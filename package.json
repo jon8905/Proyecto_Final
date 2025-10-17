@@ -10,7 +10,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
@@ -20,7 +19,7 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
     "mysql": "^2.18.1",
-    "mysql2": "^3.15.0",
+    "mysql2": "^3.15.2",
     "nodemon": "^3.1.10"
   },
   "repository": {
@@ -30,5 +29,6 @@
   "bugs": {
     "url": "https://github.com/STO0000/Proyecto_Banca/issues"
   },
-  "homepage": "https://github.com/STO0000/Proyecto_Banca#readme"
+  "homepage": "https://github.com/STO0000/Proyecto_Banca#readme",
+  "description": ""
 }
