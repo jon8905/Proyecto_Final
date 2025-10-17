@@ -1,4 +1,5 @@
-const aperturaCuentaService = requeire ('../services/aperturaCuentaService');
+const aperturaCuentaService = require ('../services/aperturaCuenta.service.js');
+
 
 //Funcion para crear cuenta
 async function crearCuenta(req, res) {
@@ -13,6 +14,7 @@ async function crearCuenta(req, res) {
     }
     
 }
+
 
 module.exports = {crearCuenta};
 

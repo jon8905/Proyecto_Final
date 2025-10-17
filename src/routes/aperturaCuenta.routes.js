@@ -1,5 +1,5 @@
 //Declaramos requisito de express
-const express = requiere ('express');
+const express = require('express');
 const route = express.Router();
 
 //Importamos controladores
