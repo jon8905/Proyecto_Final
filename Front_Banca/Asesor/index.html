@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banca 1 | Registro Cliente</title>
+    <meta name="author" content="Jean Steven Londoño Portillo">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="/Form_Apertura_Cuenta/css/styles.css">
+</head>
+
+<body>
+    <!-- Cabacera con nombre, logo, usuario, codigo usuario y boton de salir -->
+    <header>
+        <img src="" alt="Banca 1 Logo">
+        <h1>Banca 1</h1>
+        <h2>Asesor</h2>
+
+        <img src="" alt="Asesor Logo">
+        <h2>Asesor 1</h2>
+        <h3>AS001</h3>
+
+        <a href=""><img src="" alt="Logo Salir">Salir</a>
+    </header>
+
+    <!-- contenido principal del panel de asesos -->
+    <main>
+        <section>
+            <h2>Panel de Asesor</h2>
+
+            <!-- Pestañas -->
+            <nav>
+                <ul>
+                    <li><a href=""><img src="" alt="Agregar Cliente Logo">Registrar Cliente</a></li>
+                    <li><a href=""><img src="" alt="Buscar CLiente Logo">Buscar Cliente</a></li>
+                    <li><a href=""><img src="" alt="Ver Cliente Logo">Ver Clientes</a></li>
+                </ul>
+            </nav>
+        </section>
+
+        <!-- Contador de clientes registrados -->
+        <div>
+            <section>
+                <p><strong>0</strong> clientes registrados</p>
+            </section>
+
+            <!-- Pestaña de registro de clientes -->
+            <section>
+                <p>Registro de Nuevo Cliente</p>
+                <p>Seleccione el tipo de cuenta de ahorros para iniciar el registro del cliente</p>
+
+
+                <img src="" alt="Agregar Cliente Logo">
+                <p>Selección de Tipo de Cliente</p>
+                <p>Elija entre persona natural o jurídica para abrir una cuenta de ahorros</p>
+
+                <a href=""><img src="" alt="Agregar Cliente Logo">Seleccionar Tipo de Cuenta</a>
+            </section>
+        </div>
+
+        <!-- Pestaña de buscar clientes -->
+        <div>
+            <section>
+                <p>Buscar Cliente</p>
+                <p>Ingrese el número de cédula para buscar un cliente</p>
+
+                <form action="" method="get">
+                    <input type="search" name="buscar" placeholder="Número de cédula" required>
+                    <button type="submit">Buscar</button>
+                </form>
+            </section>
+        </div>
+
+        <!-- Pestaña de listado de clientes -->
+        <div>
+            <p>Lista de Clientes</p>
+            <p>Todos los clientes registrador or este asesor con sus cuentas</p>
+
+            <form action="" method="get">
+                <p>Filtros de Búsqueda</p>
+                <label for="fecha_desde">Fecha Desde </label>
+                <input type="date" id="fecha_desde" name="fecha_desde">
+
+                <label for="fecha_hasta">Fecha Hasta </label>
+                <input type="date" id="fecha_hasta" name="fecha_hasta">
+
+                <label for="">Estado</label>
+                <select name="estado" id="estado">
+                    <option value="todos_los_estados">Todos los estados</option>
+                    <option value="pendiente_aprobacion">Pendiente aprobación</option>
+                    <option value="aprobado">Aprobado</option>
+                    <option value="rechazado">Rechazado</option>
+                </select>
+
+                <button type="reset">Limpiar Filtros</button>
+            </form>
+
+            <img src="" alt="Lista de Clientes Logo">
+            <p>No hay clientes registrados aún</p>
+        </div>
+
+        <!-- Formulario de seleccion de tipo de cliente a registrar -->
+        <div>
+            <a href=""><img src="" alt="Atras Logo"></a>
+            <p>Tipo de cuenta de Ahorros</p>
+            <p>Seleccione el tipo de cliente para el cual desea abrir la cuenta de ahorros</p>
+
+            <form action="" method="post">
+                <fieldset>
+                    <input type="radio" id="persona_natural" value="natural" name="tipo_cliente">
+                    <img src="" alt="Logo Persona Natural">
+                    <label for="persona_natural">Persona Natural</label>
+
+                    <input type="radio" id="persona_juridica" value="juridica" name="tipo_cliente">
+                    <img src="" alt="Logo Persona Jurídica">
+                    <label for="persona_juridica">Persona Jurídica</label>
+
+                    <button type="submit">Continuar con Persona <strong>Natural/Jurídica</strong></button>
+                </fieldset>
+            </form>
+        </div>
+
+        <!-- Formulario de registro de cliente persona natural - Paso 1 -->
+        <div>
+            <section>
+                <section>
+                    <img src="" alt="Agregar Cliente Logo">
+                    <p>Registro de Cliente - Persona Natural</p>
+                    <p>Información Personal - Datos personales básicos</p>
+
+                    <a href=""><img src="" alt="Cancelar Logo">Cancelar</a>
+
+                    <p>Paso 1 de 6</p>
+                    <progress value="17" max="100" aria-label="17% de dominio"></progress>
+                </section>
+
+                <section>
+                    <p>Información Personal</p>
+                    <p>Complete los datos personales básicos del cliente</p>
+                </section>
+
+                <form action="" method="post">
+                    <fieldset>
+                        <legend>Tipo de solicitud</legend>
+
+                        <input type="radio">
+                        <label for="">Vinculación</label>
+
+                        <input type="radio">
+                        <label for="">Actualización</label>
+                    </fieldset>
+
+                    <select name="" id="">
+                        <option value="">Beneficiario / Ordenante de giros</option>
+                        <option value="">Terceros</option>
+                    </select>
+
+                    <label for="">Fecha diligenciamiento</label>
+                    <input type="date">
+
+                    <label for="">Primer nombre</label>
+                    <input type="text">
+
+                    <label for="">Segundo nombre</label>
+                    <input type="text">
+
+                    <label for="">Primer apellido</label>
+                    <input type="text">
+
+                    <label for="">Segundo apellido</label>
+                    <input type="text">
+
+                    <label for="">Tipo de documento</label>
+                    <select name="" id="">
+                        <option value="">C.C.</option>
+                        <option value="">T.I.</option>
+                        <option value="">C.E.</option>
+                        <option value="">PPT</option>
+                    </select>
+
+                    <label for="">N° documento</label>
+                    <input type="text">
+
+                    <label for="">Lugar de expedición</label>
+                    <input type="text">
+
+                    <label for="">Fecha de expedición</label>
+                    <input type="date">
+
+                    <label for="">Ciudad de nacimiento</label>
+                    <input type="text">
+
+                    <label for="">Fecha de nacimiento</label>
+                    <input type="date">
+
+                    <fieldset>
+                        <legend>Nacionalidad</legend>
+
+                        <input type="radio">
+                        <label for="">Colombiano</label>
+
+                        <input type="radio">
+                        <label for="">Estadounidense</label>
+
+                        <input type="radio">
+                        <label for="">Otro, ¿Cuál?</label>
+                        <input type="text">
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Género</legend>
+
+                        <input type="radio">
+                        <label for="">F</label>
+
+                        <input type="radio">
+                        <label for="">M</label>
+
+                        <input type="radio">
+                        <label for="">T</label>
+
+                        <input type="radio">
+                        <label for="">NB</label>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Estado civil</legend>
+
+                        <input type="radio">
+                        <label for="">Soltero</label>
+
+                        <input type="radio">
+                        <label for="">Casado</label>
+
+                        <input type="radio">
+                        <label for="">Unión libre</label>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Grupo étnico</legend>
+
+                        <input type="radio">
+                        <label for="">Indígena</label>
+
+                        <input type="radio">
+                        <label for="">Gitano o Rrom</label>
+
+                        <input type="radio">
+                        <label for="">Raizal</label>
+
+                        <input type="radio">
+                        <label for="">Palenquero</label>
+
+                        <input type="radio">
+                        <label for="">Comunidad negra o afrocolombiana</label>
+
+                        <input type="radio">
+                        <label for="">Ninguna</label>
+                    </fieldset>
+                </form>
+
+                <div class="indicador">
+                    <span class="paso activo"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                </div>
+
+                <a href=""><img src="" alt="Siguiente Logo">Siguiente</a>
+            </section>
+
+            <!-- Formulario de registro de cliente persona natural - Paso 2 -->
+            <section>
+                <img src="" alt="Agregar Cliente Logo">
+                <p>Regsitro de Cliente - Persona Natural</p>
+                <p>Información Contacto - Dirección y medios de contacto</p>
+
+                <a href=""><img src="" alt="Cancelar Logo">Cancelar</a>
+
+                <p>Paso 2 de 6</p>
+                <progress value="33" max="100" aria-label="33% completo"></progress>
+
+                <section>
+                    <p>Información de Contacto</p>
+                    <p>Complete los datos de contacto del cliente</p>
+                </section>
+
+                <form action="" method="post">
+                    <label for="">Dirección de residencia</label>
+                    <input type="text">
+
+                    <label for="">Barrio</label>
+                    <input type="text">
+
+                    <label for="">Ciudad / Municipio</label>
+                    <input type="text">
+
+                    <label for="">Departamento</label>
+                    <input type="text">
+
+                    <label for="">País</label>
+                    <input type="text">
+
+                    <label for="">Teléfono</label>
+                    <input type="number">
+
+                    <label for="">Celular</label>
+                    <input type="number">
+
+                    <label for="">Correo electrónico</label>
+                    <input type="email">
+                </form>
+
+                <a href=""><img src="" alt="Atras Logo">Anterior</a>
+
+                <div class="indicador">
+                    <span class="paso"></span>
+                    <span class="paso activo"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                </div>
+
+                <a href=""><img src="" alt="Siguiente Logo">Siguiente</a>
+            </section>
+
+            <!-- Formulario de registro de cliente persona natural - Paso 3 -->
+            <section>
+                <img src="" alt="Agregar Cliente Logo">
+                <p>Registro de Cliente - Persona Natural</p>
+                <p>Actividad Económica - Profesión y ocupación</p>
+
+                <a href=""><img src="" alt="Cancelar Logo">Cancelar</a>
+
+                <p>Paso 3 de 6</p>
+                <progress value="50" max="100" aria-label="50% completo"></progress>
+
+                <section>
+                    <p>Actividad Económica</p>
+                    <p>Información sobre la profesión y ocupación del cliente</p>
+                </section>
+
+                <form action="" method="post">
+                    <label for="">Profesión</label>
+                    <input type="text">
+
+                    <label for="">Ocupación / Oficio</label>
+                    <select name="" id="">
+                        <option value="">Empleado</option>
+                        <option value="">Pensionado</option>
+                        <option value="">Estudiante</option>
+                        <option value="">Ganadero</option>
+                        <option value="">Comerciante</option>
+                        <option value="">Agricultor</option>
+                        <option value="">Independiente</option>
+                        <option value="">Rentista de capital</option>
+                        <option value="">Profesional independiente</option>
+                    </select>
+
+                    <input type="checkbox">
+                    <label for="">Si su ocupación es independiente, profesioanl independiente, comerciante, ganadero,
+                        agricultor o retista de capital, por favor diligencie esta información.</label>
+
+                    <label for="">Detalle de la actividad económica principal</label>
+                    <input type="text" placeholder="Describa detalladamente su actividad económica principal">
+
+                    <label for="">Código CIIU</label>
+                    <input type="text">
+
+                    <label for="">N° Empleados</label>
+                    <input type="number">
+                </form>
+
+                <a href=""><img src="" alt="Atras Logo">Anterior</a>
+
+                <div class="indicador">
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso activo"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                </div>
+
+                <a href=""><img src="" alt="Siguiente Logo">Siguiente</a>
+            </section>
+
+            <!-- Formulario de registro de cliente persona natural - Paso 4 -->
+            <section>
+                <img src="" alt="Agregar Cliente Logo">
+                <p>Regsitro de Cliente - Persona Natural</p>
+                <p>Información Laboral - Datos del empleador</p>
+
+                <a href=""><img src="" alt="Cancelar Logo">Cancelar</a>
+
+                <p>Paso 4 de 6</p>
+                <progress value="67" max="100" aria-label="67% completo"></progress>
+
+                <section>
+                    <p>Información Laboral</p>
+                    <p>Datos de la empresa o el lugar de trabajo</p>
+                </section>
+
+                <form action="">
+                    <label for="">Nombre de la empresa</label>
+                    <input type="text">
+
+                    <label for="">Dirección de la empresa o lugar donde desarrolla su actividad</label>
+                    <input type="text">
+
+                    <label for="">Barrio</label>
+                    <input type="text">
+
+                    <label for="">Ciudad / Municipio</label>
+                    <input type="text">
+
+                    <label for="">Departamento</label>
+                    <input type="text">
+
+                    <label for="">País</label>
+                    <input type="text">
+
+                    <label for="">Teléfono</label>
+                    <input type="number">
+
+                    <label for="">Extensión</label>
+                    <input type="number">
+
+                    <label for="">Celular</label>
+                    <input type="number">
+
+                    <label for="">Correo electrónico</label>
+                    <input type="email">
+                </form>
+
+                <a href=""><img src="" alt="Atras Logo">Anterior</a>
+
+                <div class="indicador">
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso activo"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                </div>
+
+                <a href=""><img src="" alt="Siguiente Logo">Siguiente</a>
+            </section>
+
+            <!-- Formulario de registro de cliente persona natural - Paso 5 -->
+            <section>
+                <img src="" alt="Agregar Cliente Logo">
+                <p>Regsitro de Cliente - Persona Natural</p>
+                <p>Información Financiera - Ingresos y patrimonio</p>
+
+                <p>Paso 5 de 6</p>
+                <progress value="83" max="100" aria-label="83% completo"></progress>
+
+                <section>
+                    <p>Información Financiera</p>
+                    <p>Datos de lingresos, activos y patrimonio</p>
+                </section>
+
+                <form action="" method="post">
+                    <label for="">Ingresos mensuales</label>
+                    <input type="number">
+
+                    <label for="">Otros ingresos</label>
+                    <input type="number">
+
+                    <label for="">Total activos</label>
+                    <input type="number">
+
+                    <label for="">Total pasivos</label>
+                    <input type="number">
+
+                    <label for="">Total egresos</label>
+                    <input type="number">
+
+                    <label for="">Ventas anuales</label>
+                    <input type="number">
+
+                    <label for="">Fecha de cierre ventas</label>
+                    <input type="date">
+                </form>
+
+                <a href=""><img src="" alt="Atras Logo">Anterior</a>
+
+                <div class="indicador">
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso activo"></span>
+                    <span class="paso"></span>
+                </div>
+
+                <a href=""><img src="" alt="Siguiente Logo">Siguiente</a>
+            </section>
+
+            <!-- Formulario de registro de cliente persona natural - Paso 6 -->
+            <section>
+                <img src="" alt="Agregar Cliente Logo">
+                <p>Regsitro de Cliente - Persona Natural</p>
+                <p>Información Adicional - PEP, tributaria y FATCA</p>
+
+                <a href=""><img src="" alt="Cancelar Logo">Cancelar</a>
+
+                <p>Paso 6 de 6</p>
+                <progress value="100" max="100" aria-label="100% completo"></progress>
+
+                <section>
+                    <p>Información Adicional</p>
+                    <p>Información PEP, tributaria y FATCA</p>
+                </section>
+
+                <form action="">
+                    <fieldset>
+                        <legend>Información PEP</legend>
+
+                        <input type="checkbox">
+                        <label for="">¿Es usted uan persona expuesta politicamente (PEP)?</label>
+
+                        <input type="checkbox">
+                        <label for="">¿Es fideicomitente o constituyente de patrimonio autónomo?</label>
+
+                        <input type="checkbox">
+                        <label for="">¿Es relacionado con PEP</label>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Información Tributaria</legend>
+
+                        <input type="checkbox">
+                        <label for="">¿Es declarante de renta?</label>
+
+                        <input type="checkbox">
+                        <label for="">¿Es agente retenedor?</label>
+
+                        <label for="">Regimen IVA</label>
+                        <select name="" id="">
+                            <option value="">Ninguno</option>
+                            <option value="">Común</option>
+                            <option value="">Simplificado</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>FATCA y CRS</legend>
+                        <input type="checkbox">
+                        <label for="">¿Es residente fiscal de Estados Unidos?</label>
+                    </fieldset>
+                </form>
+
+                <a href=""><img src="" alt="Atras Logo">Anterior</a>
+
+                <div class="indicador">
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso"></span>
+                    <span class="paso activo"></span>
+                </div>
+
+                <button type="submit">Registrar Cliente</button>
+            </section>
+        </div>
+    </main>
+    <script src="/Form_Apertura_Cuenta/js/index.js"></script>
+</body>
+
+</html>
