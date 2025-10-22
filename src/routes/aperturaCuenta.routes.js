@@ -8,4 +8,5 @@ const {crearCuenta} = require('../controllers/aperturaCuenta.controllers.js')
 //Ruta para crear cuenta
 route.post('/aperturaCuenta',crearCuenta);
 
+//Exporta
 module.exports = route;

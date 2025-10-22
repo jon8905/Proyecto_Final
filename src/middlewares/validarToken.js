@@ -11,4 +11,5 @@ function validarToken(req, res, next) {
     });
 }
 
+//Exporta
 module.exports = validarToken;

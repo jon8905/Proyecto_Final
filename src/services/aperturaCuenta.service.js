@@ -132,4 +132,6 @@ async function crearCuenta(data) {
   }
 }
 
+
+//Exporta
 module.exports = { crearCuenta };

@@ -15,6 +15,6 @@ async function crearCuenta(req, res) {
     
 }
 
-
+//Exporta
 module.exports = {crearCuenta};
 
