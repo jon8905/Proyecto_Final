@@ -3,9 +3,11 @@ const express = require('express');
 const route = express.Router();
 
 //Importamos controladores
-const {crearCuenta} = require('../controllers/aperturaCuenta.controllers.js')
+const {crearCuenta, listarCuenta} = require('../controllers/aperturaCuenta.controllers.js');
 
 //Ruta para crear cuenta
-route.post('/aperturaCuenta',crearCuenta);
+route.post('/',crearCuenta);
+//Ruta para listar cuenta
+route.get('/', listarCuenta);
 
 module.exports = route;

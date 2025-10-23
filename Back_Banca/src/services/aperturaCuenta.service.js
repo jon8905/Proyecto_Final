@@ -1,25 +1,53 @@
 // src/services/aperturaCuentaService.js
 const db = require('../config/db');
 
-async function crearCuenta(data) {
-  const connection = await db.getConnection();
+const listarCuentas = async () => {
+  const [rows] = await db.query('SELECT * FROM Cuenta');
+  return rows;
+};
 
+const crearCuentaService = async (data) => {
+  const connection = await db.getConnection();
   try {
+    await connection.beginTransaction();
+    
+    // Aquí va tu lógica de inserción
+     if (
+    !data.nombre ||
+    !data.tipo_de_identificacion ||
+    !data.numero_documento ||
+    !data.telefono ||
+    !data.correo
+    ) {
+      throw new Error('Faltan campos obligatorios del cliente principal');
+}
+
+// Validar que las secciones anidadas existan
+  if (
+    !data.informacion ||
+    !data.contacto ||
+    !data.actividad_economica ||
+    !data.informacion_laboral ||
+    !data.informacion_financiera ||
+    !data.informacion_adicional
+    ) {
+      throw new Error('Faltan secciones completas de información relacionada');
+} 
     await connection.beginTransaction();
 
     // 1️⃣ Crear cliente principal
     const [clienteResult] = await connection.query(
-      `INSERT INTO Cliente (tipo_cliente) VALUES (?)`,
-      [data.tipo_cliente || 'NATURAL']
-    );
+      'INSERT INTO cliente (nombre, tipo_de_identificacion, numero_documento, telefono, correo) VALUES (?, ?, ?, ?, ?)',
+  [data.nombre, data.tipo_de_identificacion, data.numero_documento, data.telefono, data.correo]
+);
     const id_cliente = clienteResult.insertId;
 
     // 2️⃣ Tabla: Informacion
     await connection.query(
       `INSERT INTO Informacion 
-       (id_cliente, nombre_completo, tipo_documento, numero_documento, lugar_expedicion, fecha_expedicion,
+      (id_cliente, nombre_completo, tipo_documento, numero_documento, lugar_expedicion, fecha_expedicion,
         ciudad_nacimiento, fecha_nacimiento, nacionalidad, genero, estado_civil, grupo_etnico)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         id_cliente,
         data.nombre_completo,
@@ -118,18 +146,16 @@ async function crearCuenta(data) {
       ]
     );
 
-    // Confirmar transacción
     await connection.commit();
-
-    return { id_cliente, message: 'Cuenta creada exitosamente' };
-
+    connection.release();
+    return { message: 'Cuenta creada correctamente' };
   } catch (error) {
     await connection.rollback();
-    console.error('Error en crearCuenta (Service):', error);
-    throw error;
-  } finally {
     connection.release();
+    console.error('⚠️ Error en crearCuentaService:', error.message);
+    throw error;
   }
-}
+};
 
-module.exports = { crearCuenta };
+module.exports = { crearCuentaService };
+module.exports = {listarCuentas};
