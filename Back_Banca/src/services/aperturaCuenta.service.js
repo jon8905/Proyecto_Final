@@ -7,14 +7,22 @@ async function crearCuenta(data) {
   try {
     await connection.beginTransaction();
 
-    // 1️⃣ Crear cliente principal
+    // Crear Cliente
     const [clienteResult] = await connection.query(
-      `INSERT INTO Cliente (tipo_cliente) VALUES (?)`,
-      [data.tipo_cliente || 'NATURAL']
+      `INSERT INTO Cliente 
+        (nombre, tipo_de_identificacion, numero_documento, telefono, correo)
+       VALUES (?, ?, ?, ?, ?)`,
+      [
+        data.nombre,
+        data.tipo_de_identificacion,
+        data.numero_documento,
+        data.telefono,
+        data.correo
+      ]
     );
     const id_cliente = clienteResult.insertId;
 
-    // 2️⃣ Tabla: Informacion
+    //  Tabla: Informacion
     await connection.query(
       `INSERT INTO Informacion 
        (id_cliente, nombre_completo, tipo_documento, numero_documento, lugar_expedicion, fecha_expedicion,
@@ -36,7 +44,7 @@ async function crearCuenta(data) {
       ]
     );
 
-    // 3️⃣ Tabla: Contacto
+    // Tabla: Contacto
     await connection.query(
       `INSERT INTO Contacto 
        (id_cliente, direccion_residencia, barrio, ciudad, departamento, pais, celular, correo)
@@ -49,11 +57,11 @@ async function crearCuenta(data) {
         data.departamento,
         data.pais,
         data.celular,
-        data.correo
+        data.correo_contacto // diferente al correo del cliente si aplica
       ]
     );
 
-    // 4️⃣ Tabla: Actividad_Economica
+    // Tabla: Actividad_Economica
     await connection.query(
       `INSERT INTO Actividad_Economica 
        (id_cliente, profesion, ocupacion, detalle_actividad, codigo_ciiu, n_empleados)
@@ -68,7 +76,7 @@ async function crearCuenta(data) {
       ]
     );
 
-    // 5️⃣ Tabla: Informacion_Laboral
+    // Tabla: Informacion_Laboral
     await connection.query(
       `INSERT INTO Informacion_Laboral 
        (id_cliente, nombre_empresa, direccion, barrio, ciudad, departamento, pais, telefono, extension, celular, correo)
@@ -81,14 +89,14 @@ async function crearCuenta(data) {
         data.ciudad_laboral,
         data.departamento_laboral,
         data.pais_laboral,
-        data.telefono,
+        data.telefono_empresa,
         data.extension,
         data.celular_laboral,
         data.correo_laboral
       ]
     );
 
-    // 6️⃣ Tabla: Informacion_Financiera
+    //  Tabla: Informacion_Financiera
     await connection.query(
       `INSERT INTO Informacion_Financiera 
        (id_cliente, ingresos_mensuales, otros_ingresos, total_activos, total_pasivos, total_egresos, ventas_anuales, fecha_cierre_ventas)
@@ -105,7 +113,7 @@ async function crearCuenta(data) {
       ]
     );
 
-    // 7️⃣ Tabla: Informacion_Adicional
+    //  Tabla: Informacion_Adicional
     await connection.query(
       `INSERT INTO Informacion_Adicional 
        (id_cliente, informacion_pep, informacion_tributaria, informacion_fatca_crs)
@@ -118,14 +126,34 @@ async function crearCuenta(data) {
       ]
     );
 
-    // Confirmar transacción
+    //  Crear una Cuenta de Ahorro asociada
+    const numeroCuenta = `CTA-${Date.now()}`;
+    const [cuentaResult] = await connection.query(
+      `INSERT INTO Cuenta_Ahorro (numero_cuenta, saldo, estado, fecha_apertura, id_cliente)
+       VALUES (?, ?, ?, ?, ?)`,
+      [
+        numeroCuenta,
+        data.saldo_inicial || 0,
+        'activa',
+        new Date(),
+        id_cliente
+      ]
+    );
+
+    const id_cuenta = cuentaResult.insertId;
+
     await connection.commit();
 
-    return { id_cliente, message: 'Cuenta creada exitosamente' };
+    return {
+      id_cliente,
+      id_cuenta,
+      numeroCuenta,
+      message: 'Cuenta y cliente creados exitosamente'
+    };
 
   } catch (error) {
     await connection.rollback();
-    console.error('Error en crearCuenta (Service):', error);
+    console.error('❌ Error en crearCuenta (Service):', error);
     throw error;
   } finally {
     connection.release();

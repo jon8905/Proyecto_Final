@@ -1,4 +1,4 @@
-const app = require('./src/app');
+const app = require('./Back_Banca/src/app');
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
