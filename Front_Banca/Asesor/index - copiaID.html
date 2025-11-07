@@ -21,7 +21,7 @@
         <h2 id="nombreAsesor">Asesor 1</h2>
         <h3 id="codigoAsesor">AS001</h3>
 
-        <button id="btnSalir" name="btnSalir">Salir</button>
+        <a href="./index.html" id="btnSalir"><img src="" alt="Salir">Salir</a>
     </header>
 
     <!-- contenido principal del panel de asesor -->
@@ -55,7 +55,8 @@
                 <p>Selección de Tipo de Cliente</p>
                 <p>Elija entre persona natural o jurídica para abrir una cuenta de ahorros</p>
 
-                <button id="btnSeleccionarTipo" name="btnSeleccionarTipo">Seleccionar Tipo de Cuenta</button>
+                <a href="#seleccionTipoCliente" id="btnSeleccionarTipo"><img src=""
+                        alt="Agregar Cliente Logo">Seleccionar Tipo de Cuenta</a>
             </section>
         </div>
 
@@ -66,7 +67,7 @@
                 <p>Ingrese el número de cédula para buscar un cliente</p>
 
                 <form id="formBuscarCliente" action="/api/clientes/buscar" method="get">
-                    <input type="search" id="cedula" name="cedula" placeholder="Número de cédula" required>
+                    <input type="search" name="cedula" placeholder="Número de cédula" required>
                     <button type="submit">Buscar</button>
                 </form>
             </section>
@@ -85,7 +86,7 @@
                 <label for="fecha_hasta">Fecha Hasta </label>
                 <input type="date" id="fecha_hasta" name="fecha_hasta">
 
-                <label for="estado">Estado</label>
+                <label for="">Estado</label>
                 <select name="estado" id="estado">
                     <option value="todos_los_estados">Todos los estados</option>
                     <option value="pendiente_aprobacion">Pendiente aprobación</option>
@@ -104,8 +105,8 @@
         </div>
 
         <!-- Formulario de seleccion de tipo de cliente a registrar -->
-        <div id="seleccionTipoCliente">
-            <button id="btnAtrasSeleccion" name="btnAtrasSeleccion">Atras</button>
+        <div id="seleccionTipocliente">
+            <a href="#registroClientes"><img src="" alt="Atras"></a>
             <p>Tipo de cuenta de Ahorros</p>
             <p>Seleccione el tipo de cliente para el cual desea abrir la cuenta de ahorros</p>
 
@@ -132,7 +133,7 @@
                     <p>Registro de Cliente - Persona Natural</p>
                     <p>Información Personal - Datos personales básicos</p>
 
-                    <button type="button" id="btnCancelarPaso1" class="btnCancelar">Cancelar</button>
+                    <a href=""><img src="" alt="Cancelar Logo">Cancelar</a>
 
                     <p>Paso 1 de 6</p>
                     <progress value="17" max="100" aria-label="17% de dominio"></progress>
@@ -143,126 +144,129 @@
                     <p>Complete los datos personales básicos del cliente</p>
                 </section>
 
+                <!--Primero formulario-->
                 <form id="formPaso1" action="/api/clientes/paso1" method="post">
-                    <fieldset>
-                        <legend>Tipo de solicitud</legend>
 
-                        <input type="radio" id="sol_vinculacion" name="tipo_solicitud" value="vinculación" required>
-                        <label for="sol_vinculacion">Vinculación</label>
+                <fieldset>
+                <legend>Tipo de solicitud</legend>
+                    <input type="radio" id="tipoVinculacion" name="tipoSolicitud" value="Vinculación">
+                    <label for="tipoVinculacion">Vinculación</label>
 
-                        <input type="radio" id="sol_actulizacion" name="tipo_solicitud" value="actualizacion">
-                        <label for="">Actualización</label>
-                    </fieldset>
+                    <input type="radio" id="tipoActualizacion" name="tipoSolicitud" value="Actualización">
+                    <label for="tipoActualizacion">Actualización</label>
+                </fieldset>
 
-                    <select name="tipo_cliente_relacion" id="tipo_cliente_relacion">
-                        <option value="">Beneficiario / Ordenante de giros</option>
-                        <option value="">Terceros</option>
-                    </select>
+                <label for="tipoRelacion">Tipo de relación</label>
+                <select id="tipoRelacion" name="tipoRelacion">
+                    <option value="">Seleccione...</option>
+                    <option value="Beneficiario / Ordenante de giros">Beneficiario / Ordenante de giros</option>
+                    <option value="Terceros">Terceros</option>
+                </select>
 
-                    <label for="fecha_diligenciamiento">Fecha diligenciamiento</label>
-                    <input type="date" id="fecha_diligenciamiento" name="fecha_diligenciamiento" required>
+                <label for="fechaDiligenciamiento">Fecha diligenciamiento</label>
+                <input type="date" id="fechaDiligenciamiento" name="fechaDiligenciamiento">
 
-                    <label for="primer_nombre">Primer nombre</label>
-                    <input type="text" id="primer_nombre" name="primer_nombre" required>
+                <label for="primerNombre">Primer nombre</label>
+                <input type="text" id="primerNombre" name="primerNombre">
 
-                    <label for="segundo_nombre">Segundo nombre</label>
-                    <input type="text" id="segundo_nombre" name="segundo_nombre">
+                <label for="segundoNombre">Segundo nombre</label>
+                <input type="text" id="segundoNombre" name="segundoNombre">
 
-                    <label for="primer_apellido">Primer apellido</label>
-                    <input type="text" id="primer_apellido" name="primer_apellido" required>
+                <label for="primerApellido">Primer apellido</label>
+                <input type="text" id="primerApellido" name="primerApellido">
 
-                    <label for="segundo_apellido">Segundo apellido</label>
-                    <input type="text" id="segundo_apellido" name="segundo_apellido">
+                <label for="segundoApellido">Segundo apellido</label>
+                <input type="text" id="segundoApellido" name="segundoApellido">
 
-                    <label for="tipo_documento">Tipo de documento</label>
-                    <select name="tipo_documento" id="tipo_documento" required>
-                        <option value="CC">C.C.</option>
-                        <option value="TI">T.I.</option>
-                        <option value="CE">C.E.</option>
-                        <option value="PPT">PPT</option>
-                    </select>
+                <label for="tipoDocumento">Tipo de documento</label>
+                <select id="tipoDocumento" name="tipoDocumento">
+                    <option value="">Seleccione...</option>
+                    <option value="CC">C.C.</option>
+                    <option value="TI">T.I.</option>
+                    <option value="CE">C.E.</option>
+                    <option value="PPT">PPT</option>
+                </select>
 
-                    <label for="numero_documento">N° documento</label>
-                    <input type="text" id="numero_documento" name="numero_documento" required>
+                <label for="numeroDocumento">N° documento</label>
+                <input type="text" id="numeroDocumento" name="numeroDocumento">
 
-                    <label for="lugar_expedicion">Lugar de expedición</label>
-                    <input type="text" id="lugar_expedicion" name="lugar_expedicion">
+                <label for="lugarExpedicion">Lugar de expedición</label>
+                <input type="text" id="lugarExpedicion" name="lugarExpedicion">
 
-                    <label for="fecha_expedicion">Fecha de expedición</label>
-                    <input type="date" id="fecha_expedicion" name="fecha_expedicion">
+                <label for="fechaExpedicion">Fecha de expedición</label>
+                <input type="date" id="fechaExpedicion" name="fechaExpedicion">
 
-                    <label for="ciudad_nacimiento">Ciudad de nacimiento</label>
-                    <input type="text" id="ciudad_nacimiento" name="ciudad_nacimiento" required>
+                <label for="ciudadNacimiento">Ciudad de nacimiento</label>
+                <input type="text" id="ciudadNacimiento" name="ciudadNacimiento">
 
-                    <label for="fecha_nacimiento">Fecha de nacimiento</label>
-                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                <input type="date" id="fechaNacimiento" name="fechaNacimiento">
 
-                    <fieldset>
-                        <legend>Nacionalidad</legend>
+                <fieldset>
+                    <legend>Nacionalidad</legend>
 
-                        <input type="radio" id="nacionalidad_col" name="nacionalidad_" value="colombiano">
-                        <label for="nacionalidad_col">Colombiano</label>
+                    <input type="radio" id="nacionalidadColombiano" name="nacionalidad" value="Colombiano">
+                    <label for="nacionalidadColombiano">Colombiano</label>
 
-                        <input type="radio" id="nacionalidad_usa" name="nacionalidad" value="estadounidense">
-                        <label for="nacionalidad_usa">Estadounidense</label>
+                    <input type="radio" id="nacionalidadEstadounidense" name="nacionalidad" value="Estadounidense">
+                    <label for="nacionalidadEstadounidense">Estadounidense</label>
 
-                        <input type="radio" id="otra_nacionalidad" name="nacionalidad" value="otra">
-                        <label for="otra_nacionalidad">Otro, ¿Cuál?</label>
-                        <input type="text" id="otra_nacionalidad_detalle" name="otra_nacionalidad_detalle"
-                            placeholder="Especifique si selecciono 'Otro'">
-                    </fieldset>
+                    <input type="radio" id="nacionalidadOtro" name="nacionalidad" value="Otro">
+                    <label for="nacionalidadOtro">Otro, ¿Cuál?</label>
+                    <input type="text" id="otraNacionalidad" name="otraNacionalidad" placeholder="Especifique">
+                </fieldset>
 
-                    <fieldset>
-                        <legend>Género</legend>
+                <fieldset>
+                    <legend>Género</legend>
 
-                        <input type="radio" id="genero_f" name="genero" value="femenino">
-                        <label for="genero_f">F</label>
+                    <input type="radio" id="generoF" name="genero" value="F">
+                    <label for="generoF">F</label>
 
-                        <input type="radio" id="genero_m" name="genero" value="masculino">
-                        <label for="genero_m">M</label>
+                    <input type="radio" id="generoM" name="genero" value="M">
+                    <label for="generoM">M</label>
 
-                        <input type="radio" id="genero_t" name="genero" value="transgenero">
-                        <label for="genero_t">T</label>
+                    <input type="radio" id="generoT" name="genero" value="T">
+                    <label for="generoT">T</label>
 
-                        <input type="radio" id="genero_nb" name="genero" value="no_binario">
-                        <label for="genero_nb">NB</label>
-                    </fieldset>
+                    <input type="radio" id="generoNB" name="genero" value="NB">
+                    <label for="generoNB">NB</label>
+                </fieldset>
 
-                    <fieldset>
-                        <legend>Estado civil</legend>
+                <fieldset>
+                    <legend>Estado civil</legend>
 
-                        <input type="radio" id="soltero" name="estado_civil" value="soltero">
-                        <label for="soltero">Soltero</label>
+                    <input type="radio" id="estadoSoltero" name="estadoCivil" value="Soltero">
+                    <label for="estadoSoltero">Soltero</label>
 
-                        <input type="radio" id="casado" name="estado_civil" value="casado">
-                        <label for="casado">Casado</label>
+                    <input type="radio" id="estadoCasado" name="estadoCivil" value="Casado">
+                    <label for="estadoCasado">Casado</label>
 
-                        <input type="radio" id="union_libre" name="estado_civil" value="union_libre">
-                        <label for="union_libre">Unión libre</label>
-                    </fieldset>
+                    <input type="radio" id="estadoUnionLibre" name="estadoCivil" value="Union libre">
+                    <label for="estadoUnionLibre">Unión libre</label>
+                </fieldset>
 
-                    <fieldset>
-                        <legend>Grupo étnico</legend>
+                <fieldset>
+                    <legend>Grupo étnico</legend>
 
-                        <input type="radio" id="indigena" name="grupo_etnico" value="indigena">
-                        <label for="">Indígena</label>
+                    <input type="radio" id="etnicoIndigena" name="grupoEtnico" value="Indígena">
+                    <label for="etnicoIndigena">Indígena</label>
 
-                        <input type="radio" id="ginato" name="grupo_etnico" value="gitano">
-                        <label for="ginato">Gitano o Rrom</label>
+                    <input type="radio" id="etnicoGitano" name="grupoEtnico" value="Gitano o Rrom">
+                    <label for="etnicoGitano">Gitano o Rrom</label>
 
-                        <input type="radio" id="raizal" name="grupo_etnico" value="raizal">
-                        <label for="raizal">Raizal</label>
+                    <input type="radio" id="etnicoRaizal" name="grupoEtnico" value="Raizal">
+                    <label for="etnicoRaizal">Raizal</label>
 
-                        <input type="radio" id="palenquero" name="grupo_etnico" value="palenquero">
-                        <label for="palenquero">Palenquero</label>
+                    <input type="radio" id="etnicoPalenquero" name="grupoEtnico" value="Palenquero">
+                    <label for="etnicoPalenquero">Palenquero</label>
 
-                        <input type="radio" id="afro" name="grupo_etnico" value="afrocolombiano">
-                        <label for="afro">Comunidad negra o afrocolombiana</label>
+                    <input type="radio" id="etnicoAfrocolombiano" name="grupoEtnico" value="Comunidad negra o afrocolombiana">
+                    <label for="etnicoAfrocolombiano">Comunidad negra o afrocolombiana</label>
 
-                        <input type="radio" id="ninguno" name="grupo_etnico" value="ninguno">
-                        <label for="ninguno">Ninguna</label>
-                    </fieldset>
-                </form>
+                    <input type="radio" id="etnicoNinguno" name="grupoEtnico" value="Ninguna">
+                    <label for="etnicoNinguno">Ninguna</label>
+                </fieldset>
+</form>
 
                 <div class="indicador">
                     <span class="paso activo"></span>
@@ -273,7 +277,7 @@
                     <span class="paso"></span>
                 </div>
 
-                <button type="button" id="bntSiguientePaso1" class="btnSiguiente">Siguiente</button>
+                <a href=""><img src="" alt="Siguiente Logo">Siguiente</a>
             </section>
 
             <!-- Formulario de registro de cliente persona natural - Paso 2 -->
@@ -282,7 +286,7 @@
                 <p>Regsitro de Cliente - Persona Natural</p>
                 <p>Información Contacto - Dirección y medios de contacto</p>
 
-                <button type="button" id="btnCancelarPaso2" class="btnCancelar">Cancelar</button>
+                <a href=""><img src="" alt="Cancelar Logo">Cancelar</a>
 
                 <p>Paso 2 de 6</p>
                 <progress value="33" max="100" aria-label="33% completo"></progress>
@@ -294,31 +298,31 @@
 
                 <form id="formPaso2" action="/api/clientes/paso2" method="post">
                     <label for="direccion_residencia">Dirección de residencia</label>
-                    <input type="text" id="direccion_residencia" name="direccion_residencia">
+                    <input type="text" id="direccion_residencia" name="direccion_residencia" required>
 
                     <label for="barrio">Barrio</label>
-                    <input type="text" id="barrio" name="barrio">
+                    <input type="text" id="barrio" name="barrio" required>
 
-                    <label for="ciudad_municipio">Ciudad / Municipio</label>
-                    <input type="text" id="ciudad_municipio" name="ciudad_municipio">
+                    <label for="ciudad">Ciudad / Municipio</label>
+                    <input type="text" id="ciudad" name="ciudad" required>
 
                     <label for="departamento">Departamento</label>
-                    <input type="text" id="departamento" name="departamento">
+                    <input type="text" id="departamento" name="departamento" required>
 
                     <label for="pais">País</label>
-                    <input type="text" id="pais" name="pais">
+                    <input type="text" id="pais" name="pais" required>
 
                     <label for="telefono">Teléfono</label>
                     <input type="number" id="telefono" name="telefono">
 
                     <label for="celular">Celular</label>
-                    <input type="number" id="celular" name="celular">
+                    <input type="number" id="celular" name="celular" required>
 
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" id="email" name="email">
+                    <label for="correo_electronico">Correo electrónico</label>
+                    <input type="email" id="correo_electronico" name="correo_electronico" required>
                 </form>
 
-                <button type="button" id="bntAnteriorPaso2" class="btnanterior">Anterior</button>
+                <a href=""><img src="" alt="Atras Logo">Anterior</a>
 
                 <div class="indicador">
                     <span class="paso"></span>
@@ -329,7 +333,7 @@
                     <span class="paso"></span>
                 </div>
 
-                <button type="button" id="bntSiguientePaso2" class="btnSiguiente">Siguiente</button>
+                <a href=""><img src="" alt="Siguiente Logo">Siguiente</a>
             </section>
 
             <!-- Formulario de registro de cliente persona natural - Paso 3 -->
@@ -338,7 +342,7 @@
                 <p>Registro de Cliente - Persona Natural</p>
                 <p>Actividad Económica - Profesión y ocupación</p>
 
-                <button type="button" id="btnCancelarPaso3" class="btnCancelar">Cancelar</button>
+                <a href=""><img src="" alt="Cancelar Logo">Cancelar</a>
 
                 <p>Paso 3 de 6</p>
                 <progress value="50" max="100" aria-label="50% completo"></progress>
@@ -350,10 +354,11 @@
 
                 <form id="formPaso3" action="/api/clientes/paso3" method="post">
                     <label for="profesion">Profesión</label>
-                    <input type="text" id="profesion" name="profesion">
+                    <input type="text" id="profesion" name="profesion" required>
 
                     <label for="ocupacion">Ocupación / Oficio</label>
-                    <select name="ocupacion" id="ocupacion">
+                    <select id="ocupacion" name="ocupacion" required>
+                        <option value="">Seleccione una opción</option>
                         <option value="Empleado">Empleado</option>
                         <option value="Pensionado">Pensionado</option>
                         <option value="Estudiante">Estudiante</option>
@@ -361,25 +366,32 @@
                         <option value="Comerciante">Comerciante</option>
                         <option value="Agricultor">Agricultor</option>
                         <option value="Independiente">Independiente</option>
-                        <option value="Rentista">Rentista de capital</option>
-                        <option value="Profesional">Profesional independiente</option>
+                        <option value="Rentista de capital">Rentista de capital</option>
+                        <option value="Profesional independiente">Profesional independiente</option>
                     </select>
 
-                    <input type="checkbox" id="ocupacion_detalle" name="ocupacion_detalle">
-                    <label for="ocupacion_detalle">Si su ocupación es independiente, profesioanl independiente, comerciante, ganadero,
-                        agricultor o retista de capital, por favor diligencie esta información.</label>
+                    <input type="checkbox" id="ocupacion_independiente" name="ocupacion_independiente" value="true">
+                    <label for="ocupacion_independiente">
+                        Si su ocupación es independiente, profesional independiente, comerciante, ganadero,
+                        agricultor o rentista de capital, por favor diligencie esta información.
+                    </label>
 
-                    <label for="actividad_economica_detalle">Detalle de la actividad económica principal</label>
-                    <input type="text" id="actividad_economica_detalle" name="actividad_economica_detalle" placeholder="Describa detalladamente su actividad económica principal">
+                    <label for="actividad_economica">Detalle de la actividad económica principal</label>
+                    <input 
+                        type="text" 
+                        id="actividad_economica" 
+                        name="actividad_economica" 
+                        placeholder="Describa detalladamente su actividad económica principal" 
+                        required
+                    >
 
                     <label for="codigo_ciiu">Código CIIU</label>
-                    <input type="text" id="cadigo_ciiu" name="codigo_ciiu">
+                    <input type="text" id="codigo_ciiu" name="codigo_ciiu" required>
 
-                    <label for="num_empleados">N° Empleados</label>
-                    <input type="number" id="num_empleados" name="num_empleados">
+                    <label for="numero_empleados">N° Empleados</label>
+                    <input type="number" id="numero_empleados" name="numero_empleados" min="0">
                 </form>
-
-                <button type="button" id="bntAnteriorPaso3" class="btnanterior">Anterior</button>
+                <a href=""><img src="" alt="Atras Logo">Anterior</a>
 
                 <div class="indicador">
                     <span class="paso"></span>
@@ -390,7 +402,7 @@
                     <span class="paso"></span>
                 </div>
 
-                <button type="button" id="bntSiguientePaso3" class="btnSiguiente">Siguiente</button>
+                <a href=""><img src="" alt="Siguiente Logo">Siguiente</a>
             </section>
 
             <!-- Formulario de registro de cliente persona natural - Paso 4 -->
@@ -399,7 +411,7 @@
                 <p>Regsitro de Cliente - Persona Natural</p>
                 <p>Información Laboral - Datos del empleador</p>
 
-                <button type="button" id="btnCancelarPaso4" class="btnCancelar">Cancelar</button>
+                <a href=""><img src="" alt="Cancelar Logo">Cancelar</a>
 
                 <p>Paso 4 de 6</p>
                 <progress value="67" max="100" aria-label="67% completo"></progress>
@@ -409,39 +421,39 @@
                     <p>Datos de la empresa o el lugar de trabajo</p>
                 </section>
 
-                <form id="formPaso4" action="/api/clientes/paso4">
+                <form id="formPaso4" action="/api/clientes/paso4" method="post">
                     <label for="nombre_empresa">Nombre de la empresa</label>
-                    <input type="text" id="nombre_empresa" name="nombre_empresa">
+                    <input type="text" id="nombre_empresa" name="nombre_empresa" required>
 
                     <label for="direccion_empresa">Dirección de la empresa o lugar donde desarrolla su actividad</label>
-                    <input type="text" id="direcion_empresa" name="direccion_empresa">
+                    <input type="text" id="direccion_empresa" name="direccion_empresa" required>
 
                     <label for="barrio_empresa">Barrio</label>
-                    <input type="text" id="barrio_empresa" name="barrio_empresa">
+                    <input type="text" id="barrio_empresa" name="barrio_empresa" required>
 
                     <label for="ciudad_empresa">Ciudad / Municipio</label>
-                    <input type="text" id="ciudad_empresa" name="ciudad_empresa">
+                    <input type="text" id="ciudad_empresa" name="ciudad_empresa" required>
 
-                    <label for="departaento_empresa">Departamento</label>
-                    <input type="text" id="departaento_empresa" name="departamento_empresa">
+                    <label for="departamento_empresa">Departamento</label>
+                    <input type="text" id="departamento_empresa" name="departamento_empresa" required>
 
                     <label for="pais_empresa">País</label>
-                    <input type="text" id="pais_empresa" name="pais_empresa">
+                    <input type="text" id="pais_empresa" name="pais_empresa" required>
 
-                    <label for="telefono">Teléfono</label>
+                    <label for="telefono_empresa">Teléfono</label>
                     <input type="number" id="telefono_empresa" name="telefono_empresa">
 
-                    <label for="extension">Extensión</label>
-                    <input type="number" id="extension" name="extension">
+                    <label for="extension_empresa">Extensión</label>
+                    <input type="number" id="extension_empresa" name="extension_empresa">
 
                     <label for="celular_empresa">Celular</label>
                     <input type="number" id="celular_empresa" name="celular_empresa">
 
-                    <label for="email_empresa">Correo electrónico</label>
-                    <input type="email" id="email_empresa" name="email_empresa">
+                    <label for="correo_empresa">Correo electrónico</label>
+                    <input type="email" id="correo_empresa" name="correo_empresa">
                 </form>
 
-                <button type="button" id="bntAnteriorPaso4" class="btnanterior">Anterior</button>
+                <a href=""><img src="" alt="Atras Logo">Anterior</a>
 
                 <div class="indicador">
                     <span class="paso"></span>
@@ -452,7 +464,7 @@
                     <span class="paso"></span>
                 </div>
 
-                <button type="button" id="bntSiguientePaso4" class="btnSiguiente">Siguiente</button>
+                <a href=""><img src="" alt="Siguiente Logo">Siguiente</a>
             </section>
 
             <!-- Formulario de registro de cliente persona natural - Paso 5 -->
@@ -460,8 +472,6 @@
                 <img src="" alt="Agregar Cliente Logo">
                 <p>Regsitro de Cliente - Persona Natural</p>
                 <p>Información Financiera - Ingresos y patrimonio</p>
-
-                <button type="button" id="btnCancelarPaso5" class="btnCancelar">Cancelar</button>
 
                 <p>Paso 5 de 6</p>
                 <progress value="83" max="100" aria-label="83% completo"></progress>
@@ -473,19 +483,19 @@
 
                 <form id="formPaso5" action="/api/clientes/paso5" method="post">
                     <label for="ingresos_mensuales">Ingresos mensuales</label>
-                    <input type="number" id="ingresos_mensuales" name="ingresos_mensuales">
+                    <input type="number" id="ingresos_mensuales" name="ingresos_mensuales" required>
 
                     <label for="otros_ingresos">Otros ingresos</label>
                     <input type="number" id="otros_ingresos" name="otros_ingresos">
 
                     <label for="total_activos">Total activos</label>
-                    <input type="number" id="total_activos" name="total_activos">
+                    <input type="number" id="total_activos" name="total_activos" required>
 
                     <label for="total_pasivos">Total pasivos</label>
-                    <input type="number" id="total_pasivos" name="total_pasivos">
+                    <input type="number" id="total_pasivos" name="total_pasivos" required>
 
                     <label for="total_egresos">Total egresos</label>
-                    <input type="number" id="total_egresos" name="total_egresos">
+                    <input type="number" id="total_egresos" name="total_egresos" required>
 
                     <label for="ventas_anuales">Ventas anuales</label>
                     <input type="number" id="ventas_anuales" name="ventas_anuales">
@@ -494,7 +504,7 @@
                     <input type="date" id="fecha_cierre_ventas" name="fecha_cierre_ventas">
                 </form>
 
-                <button type="button" id="bntAnteriorPaso5" class="btnanterior">Anterior</button>
+                <a href=""><img src="" alt="Atras Logo">Anterior</a>
 
                 <div class="indicador">
                     <span class="paso"></span>
@@ -505,7 +515,7 @@
                     <span class="paso"></span>
                 </div>
 
-                <button type="button" id="bntSiguientePaso5" class="btnSiguiente">Siguiente</button>
+                <a href=""><img src="" alt="Siguiente Logo">Siguiente</a>
             </section>
 
             <!-- Formulario de registro de cliente persona natural - Paso 6 -->
@@ -514,7 +524,7 @@
                 <p>Regsitro de Cliente - Persona Natural</p>
                 <p>Información Adicional - PEP, tributaria y FATCA</p>
 
-                <button type="button" id="btnCancelarPaso6" class="btnCancelar">Cancelar</button>
+                <a href=""><img src="" alt="Cancelar Logo">Cancelar</a>
 
                 <p>Paso 6 de 6</p>
                 <progress value="100" max="100" aria-label="100% completo"></progress>
@@ -528,41 +538,42 @@
                     <fieldset>
                         <legend>Información PEP</legend>
 
-                        <input type="checkbox" id="pep" name="informacion_pep" value="pep">
-                        <label for="pep">¿Es usted una persona expuesta politicamente (PEP)?</label>
+                        <input type="checkbox" id="pep_persona" name="pep_persona">
+                        <label for="pep_persona">¿Es usted una persona expuesta políticamente (PEP)?</label>
 
-                        <input type="checkbox" id="fide_ico" name="informacion_pep" value="fide_ico">
-                        <label for="fide_ico">¿Es fideicomitente o constituyente de patrimonio autónomo?</label>
+                        <input type="checkbox" id="pep_fideicomitente" name="pep_fideicomitente">
+                        <label for="pep_fideicomitente">¿Es fideicomitente o constituyente de patrimonio autónomo?</label>
 
-                        <input type="checkbox" id="relacion_pep" name="informacion_pep" value="relacion_pep">
-                        <label for="relacion_pep">¿Es relacionado con PEP</label>
+                        <input type="checkbox" id="pep_relacionado" name="pep_relacionado">
+                        <label for="pep_relacionado">¿Es relacionado con PEP?</label>
                     </fieldset>
 
                     <fieldset>
                         <legend>Información Tributaria</legend>
 
-                        <input type="checkbox" id="declara_renta" name="informacion_tributaria" value="declara_renta">
-                        <label for="declara_renta">¿Es declarante de renta?</label>
+                        <input type="checkbox" id="declarante_renta" name="declarante_renta">
+                        <label for="declarante_renta">¿Es declarante de renta?</label>
 
-                        <input type="checkbox" id="agente_retenedor" name="informacion_tributaria" value="agente_retenedor">
+                        <input type="checkbox" id="agente_retenedor" name="agente_retenedor">
                         <label for="agente_retenedor">¿Es agente retenedor?</label>
 
-                        <label for="iva">Regimen IVA</label>
-                        <select name="informacion_tributaria" id="iva">
-                            <option value="Ninguno">Ninguno</option>
-                            <option value="Comun">Común</option>
-                            <option value="Simplificado">Simplificado</option>
+                        <label for="regimen_iva">Régimen IVA</label>
+                        <select id="regimen_iva" name="regimen_iva">
+                            <option value="ninguno">Ninguno</option>
+                            <option value="comun">Común</option>
+                            <option value="simplificado">Simplificado</option>
                         </select>
                     </fieldset>
 
                     <fieldset>
                         <legend>FATCA y CRS</legend>
-                        <input type="checkbox" id="fatca_crs" name="fatca_crs">
-                        <label for="fatca_crs">¿Es residente fiscal de Estados Unidos?</label>
+
+                        <input type="checkbox" id="residente_fiscal_usa" name="residente_fiscal_usa">
+                        <label for="residente_fiscal_usa">¿Es residente fiscal de Estados Unidos?</label>
                     </fieldset>
                 </form>
 
-                <button type="button" id="bntAnteriorPaso6" class="btnanterior">Anterior</button>
+                <a href=""><img src="" alt="Atras Logo">Anterior</a>
 
                 <div class="indicador">
                     <span class="paso"></span>
@@ -573,12 +584,13 @@
                     <span class="paso activo"></span>
                 </div>
 
-                <button type="submit" id="btnRegistrarCliente">Registrar Cliente</button>
+                <button id="btnEnviar" type="submit">Registrar Cliente</button>
             </section>
         </div>
     </main>
-    <script src="./js/index.js"></script>
-    <script src="js/archivos.js"></script>
+    
+    <!-- Enrutar a archivo de conexion con back -->
+    <script src="./js/archivos.js"></script>
 </body>
 
 </html>
