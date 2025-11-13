@@ -7,6 +7,10 @@ const { param } = require('../app.js');
     async function crearCuentaController(req, res){
     try {
         const data = req.body;
+        
+        //Probamos que datos recibimos desde el front
+        console.log('Datos que vienen del front',data)
+
         const result = await crearCuenta(data);
         res.status(201).json({ message: 'Cuenta creada con éxito', result });
     } catch (error) {

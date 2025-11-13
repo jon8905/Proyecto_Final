@@ -1,11 +1,33 @@
 //Conexion al backend 
 const URL = "http://localhost:3000/api";
-// Esperamos a que el documento cargue completamente
+
+// Esperamos a que el documento cargue completamente en el DOM
 document.addEventListener('DOMContentLoaded', () => {
   const btnEnviar = document.getElementById('btnRegistrarCliente');
   if (!btnEnviar) {
     console.error('❌ No se encontró el botón con ID "btnRegistrarCliente".');
     return;
+  }
+
+  //Activar/desactivar el input "otra nacionalidad" dinámicamente
+  const radiosNacionalidad = document.querySelectorAll('input[name="nacionalidad"]');
+  const inputOtraNacionalidad = document.getElementById("otra_nacionalidad_detalle");
+
+  //Condicionamos el input para validar si tenemos o no algun dato
+  if (radiosNacionalidad.length && inputOtraNacionalidad) {
+    inputOtraNacionalidad.disabled = true; // Por defecto deshabilitado
+
+    radiosNacionalidad.forEach((radio) => {
+      radio.addEventListener("change", () => {
+        if (radio.value === "otra" && radio.checked) {
+          inputOtraNacionalidad.disabled = false;
+          inputOtraNacionalidad.focus();
+        } else {
+          inputOtraNacionalidad.disabled = true;
+          inputOtraNacionalidad.value = "";
+        }
+      });
+    });
   }
 
   btnEnviar.addEventListener('click', async (e) => {
@@ -14,52 +36,85 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const datosCompletos = {};
 
-      // 🔹 Recorremos los 6 formularios
+      //Procesamiento de los inputs tipo radio o checkbox
+      const nacionalidadSeleccionada = document.querySelector('input[name="nacionalidad"]:checked');
+      datosCompletos.nacionalidad = nacionalidadSeleccionada ? nacionalidadSeleccionada.value : null;
+
+      // Si seleccionamos "otra", obtenemos el dato del input text
+      datosCompletos.otra_nacionalidad_detalle =
+        datosCompletos.nacionalidad === "otra"
+          ? document.getElementById("otra_nacionalidad_detalle").value.trim()
+          : null;
+
+      //Obtenemos input del radio género, estado civil y grupo étnico
+      const generoSeleccionado = document.querySelector('input[name="genero"]:checked');
+      datosCompletos.genero = generoSeleccionado ? generoSeleccionado.value : null;
+
+      const estadoCivilSeleccionado = document.querySelector('input[name="estado_civil"]:checked');
+      datosCompletos.estado_civil = estadoCivilSeleccionado ? estadoCivilSeleccionado.value : null;
+
+      const grupoEtnicoSeleccionado = document.querySelector('input[name="grupo_etnico"]:checked');
+      datosCompletos.grupo_etnico = grupoEtnicoSeleccionado ? grupoEtnicoSeleccionado.value : null;
+
+      //Recorremos los 6 formularios
       for (let i = 1; i <= 6; i++) {
-  const form = document.getElementById(`formPaso${i}`);
+        const form = document.getElementById(`formPaso${i}`);
 
-  if (!form) {
-    console.warn(`⚠️ No se encontró el formulario formPaso${i}`);
-    continue;
-  }
+        //condicionamos en caso de no encontrar el id del form
+        if (!form) {
+          console.warn(`⚠️ No se encontró el formulario formPaso${i}`);
+          continue;
+        }
 
-  const campos = form.querySelectorAll('input, select, textarea');
-  console.log(`✅ Formulario ${i} tiene ${campos.length} campos.`);
+        //Arrojamos cuantos campos tiene cada formulario <i>
+        const campos = form.querySelectorAll('input, select, textarea');
+        console.log(`✅ Formulario ${i} tiene ${campos.length} campos.`);
 
-  campos.forEach((campo) => {
-    if (!campo.id) {
-      console.warn(`⚠️ El campo no tiene ID:`, campo);
-      return;
-    }
+        //Condicionamos en caso de que el input no tenga id
+        campos.forEach((campo) => {
+          if (!campo.id) {
+            console.warn(`⚠️ El campo no tiene ID:`, campo);
+            return;
+          }
 
-    let valor = campo.value;
-    if (campo.type === 'checkbox') valor = campo.checked;
-    if (campo.type === 'radio' && !campo.checked) return;
+          // Ignoramos radios porque ya los procesamos arriba
+          if (campo.type === 'radio') return;
 
-    datosCompletos[campo.id] = valor;
-  });
-}
+          let valor = campo.value;
 
+          // Si el campo es checkbox, verificamos si está marcado
+          if (campo.type === 'checkbox') {
+            valor = campo.checked ? campo.value || true : false;
+          }
 
+          // Guardamos el valor del campo con su ID
+          datosCompletos[campo.id] = valor;
+        });
+      }
+
+      //Aqui podemos colocar banderas para verificar si esta enviando datos o no
+      // **
+      
       console.log('📦 Datos combinados de todos los formularios:', datosCompletos);
 
-      // Si no hay datos, detenemos
+      // Validación, si no hay datos, detenemos el proceso
       if (Object.keys(datosCompletos).length === 0) {
         console.error('❌ No hay datos para enviar al backend.');
         return;
       }
 
-      //Enviamos los datos
-      const response = await fetch('http://localhost:3000/api/aperturaCuenta/crearCuenta', {
+      //Enviamos los datos con fetch al Backend
+      const response = await fetch(`${URL}/aperturaCuenta/crearCuenta`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datosCompletos)
+        body: JSON.stringify(datosCompletos),
       });
 
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
 
+      //Obtenemos la respuesta del servidor
       const result = await response.json();
       console.log('✅ Respuesta del servidor:', result);
       alert('✅ Cuenta creada con éxito.');

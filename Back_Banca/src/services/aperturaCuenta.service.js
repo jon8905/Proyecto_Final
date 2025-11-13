@@ -21,12 +21,19 @@ async function crearCuenta(data) {
     const nombre_completo_cliente = [primerNombre, segundoNombre, primerApellido, segundoApellido].filter(Boolean).join(' ').trim() || null;
 
     //Construimos normalizacion para el tipo de documento que vienen del front
-    const tipoDocumento = (data.tipoDocumento || tipo_de_documento || '').trim() || null;
-    const numeroDocumento = (data.numeroDocumento || numero_documento || '').trim() || null;
+    //const tipoDocumento = (data.tipoDocumento || data.tipo_de_documento || '').trim() || null;
+    const numeroDocumento = (data.numeroDocumento || data.numero_documento || '').trim() || null;
 
     //Construimos normalizacion de los datos telefono y correo que vienen del front
     const telefonoCliente = (data.telefono || '').trim() || null;
     const correoCliente = (data.email || '').trim() || null;
+
+    //Normalizar datos de nacionalidad-genero-raza-estado civil
+    const nacionalidad = data.nacionalidad || null;
+    const otra_nacionalidad_detalle = data.otra_nacionalidad_detalle || null;
+    const genero = data.genero || null;
+    const estado_civil = data.estado_civil || null;
+    const grupo_etnico = data.grupo_etnico || null;
 
     // Crear Cliente
     const [clienteResult] = await connection.query(
@@ -35,7 +42,7 @@ async function crearCuenta(data) {
       VALUES (?, ?, ?, ?, ?)`,
       [
         nombrecliente,
-        tipoDocumento,
+        data.tipo_documento,
         numeroDocumento,
         telefonoCliente,
         correoCliente
@@ -47,8 +54,8 @@ async function crearCuenta(data) {
     await connection.query(
       `INSERT INTO Informacion 
        (id_cliente, nombre_completo, tipo_documento, numero_documento, lugar_expedicion, fecha_expedicion,
-        ciudad_nacimiento, fecha_nacimiento, nacionalidad, genero, estado_civil, grupo_etnico)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        ciudad_nacimiento, fecha_nacimiento, nacionalidad, genero, estado_civil, grupo_etnico, otra_nacionalidad)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         id_cliente,
         nombre_completo_cliente, //Debemos colocar la const que se asigno al concatenar
@@ -58,10 +65,11 @@ async function crearCuenta(data) {
         data.fecha_expedicion || null,
         data.ciudad_nacimiento,
         data.fecha_nacimiento || null,
-        data.nacionalidad,
-        data.genero,
-        data.estado_civil,
-        data.grupo_etnico
+        nacionalidad,
+        otra_nacionalidad_detalle,
+        genero,
+        estado_civil,
+        grupo_etnico
       ]
     );
 
@@ -74,11 +82,11 @@ async function crearCuenta(data) {
         id_cliente,
         data.direccion_residencia,
         data.barrio,
-        data.ciudad,
+        data.ciudad_municipio,
         data.departamento,
         data.pais,
         data.celular,
-        data.correo_contacto // diferente al correo del cliente si aplica
+        correoCliente// diferente al correo del cliente si aplica
       ]
     );
 
