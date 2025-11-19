@@ -7,6 +7,7 @@ async function crearCuenta(data) {
   try {
     await connection.beginTransaction();
 
+    //DATOS PARA FORMULARIO DEL CLIENTE INFORMACIÓN
     //Normalizar / mapear campos que vienen del frontend ---
     //Nombres
     const primerNombre   = (data.primerNombre || data.primer_nombre || '').trim();
@@ -34,6 +35,8 @@ async function crearCuenta(data) {
     const genero = data.genero || null;
     const estado_civil = data.estado_civil || null;
     const grupo_etnico = data.grupo_etnico || null;
+
+    //DATOS PARA FORMULARIO DEL CLIENTE INFORMACION LABORAL
 
     // Crear Cliente
     const [clienteResult] = await connection.query(
@@ -66,10 +69,10 @@ async function crearCuenta(data) {
         data.ciudad_nacimiento,
         data.fecha_nacimiento || null,
         nacionalidad,
-        otra_nacionalidad_detalle,
         genero,
         estado_civil,
-        grupo_etnico
+        grupo_etnico,
+        otra_nacionalidad_detalle,
       ]
     );
 
@@ -93,13 +96,14 @@ async function crearCuenta(data) {
     // Tabla: Actividad_Economica
     await connection.query(
       `INSERT INTO Actividad_Economica 
-       (id_cliente, profesion, ocupacion, detalle_actividad, codigo_ciiu, n_empleados)
-       VALUES (?, ?, ?, ?, ?, ?)`,
+       (id_cliente, profesion, ocupacion, detalle_actividad, actividad_economica_detalle, codigo_ciiu, n_empleados)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         id_cliente,
         data.profesion,
         data.ocupacion,
         data.detalle_actividad,
+        data.actividad_economica_detalle,
         data.codigo_ciiu,
         data.n_empleados
       ]
@@ -113,25 +117,25 @@ async function crearCuenta(data) {
       [
         id_cliente,
         data.nombre_empresa,
-        data.direccion_laboral,
-        data.barrio_laboral,
-        data.ciudad_laboral,
-        data.departamento_laboral,
-        data.pais_laboral,
-        data.telefono_empresa,
+        data.direccion,
+        data.barrio,
+        data.ciudad,
+        data.departamento,
+        data.pais,
+        data.telefono,
         data.extension,
-        data.celular_laboral,
-        data.correo_laboral
+        data.celular,
+        data.correo
       ]
     );
 
     //Conversion de datos a decimales para el MySQL
-const ingresos = parseFloat(data.ingresos_mensuales) || 0;
-const otrosIngresos = parseFloat(data.otros_ingresos) || 0;
-const totalActivos = parseFloat(data.total_activos) || 0;
-const totalPasivos = parseFloat(data.total_pasivos) || 0;
-const totalEgresos = parseFloat(data.total_egresos) || 0;
-const ventasAnuales = parseFloat(data.ventas_anuales) || 0;
+    const ingresos = parseFloat(data.ingresos_mensuales) || 0;
+    const otrosIngresos = parseFloat(data.otros_ingresos) || 0;
+    const totalActivos = parseFloat(data.total_activos) || 0;
+    const totalPasivos = parseFloat(data.total_pasivos) || 0;
+    const totalEgresos = parseFloat(data.total_egresos) || 0;
+    const ventasAnuales = parseFloat(data.ventas_anuales) || 0;
 
     //  Tabla: Informacion_Financiera
     await connection.query(

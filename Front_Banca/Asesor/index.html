@@ -208,7 +208,7 @@
 
                         <input type="radio" id="otra_nacionalidad" name="nacionalidad" value="otra">
                         <label for="otra_nacionalidad">Otro, ¿Cuál?</label>
-                        <input type="text" id="otra_nacionalidad_detalle" name="nacionalidad"
+                        <input type="text" id="otra_nacionalidad_detalle" name="otra_nacionalidad_detalle"
                             placeholder="Especifique si selecciono 'Otro'">
                     </fieldset>
 
@@ -365,18 +365,18 @@
                         <option value="Profesional">Profesional independiente</option>
                     </select>
 
-                    <input type="checkbox" id="ocupacion_detalle" name="ocupacion_detalle">
-                    <label for="ocupacion_detalle">Si su ocupación es independiente, profesioanl independiente, comerciante, ganadero,
+                    <input type="checkbox" id="detalle_actividad" name="detalle_actividad">
+                    <label for="ocupacion_detalle">Si su ocupación es independiente, profesional independiente, comerciante, ganadero,
                         agricultor o retista de capital, por favor diligencie esta información.</label>
 
                     <label for="actividad_economica_detalle">Detalle de la actividad económica principal</label>
-                    <input type="text" id="actividad_economica_detalle" name="actividad_economica_detalle" placeholder="Describa detalladamente su actividad económica principal">
+                    <input type="text" id="actividad_economica_detalle" name="actividad_economica_detalle" value="detalle_actividad" placeholder=Describa detalladamente su actividad económica principal">
 
                     <label for="codigo_ciiu">Código CIIU</label>
-                    <input type="text" id="cadigo_ciiu" name="codigo_ciiu">
+                    <input type="text" id="codigo_ciiu" name="codigo_ciiu">
 
                     <label for="num_empleados">N° Empleados</label>
-                    <input type="number" id="num_empleados" name="num_empleados">
+                    <input type="number" id="n_empleados" name="num_empleados">
                 </form>
 
                 <button type="button" id="bntAnteriorPaso3" class="btnanterior">Anterior</button>
@@ -414,31 +414,31 @@
                     <input type="text" id="nombre_empresa" name="nombre_empresa">
 
                     <label for="direccion_empresa">Dirección de la empresa o lugar donde desarrolla su actividad</label>
-                    <input type="text" id="direcion_empresa" name="direccion_empresa">
+                    <input type="text" id="direccion" name="direccion_empresa">
 
                     <label for="barrio_empresa">Barrio</label>
-                    <input type="text" id="barrio_empresa" name="barrio_empresa">
+                    <input type="text" id="barrio" name="barrio_empresa">
 
                     <label for="ciudad_empresa">Ciudad / Municipio</label>
-                    <input type="text" id="ciudad_empresa" name="ciudad_empresa">
+                    <input type="text" id="ciudad" name="ciudad_empresa">
 
                     <label for="departaento_empresa">Departamento</label>
-                    <input type="text" id="departaento_empresa" name="departamento_empresa">
+                    <input type="text" id="departamento" name="departamento_empresa">
 
                     <label for="pais_empresa">País</label>
-                    <input type="text" id="pais_empresa" name="pais_empresa">
+                    <input type="text" id="pais" name="pais_empresa">
 
                     <label for="telefono">Teléfono</label>
-                    <input type="number" id="telefono_empresa" name="telefono_empresa">
+                    <input type="number" id="telefono" name="telefono_empresa">
 
                     <label for="extension">Extensión</label>
                     <input type="number" id="extension" name="extension">
 
                     <label for="celular_empresa">Celular</label>
-                    <input type="number" id="celular_empresa" name="celular_empresa">
+                    <input type="number" id="celular" name="celular_empresa">
 
                     <label for="email_empresa">Correo electrónico</label>
-                    <input type="email" id="email_empresa" name="email_empresa">
+                    <input type="email" id="correo" name="email_empresa">
                 </form>
 
                 <button type="button" id="bntAnteriorPaso4" class="btnanterior">Anterior</button>
@@ -557,7 +557,7 @@
 
                     <fieldset>
                         <legend>FATCA y CRS</legend>
-                        <input type="checkbox" id="fatca_crs" name="fatca_crs">
+                        <input type="checkbox" id="fatca_crs" name="fatca_crs" value="declara_fatca_crs">
                         <label for="fatca_crs">¿Es residente fiscal de Estados Unidos?</label>
                     </fieldset>
                 </form>

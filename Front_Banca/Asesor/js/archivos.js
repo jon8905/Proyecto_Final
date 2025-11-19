@@ -36,15 +36,17 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const datosCompletos = {};
 
+      //DATOS PARA FORMULARIO DEL CLIENTE INFORMACIÓN
+
       //Procesamiento de los inputs tipo radio o checkbox
       const nacionalidadSeleccionada = document.querySelector('input[name="nacionalidad"]:checked');
       datosCompletos.nacionalidad = nacionalidadSeleccionada ? nacionalidadSeleccionada.value : null;
 
       // Si seleccionamos "otra", obtenemos el dato del input text
-      datosCompletos.otra_nacionalidad_detalle =
+        datosCompletos.otra_nacionalidad_detalle =
         datosCompletos.nacionalidad === "otra"
-          ? document.getElementById("otra_nacionalidad_detalle").value.trim()
-          : null;
+        ? document.getElementById("otra_nacionalidad_detalle").value.trim()
+        : null;
 
       //Obtenemos input del radio género, estado civil y grupo étnico
       const generoSeleccionado = document.querySelector('input[name="genero"]:checked');
@@ -56,6 +58,23 @@ document.addEventListener('DOMContentLoaded', () => {
       const grupoEtnicoSeleccionado = document.querySelector('input[name="grupo_etnico"]:checked');
       datosCompletos.grupo_etnico = grupoEtnicoSeleccionado ? grupoEtnicoSeleccionado.value : null;
 
+      //Obtenemos la la seleccion del checkbox seccion actividad economica
+      const ocupacionIndependiente = document.querySelector('input[name="detalle_actividad"]:checked');
+      datosCompletos.detalle_actividad = ocupacionIndependiente ? ocupacionIndependiente.value : null;
+      //Obtenemos el dato que se ingresa en el input tipo texto como detalle de la actividad
+      datosCompletos.actividad_economica_detalle = datosCompletos.detalle_actividad === "detalle_actividad"
+      ? document.getElementById("actividad_economica_detalle").value.trim() : null;
+
+      //Obtenemos el input del checkbox seccion informacion adicional PEP
+      const informacionAdicional = document.querySelector('input[name="informacion_pep"]:checked');
+      datosCompletos.informacion_pep = informacionAdicional ? informacionAdicional.value : null;
+      //Obtenemos el input del checkbox seccion informacion Tributaria
+      const informacionTributaria = document.querySelector('input[name="informacion_tributaria"]:checked');
+      datosCompletos.informacion_tributaria = informacionTributaria ? informacionTributaria.value : null;
+      //Obtenemos el input del checkbox seccion informacion FACTCA Y CRS
+      const informacionFatcaCrs = document.querySelector('input[name="fatca_crs"]:checked');
+      datosCompletos.informacion_fatca_crs = informacionFatcaCrs ? informacionFatcaCrs.value : null;
+      
       //Recorremos los 6 formularios
       for (let i = 1; i <= 6; i++) {
         const form = document.getElementById(`formPaso${i}`);
@@ -94,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       //Aqui podemos colocar banderas para verificar si esta enviando datos o no
       // **
+
       
       console.log('📦 Datos combinados de todos los formularios:', datosCompletos);
 
