@@ -6,7 +6,7 @@ async function crearUsuarios(data) {
 
         const [result] = await db.execute(
             `INSERT INTO Usuarios (codigo, contrasena, id_rol)
-             VALUES (?, ?, ?)`,
+            VALUES (?, ?, ?)`,
             [codigo, contrasena, id_rol || null]
         );
 

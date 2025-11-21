@@ -17,5 +17,7 @@ app.use('/api/aperturaCuenta', require('./routes/aperturaCuenta.routes'));
 // Ruta para crear usuarios bancarios
 app.use('/api/usuarios', require('./routes/usuarios.routes'));
 
+
+
 module.exports = app;
 

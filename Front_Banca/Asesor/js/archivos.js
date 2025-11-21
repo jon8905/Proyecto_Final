@@ -1,6 +1,17 @@
 //Conexion al backend 
 const URL = "http://localhost:3000/api";
 
+const elementos = {
+    btn_buscar: document.getElementById("search_btn"),
+    input_buscar : document.getElementById("search_input")  
+}
+    elementos.btn_buscar.addEventListener('click', buscarCliente);
+
+    function buscarCliente(req,res){
+      
+    }
+
+
 // Esperamos a que el documento cargue completamente en el DOM
 document.addEventListener('DOMContentLoaded', () => {
   const btnEnviar = document.getElementById('btnRegistrarCliente');
@@ -143,5 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('❌ Error en la conexión con el backend:', error);
       alert('Error al enviar los datos. Verifica la conexión con el servidor.');
     }
-  });
+
+});
 });

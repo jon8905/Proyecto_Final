@@ -3,7 +3,7 @@ const express = require('express');
 const route = express.Router();
 
 //Importamos controladores
-const {crearCuentaController, listarCuenta, obtenerClienteCuenta} = require('../controllers/aperturaCuenta.controllers.js');
+const {crearCuentaController, listarCuenta, obtenerClienteCuenta} = require('../controllers/aperturaCuenta.controller.js');
 
 //Ruta para crear cuenta
 route.post('/crearCuenta',crearCuentaController);
@@ -12,4 +12,6 @@ route.get('/listarCuentas', listarCuenta);
 //Ruta para obtener cliente por cedula
 route.get('/clienteCuenta/:doc', obtenerClienteCuenta);
 
+
+//Exportar
 module.exports = route;

@@ -183,6 +183,15 @@ async function crearCuenta(data) {
 
     const id_cuenta = cuentaResult.insertId;
 
+    //Banderita para validar si genera solicitud de cuenta
+    console.log("Insertando solicitud:", id_cliente, id_cuenta)
+    //Creamos solicitud en la misma transacción
+      await connection.query(
+        `INSERT INTO Solicitudes_Apertura (id_cliente, id_cuenta) VALUES (?, ?)`,
+        [id_cliente, id_cuenta]
+      );
+
+
     await connection.commit();
 
     return {
