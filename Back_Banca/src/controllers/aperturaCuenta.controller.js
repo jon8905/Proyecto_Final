@@ -2,8 +2,19 @@ const { crearCuenta } = require('../services/aperturaCuenta.service.js');
 const db = require('../config/db.js');
 const { param } = require('../app.js');
 
+//Funcion para listar los clientes (ASESOR)
+    async function listarClientes(req, res) {
+        try{
+            const [] = await db.query('SELECT * FROM Cliente');
+            res.status(200).json(clientes);
+        }catch(error){
+            console.error('Error al listar el cliente', error.Message);
+            res.status(500).json({message: 'Error interno en el servidor'});
+        }
+    }
 
-//Funcion para crear cuenta
+
+//Funcion para crear cuenta (ASESOR)
     async function crearCuentaController(req, res){
     try {
         const data = req.body;
@@ -21,12 +32,12 @@ const { param } = require('../app.js');
     };
 
 
-//obtener los datos de los clientes registrados
 async function listarCuenta (req,res){
     try {
-        const { fechaDesde, fechaHasta, estado } = req.query; // filtros enviados desde el front
+        const { fechaDesde, fechaHasta, estado } = req.query;
 
-            let query =`SELECT 
+        let query = `
+        SELECT 
             c.id_cliente,
             c.nombre,
             c.tipo_de_identificacion,
@@ -36,43 +47,59 @@ async function listarCuenta (req,res){
             ca.numero_cuenta,
             ca.saldo,
             ca.estado,
-            ca.fecha_apertura
-            FROM Cliente c
-            INNER JOIN Cuenta_ahorro ca
-                ON ca.id_cliente = c.id_cliente
-            WHERE 1=1
-            ORDER BY ca.fecha_apertura DESC 
-            `;
+            ca.fecha_apertura,
+            sa.fecha_solicitud,
+            sa.estado,
+            sa.fecha_respuesta,
+            sa.observaciones
+        FROM Cliente c
+        INNER JOIN Cuenta_ahorro ca
+            ON ca.id_cliente = c.id_cliente
+        INNER JOIN Solicitudes_Apertura sa
+            ON ca.id_cuenta = sa.id_cuenta
+        WHERE 1=1
+        `;
 
-            const params =  [];
+        const params = [];
 
-            //Establecemos filtro por fecha
-            if (fechaDesde && fechaHasta){
-                query += `AND ca.fecha_apertura BETWEEN ? AND ?`;
-                params.push(fechaDesde, fechaHasta);
-            }else if (fechaDesde){ 
-                query += `AND ca.fecha_apertura >= ?`;
-                params.push(fechaDesde);
-            }else if (fechaHasta){
-                query += `AND ca.fecha_apertura <= ?`;
-                params.push(fechaHasta);
-            }
+        // FILTRO POR FECHAS
+        if (fechaDesde && fechaHasta) {
+            query += ` AND sa.fecha_solicitud BETWEEN ? AND ?`;
+            params.push(fechaDesde, fechaHasta);
+        } else if (fechaDesde) {
+            query += ` AND sa.fecha_solicitud >= ?`;
+            params.push(fechaDesde);
+        } else if (fechaHasta) {
+            query += ` AND sa.fecha_solicitud <= ?`;
+            params.push(fechaHasta);
+        }
 
-            //Filtro por estado
-            if (estado && estado !== 'Todos los estados'){
-                query =+ `AND ca.estado = ?`;
-                params.push(estado);
-            }
+        // FILTRO POR ESTADO
+        if (estado && estado !== "Todos") {
+            query += ` AND ca.estado = ?`;
+            params.push(estado);
+        }
 
-            const [detalle] = await db.execute(query,params);
-            res.json(detalle);
+        // SIEMPRE AL FINAL
+        query += ` ORDER BY sa.fecha_solicitud DESC`;
 
+        const [detalle] = await db.execute(query, params);
+
+        // SI NO HAY RESULTADOS
+        if (detalle.length === 0) {
+            return res.status(200).json({
+                message: "No se encontraron registros según los filtros aplicados",
+                data: []
+            });
+        }
+
+        return res.status(200).json(detalle);
 
     } catch (error) {
-        console.error('Error al listar las cuentas', error)
-        res.status(500).json({ Message: 'error interno en el servidor. '});
+        console.error("❌ Error al listar cuentas:", error);
+        res.status(500).json({ message: "Error interno en el servidor." });
     }
-};
+}
 
 //Funcion para obtener datos de cliente por cedula (Modulo asesor)
 async function obtenerClienteCuenta(req, res) {
@@ -101,7 +128,7 @@ async function obtenerClienteCuenta(req, res) {
 }
 
 //Exportamos
-module.exports = { crearCuentaController, listarCuenta, obtenerClienteCuenta};
+module.exports = { crearCuentaController, listarCuenta, obtenerClienteCuenta, listarClientes };
 
 
 

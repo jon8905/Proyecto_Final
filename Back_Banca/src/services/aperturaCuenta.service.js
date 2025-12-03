@@ -175,7 +175,7 @@ async function crearCuenta(data) {
       [
         numeroCuenta,
         data.saldo_inicial || 0,
-        'activa',
+        'Inactiva',
         new Date(),
         id_cliente
       ]

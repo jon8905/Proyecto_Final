@@ -11,6 +11,7 @@ route.post('/crearCuenta',crearCuentaController);
 route.get('/listarCuentas', listarCuenta);
 //Ruta para obtener cliente por cedula
 route.get('/clienteCuenta/:doc', obtenerClienteCuenta);
+//Ruta para obtener clientes
 
 
 //Exportar

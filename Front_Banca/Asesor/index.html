@@ -69,6 +69,7 @@
                     <input type="search" id="search_input" name="cedula" placeholder="Número de cédula" required>
                     <button type="submit" id="search_btn">Buscar</button>
                 </form>
+                <div id="resultado_busqueda"></div>
             </section>
         </div>
 
@@ -87,10 +88,9 @@
 
                 <label for="estado">Estado</label>
                 <select name="estado" id="estado">
-                    <option value="todos_los_estados">Todos los estados</option>
-                    <option value="pendiente_aprobacion">Pendiente aprobación</option>
-                    <option value="aprobado">Aprobado</option>
-                    <option value="rechazado">Rechazado</option>
+                    <option value="aprobada">Activa</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="rechazada">Rechazado</option>
                 </select>
 
                 <button type="reset">Limpiar Filtros</button>
@@ -99,8 +99,8 @@
 
         <div id="tablaClientes">
             <img src="" alt="Lista de Clientes Logo">
-            <p>No hay clientes registrados aún</p>
-            <!-- El backend puede inyetar aqui una tabla con los resultados -->
+           <div id="listado_cuentas"><!-- El backend puede inyetar aqui una tabla con los resultados --></div>
+            
         </div>
 
         <!-- Formulario de seleccion de tipo de cliente a registrar -->
