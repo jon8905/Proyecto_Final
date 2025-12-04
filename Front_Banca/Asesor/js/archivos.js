@@ -35,7 +35,7 @@ const elementos = {
 
         const cliente = await response.json();
 
-        //Aqui se agrega la tabla para mostrar datos en front
+         //Aqui se agrega la tabla para mostrar datos en front
         elementos.resultado.innerHTML=`<table border="1" class="tabla-cliente">
                 <thead>
                     <tr>
@@ -47,6 +47,7 @@ const elementos = {
                         <th>Fecha Apertura</th>
                     </tr>
                 </thead>
+
                 <tbody>|
                     <tr>
                         <td>${cliente.nombre}</td>
@@ -58,20 +59,17 @@ const elementos = {
                     </tr>
                 </tbody>
             </table>
+
         `;        
 
       }catch(error){
         console.error("Error buscando cliente", error);
-        elementos.resultado.innerHTML =`<p style=color:red;>Error al conectar con el servidor</p>`;
+        elementos.resultado.innerHTML = `<p style=color:red;>Error al conectar con el servidor</p>`;
       }
+    //Boton que llama la funcion buscarcliente
+    elementos.btn_buscar.addEventListener('click', buscarCliente);
+  
     }
-//Boton que llama la funcion buscarcliente
-elementos.btn_buscar.addEventListener('click', buscarCliente);
-
-// Funcion para filtrar cuentas por estado
-
-document.getElementById("estado").addEventListener("change", filtrarCuentasPorEstado);
-
 async function listarCuentas() {
   try {
     const response = await fetch(`${URL}/aperturaCuenta/listarCuentas`);
@@ -87,6 +85,7 @@ async function listarCuentas() {
     console.error("Error al listar cuentas:", error);
   }
 }
+//(ASESOR)
 async function filtrarCuentasPorEstado() {
     const estadoSeleccionado = document.getElementById("estado").value;
     const fechaDesde = document.getElementById("fecha_desde").value;
@@ -102,6 +101,9 @@ async function filtrarCuentasPorEstado() {
     if (estadoSeleccionado !== "todos_los_estados") {
         cuentasFiltradas = cuentasFiltradas.filter(cuenta => cuenta.estado === estadoSeleccionado);
     }
+    // Funcion para filtrar cuentas por estado
+    document.getElementById("estado").addEventListener("change", filtrarCuentasPorEstado);
+
 
     // Filtrar por fechas (fecha_solicitud)
     cuentasFiltradas = cuentasFiltradas.filter(cuenta => {
