@@ -168,7 +168,7 @@ async function crearCuenta(data) {
     );
 
     //  Crear una Cuenta de Ahorro asociada
-    const numeroCuenta = `CTA-${Date.now()}`;
+    const numeroCuenta = `${Date.now()}`;
     const [cuentaResult] = await connection.query(
       `INSERT INTO Cuenta_Ahorro (numero_cuenta, saldo, estado, fecha_apertura, id_cliente)
        VALUES (?, ?, ?, ?, ?)`,

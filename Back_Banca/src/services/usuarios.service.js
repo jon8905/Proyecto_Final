@@ -1,56 +1,48 @@
-const db = require('../config/db'); //Conexion a la base de datos
-// Crear usuario
+
+const db = require('../config/db');
+const bcrypt = require('bcrypt');
+
+// CREAR USUARIO
 async function crearUsuarios(data) {
     try {
         const { codigo, contrasena, id_rol } = data;
 
+        if (!codigo || !contrasena || !id_rol) {
+            return { error: "Datos incompletos", status: 400 };
+        }
+
+        //  Encriptar contraseña antes de guardar
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(contrasena, salt);
+
         const [result] = await db.execute(
             `INSERT INTO Usuarios (codigo, contrasena, id_rol)
             VALUES (?, ?, ?)`,
-            [codigo, contrasena, id_rol || null]
+            [codigo, hash, id_rol]
         );
 
         return {
             mensaje: 'Usuario creado correctamente',
             id_usuario: result.insertId
         };
+
     } catch (error) {
         console.error('Error al crear el usuario (Service):', error);
         throw error;
     }
 }
 
-// Obtener todos los usuarios
-async function obtenerUsuarios() {
-    try {
-        const [rows] = await db.query(`
-            SELECT * FROM Usuarios       
-        `);
-        return rows;
-    } catch (error) {
-        console.error('Error al obtener usuarios (Service):', error);
-        throw error;
-    }
-}
-
-async function obtenerUsuarioPorId(id) {
-    try {
-        const [rows] = await db.execute(
-            `SELECT * FROM Usuarios WHERE id_usuario = ?`,
-            [id]
-        );
-        return rows[0];
-    } catch (error) {
-        console.error('Error al obtener el usuario por ID (Service):', error);
-        throw error;
-    }
-}
-
-// Editar usuario
+//EDITAR USUARIO
 async function editarUsuarios(id, nuevosDatos) {
     try {
         const campos = [];
         const valores = [];
+
+        // Si viene contraseña → encriptarla
+        if (nuevosDatos.contrasena) {
+            const salt = await bcrypt.genSalt(10);
+            nuevosDatos.contrasena = await bcrypt.hash(nuevosDatos.contrasena, salt);
+        }
 
         // Construcción dinámica del UPDATE
         for (const key in nuevosDatos) {
@@ -76,27 +68,67 @@ async function editarUsuarios(id, nuevosDatos) {
         }
 
         return { mensaje: 'Usuario actualizado correctamente' };
+
     } catch (error) {
         console.error('Error al editar el usuario (Service):', error);
         throw error;
     }
 }
 
-// Eliminar usuario
+
+
+// OBTENER USUARIOS
+async function obtenerUsuarios() {
+    try {
+        const [rows] = await db.query(`SELECT * FROM Usuarios`);
+        return rows;
+
+    } catch (error) {
+        console.error('Error al obtener usuarios (Service):', error);
+        throw error;
+    }
+}
+
+// OBTENER POR ID
+async function obtenerUsuarioPorId(id) {
+    try {
+        const [rows] = await db.execute(
+            `SELECT * FROM Usuarios WHERE id_usuario = ?`,
+            [id]
+        );
+        return rows[0];
+
+    } catch (error) {
+        console.error('Error al obtener usuario por ID:', error);
+        throw error;
+    }
+}
+
+
+
+
+//  ELIMINAR USUARIO
+
 async function eliminarUsuarios(id) {
     try {
-        const [result] = await db.execute(`DELETE FROM Usuarios WHERE id_usuario = ?`, [id]);
+        const [result] = await db.execute(
+            `DELETE FROM Usuarios WHERE id_usuario = ?`,
+            [id]
+        );
 
         if (result.affectedRows === 0) {
             return { mensaje: 'Usuario no encontrado' };
         }
 
         return { mensaje: 'Usuario eliminado correctamente' };
+
     } catch (error) {
-        console.error('Error al eliminar el usuario (Service):', error);
+        console.error('Error al eliminar el usuario:', error);
         throw error;
     }
 }
+
+
 
 module.exports = {
     crearUsuarios,

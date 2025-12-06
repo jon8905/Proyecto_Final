@@ -2,11 +2,11 @@
 const URL = "http://localhost:3000/api";
 
 const elementos = {
-    btn_buscar: document.getElementById("search_btn"),
-    input_buscar : document.getElementById("search_input"),
-    resultado : document.getElementById("resultado_busqueda"),
-    listadoCuentas : document.getElementById("listado_cuentas")
-}
+  input_buscar: document.getElementById("search_input"),
+  btn_buscar: document.getElementById("search_btn"),
+  resultado: document.getElementById("resultado_busqueda"),
+  listadoCuentas: document.getElementById("listado_cuentas"),
+};
 
 //Evitamos que la pagina se recargue 
     document.getElementById("formBuscarCliente").addEventListener("submit",(e)=>{
@@ -66,10 +66,11 @@ const elementos = {
         console.error("Error buscando cliente", error);
         elementos.resultado.innerHTML = `<p style=color:red;>Error al conectar con el servidor</p>`;
       }
+}
     //Boton que llama la funcion buscarcliente
     elementos.btn_buscar.addEventListener('click', buscarCliente);
   
-    }
+//Funcion para listar cuentas (ASESOR)    
 async function listarCuentas() {
   try {
     const response = await fetch(`${URL}/aperturaCuenta/listarCuentas`);
@@ -85,6 +86,7 @@ async function listarCuentas() {
     console.error("Error al listar cuentas:", error);
   }
 }
+
 //(ASESOR)
 async function filtrarCuentasPorEstado() {
     const estadoSeleccionado = document.getElementById("estado").value;
@@ -101,9 +103,6 @@ async function filtrarCuentasPorEstado() {
     if (estadoSeleccionado !== "todos_los_estados") {
         cuentasFiltradas = cuentasFiltradas.filter(cuenta => cuenta.estado === estadoSeleccionado);
     }
-    // Funcion para filtrar cuentas por estado
-    document.getElementById("estado").addEventListener("change", filtrarCuentasPorEstado);
-
 
     // Filtrar por fechas (fecha_solicitud)
     cuentasFiltradas = cuentasFiltradas.filter(cuenta => {
@@ -173,8 +172,8 @@ async function filtrarCuentasPorEstado() {
       </table>
     `;
 }
-
-
+  // Obtener filtro cuentas por estado
+  document.getElementById("estado").addEventListener("change", filtrarCuentasPorEstado);
 
 
 

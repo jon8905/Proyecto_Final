@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Banca 1 | Panel Cajero</title>
-    <meta name="author" content="Jean Steven Londoño Portillo">
+    <!-- <meta name="author" content="Jean Steven Londoño Portillo">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./Stylos.css">  -->
 </head>
 
 <body>
@@ -21,7 +21,7 @@
         <h2 id="nombreCajero">Cajero 1</h2>
         <h3 id="codigoCajero">CAJ001</h3>
 
-        <button id="btnSalir" name="btnSalir">Salir</button>
+        <button type="submit" id="btnSalir" name="btnSalir">Salir</button>
     </header>
 
     <main>
@@ -75,11 +75,13 @@
 
                 <form id="formConsultarSaldo" action="" method="get">
                     <input type="search" id="cuentaActiva" name="cuentaActiva" placeholder="Número de cuenta" required>
-                    <button type="submit">Consultar</button>
+                    <button type="submit" id="btnConsultar">Consultar</button>
                 </form>
             </section>
         </div>
 
+        
+         <div id="listarCuentasCajero"></div>
         <!-- Pestaña de estado de cuentas -->
 
         <div id="resumenCajero">
@@ -112,5 +114,5 @@
         </div>
     </main>
 </body>
-
+    <script src ="./js/cajero.js"></script>
 </html>

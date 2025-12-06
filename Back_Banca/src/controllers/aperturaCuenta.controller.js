@@ -116,7 +116,7 @@ async function obtenerClienteCuenta(req, res) {
     FROM Cuenta_Ahorro ca
     INNER JOIN Cliente c
     ON ca.id_cliente = c.id_cliente
-    WHERE c.numero_documento = ?`, [doc]);
+    WHERE c.numero_documento = ? OR ca.numero_cuenta = ?`, [doc, doc]);
         if (cliente.length === 0) {
             return res.status(404).json({ error: 'Cliente no encontrado' });
         }
