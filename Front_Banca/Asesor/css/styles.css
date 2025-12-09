@@ -296,7 +296,7 @@ main {
 
 /* Tab Content */
 .tab-content {
-    display: none;
+    display: block;
     flex: 1;
     outline: none;
 }

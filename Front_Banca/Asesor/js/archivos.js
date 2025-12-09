@@ -6,7 +6,13 @@ const elementos = {
   btn_buscar: document.getElementById("search_btn"),
   resultado: document.getElementById("resultado_busqueda"),
   listadoCuentas: document.getElementById("listado_cuentas"),
+  salir: document.getElementById('btnSalir')
 };
+
+//Salir de pag
+elementos.salir.addEventListener("click", () => {
+    window.location.href = "../Login/login.html";
+});
 
 //Evitamos que la pagina se recargue 
     document.getElementById("formBuscarCliente").addEventListener("submit",(e)=>{

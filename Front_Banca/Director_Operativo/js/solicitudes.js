@@ -44,39 +44,40 @@ async function cargarSolicitudesPendientes() {
         }
 
         let html = `
-            <table border="1" class="table table-bordered" style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr style="background-color: #f0f0f0;">
-                        <th style="padding: 10px; border: 1px solid #ddd;">Número Solicitud</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Cliente</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Documento</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Número Cuenta</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Saldo</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Fecha Solicitud</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Estado</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
+    <table class="tabla-cliente tabla-solicitudes">
+        <thead>
+            <tr>
+                <th>Número Solicitud</th>
+                <th>Cliente</th>
+                <th>Documento</th>
+                <th>Número Cuenta</th>
+                <th>Saldo</th>
+                <th>Fecha Solicitud</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+`;
 
-        datos.forEach(item => {
-            html += `
-                <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${item.id_solicitud}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${item.cliente || "-"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${item.numero_documento || "-"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${item.numero_cuenta ?? "-"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">$${item.saldo ?? "0.00"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${formatearFecha(item.fecha_solicitud)}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${item.estado_solicitud || item.estado || "pendiente"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">
-                        <button onclick="aprobar(${item.id_solicitud})" style="background-color: #28a745; color: white; padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; margin-right: 5px;">Aprobar</button>
-                        <button onclick="rechazar(${item.id_solicitud})" style="background-color: #dc3545; color: white; padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer;">Rechazar</button>
-                    </td>
-                </tr>
-            `;
-        });
+datos.forEach(item => {
+    html += `
+        <tr>
+            <td>${item.id_solicitud}</td>
+            <td>${item.cliente || "-"}</td>
+            <td>${item.numero_documento || "-"}</td>
+            <td>${item.numero_cuenta ?? "-"}</td>
+            <td>$${item.saldo ?? "0.00"}</td>
+            <td>${formatearFecha(item.fecha_solicitud)}</td>
+            <td>${item.estado_solicitud || item.estado || "Pendiente"}</td>
+
+            <td class="acciones-col">
+                <button class="btn-approve" onclick="aprobar(${item.id_solicitud})">Aprobar</button>
+                <button class="btn-reject" onclick="rechazar(${item.id_solicitud})">Rechazar</button>
+            </td>
+        </tr>
+    `;
+});
 
         html += `</tbody></table>`;
         contenedor.innerHTML = html;
@@ -110,35 +111,36 @@ async function cargarCuentasAprobadas() {
             return;
         }
 
-        let html = `
-            <table border="1" class="table table-bordered" style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr style="background-color: #f0f0f0;">
-                        <th style="padding: 10px; border: 1px solid #ddd;">Número Solicitud</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Cliente</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Número Cuenta</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Saldo</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Fecha Solicitud</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Fecha Respuesta</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Observaciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
+       let html = `
+    <table class="tabla-cliente tabla-solicitudes-respondidas">
+        <thead>
+            <tr>
+                <th>Número Solicitud</th>
+                <th>Cliente</th>
+                <th>Número Cuenta</th>
+                <th>Saldo</th>
+                <th>Fecha Solicitud</th>
+                <th>Fecha Respuesta</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+`;
 
-        datos.forEach(item => {
-            html += `
-                <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${item.id_solicitud}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${item.cliente || "-"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${item.numero_cuenta ?? "-"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">$${item.saldo ?? "0.00"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${formatearFecha(item.fecha_solicitud)}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${item.fecha_respuesta ? formatearFecha(item.fecha_respuesta) : "-"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${item.observaciones || "-"}</td>
-                </tr>
-            `;
-        });
+datos.forEach(item => {
+    html += `
+        <tr>
+            <td>${item.id_solicitud}</td>
+            <td>${item.cliente || "-"}</td>
+            <td>${item.numero_cuenta ?? "-"}</td>
+            <td>$${item.saldo ?? "0.00"}</td>
+            <td>${formatearFecha(item.fecha_solicitud)}</td>
+            <td>${item.fecha_respuesta ? formatearFecha(item.fecha_respuesta) : "-"}</td>
+            <td>${item.observaciones || "-"}</td>
+        </tr>
+    `;
+});
+ 
 
         html += `</tbody></table>`;
         contenedor.innerHTML = html;
@@ -200,36 +202,38 @@ async function filtrarCuentasPorFechasYEstado() {
             return;
         }
 
-        let html = `
-            <h3>Cuentas Filtradas</h3>
-            <table border="1" class="table table-bordered" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-                <thead>
-                    <tr style="background-color: #f0f0f0;">
-                        <th style="padding: 10px; border: 1px solid #ddd;">Cliente</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Documento</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Número Cuenta</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Saldo</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Estado</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Fecha Solicitud</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Fecha Apertura</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
+      let html = `
+    <h3>Cuentas Filtradas</h3>
 
-        cuentas.forEach(cuenta => {
-            html += `
-                <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${cuenta.nombre || "-"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${cuenta.numero_documento || "-"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${cuenta.numero_cuenta || "-"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">$${cuenta.saldo ?? "0.00"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${cuenta.estado || "-"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${cuenta.fecha_solicitud ? formatearFecha(cuenta.fecha_solicitud) : "-"}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${cuenta.fecha_apertura ? formatearFecha(cuenta.fecha_apertura) : "-"}</td>
-                </tr>
-            `;
-        });
+    <table class="tabla-cliente tabla-cuentas-filtradas">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Documento</th>
+                <th>Número Cuenta</th>
+                <th>Saldo</th>
+                <th>Estado</th>
+                <th>Fecha Solicitud</th>
+                <th>Fecha Apertura</th>
+            </tr>
+        </thead>
+        <tbody>
+`;
+
+cuentas.forEach(cuenta => {
+    html += `
+        <tr>
+            <td>${cuenta.nombre || "-"}</td>
+            <td>${cuenta.numero_documento || "-"}</td>
+            <td>${cuenta.numero_cuenta || "-"}</td>
+            <td>$${cuenta.saldo ?? "0.00"}</td>
+            <td>${cuenta.estado || "-"}</td>
+            <td>${cuenta.fecha_solicitud ? formatearFecha(cuenta.fecha_solicitud) : "-"}</td>
+            <td>${cuenta.fecha_apertura ? formatearFecha(cuenta.fecha_apertura) : "-"}</td>
+        </tr>
+    `;
+});
+
 
         html += `</tbody></table>`;
         contenedor.innerHTML = html;
@@ -321,7 +325,7 @@ async function rechazar(id) {
             throw new Error(resultado.message || "Error al rechazar");
         }
 
-        alert("Solicitud rechazada ❌");
+        alert("Solicitud rechazada ");
         // Recargar ambas secciones
         cargarSolicitudesPendientes();
         cargarCuentasAprobadas();
