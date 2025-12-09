@@ -7,11 +7,15 @@ const API_LISTAR_CUENTAS = `${API_BASE}/aperturaCuenta/listarCuentas`; // Para f
 
 // Inicialización cuando carga el DOM
 document.addEventListener("DOMContentLoaded", () => {
-  cargarSolicitudesPendientes();
-  cargarCuentasAprobadas();
-  filtrarCuentasPorFechasYEstado(); // <-- agrega esta
-  configurarFiltros();
+cargarSolicitudesPendientes();
+cargarCuentasAprobadas();
+filtrarCuentasPorFechasYEstado(); // <-- agrega esta
+configurarFiltros();
 });
+
+//Salir de la pagina al login
+document.getElementById("btnSalir").addEventListener('click', () => {
+    window.location.href = "../Login/login.html"});
 
 // ========== FUNCIÓN PARA CARGAR SOLICITUDES PENDIENTES ==========
 async function cargarSolicitudesPendientes() {

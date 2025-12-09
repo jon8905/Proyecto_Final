@@ -5,55 +5,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Banca 1 | Panel Cajero</title>
-    <!-- <meta name="author" content="Jean Steven Londoño Portillo">
+    <meta name="author" content="Jean Steven Londoño Portillo">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="stylesheet" href="./Stylos.css">  -->
+    
+    <link rel="stylesheet" href="../../globals.css">
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
     <!-- Cabacera con nombre, logo, usuario, codigo usuario y boton de salir -->
     <header>
-        <img src="" alt="Banca 1 Logo">
-        <h1>Banca 1</h1>
-        <h2>Cajero</h2>
-
-        <img src="" alt="Cajero Logo">
-        <h2 id="nombreCajero">Cajero 1</h2>
-        <h3 id="codigoCajero">CAJ001</h3>
-
-        <button type="submit" id="btnSalir" name="btnSalir">Salir</button>
+        <div>
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-title">
+                        <h1>SimulaBank</h1>
+                        <h2>Cajero</h2>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-details">
+                            <h2 id="nombreCajero">Cajero 1</h2>
+                            <h3 id="codigoCajero">CAJ001</h3>
+                        </div>
+                    </div>
+                    <button type="submit" id="btnSalir" name="btnSalir">Salir</button>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main>
         <section id="panelCajero">
-            <h2>Panel de Cajero</h2>
-
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+            <h2 style="font-size: 1.5rem; font-weight: 500; color: var(--foreground);">Panel de Cajero</h2>
+            <div class="badges-container">
+                <span class="badge"><strong id="totalCuentasPendientes">0</strong> pendientes</span>
+                <span class="badge"><strong id="totalSaldoAdministrado">$0</strong> administrado</span>
+            </div>
+        </div>
             <!-- Pestañas -->
             <nav>
                 <ul>
-                    <li><a href="#depositoInicial"><img src="" alt="Deposito Inicial Logo">Depósito Inicial</a></li>
-                    <li><a href="#buscarSaldo"><img src="" alt="Consultar Saldo Logo">Consultar Saldo</a></li>
-                    <li><a href="#estadoCuenta"><img src="" alt="Estado Cuenta Logo">Estado Cuentas</a></li>
+                    <li><a href="#depositoInicial">Depósito Inicial</a></li>
+                    <li><a href="#consultarSaldo">Consultar Saldo</a></li>
+                    <li><a href="#resumenCajero">Estado Cuentas</a></li>
                 </ul>
             </nav>
         </section>
 
-        <!-- Contador de cuentas pendiente por deposito inicial -->
-        <section id="contadorCuentasPendientes">
-            <p><strong id="totalCuentasPendientes">0</strong> pendientes</p>
-        </section>
-
-        <!-- Contador de saldo administrado en cajero -->
-        <section id="contadorSaldoAdministrado">
-            <p><strong id="totalSaldoAdministrado">$0</strong> administrado</p>
-        </section>
-
         <!-- Pestaña de deposito inicial -->
         <div>
-            <section id="depositoInicial">
-                <p>Registro de Depósito Inicial</p>
-                <p>Registre el depósito inicial obligatorio para activar la cuenta</p>
-
+            <section id="depositoInicial" class="tab-content">
+                <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Registro de Depósito Inicial</h4>
+                    <p class="card-description">Registre el depósito inicial obligatorio para activar la cuenta</p>
+                </div>
                 <form id="formDepositoInicial" action="" method="post">
 
                     <label for="cuenta">Número de Cuenta</label>
@@ -68,50 +77,61 @@
         </div>
 
         <!-- Pestaña de consultar saldos -->
-        <div>
-            <section id="consultarSaldo">
-                <p>Consulta de Saldo</p>
-                <p>Consulte el saldo de una cuenta específica</p>
-
-                <form id="formConsultarSaldo" action="" method="get">
-                    <input type="search" id="cuentaActiva" name="cuentaActiva" placeholder="Número de cuenta" required>
-                    <button type="submit" id="btnConsultar">Consultar</button>
-                </form>
-            </section>
-        </div>
+        <section id="consultarSaldo" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Consulta de Saldo</h4>
+                    <p class="card-description">Consulte el saldo de una cuenta específica</p>
+                </div>
+                <div class="card-content">
+                    <form id="formConsultarSaldo" action="" method="get" class="search-form">
+                        <input type="search" id="cuentaActiva" name="cuentaActiva" placeholder="Número de cuenta" required>
+                        <button type="submit" id="btnConsultar">Consultar</button>
+                    </form>
+                </div>
+            </div>
+        </section>
 
         
-         <div id="listarCuentasCajero"></div>
+        <div id="listarCuentasCajero"></div>
         <!-- Pestaña de estado de cuentas -->
 
-        <div id="resumenCajero">
-            <p>Resumen del Cajero</p>
-            
-            <section>
-                <h2 id="totalCuentas">Total Cuentas</h2>
-                <strong>0</strong>
-            </section>
-
-            <section>
-                <h2 id="cuentasActivasCajero">Cuentas Activas</h2>
-                <strong>0</strong>
-            </section>
-
-            <section>
-                <h2 id="saldoTotalAdministrado">Saldo Total Administrado</h2>
-                <strong>$0</strong>
-            </section>
-        </div>
-
-        <div id="listarCuentas">
-            <p>Listado de Cuentas</p>
-
-            <div id="tablaCuentas">
-                <img src="" alt="Lista de cuentas">
-                <p>No hay cuentas registradas aún</p>
-                <!-- El backend puede inyectar aqui una tabla con los resultados -->
+        <section id="resumenCajero" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Resumen del Cajero</h4>
+                </div>
+                <div class="card-content">
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <p>Total Cuentas</p>
+                            <strong id="totalCuentas">0</strong>
+                        </div>
+                        <div class="summary-item">
+                            <p>Cuentas Activas</p>
+                            <strong id="cuentasActivasCajero" style="color: var(--bank-green);">0</strong>
+                        </div>
+                        <div class="summary-item">
+                            <p>Saldo Total Administrado</p>
+                            <strong id="saldoTotalAdministrado">$0</strong>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Listado de Cuentas</h4>
+                </div>
+                <div class="card-content">
+                    <div id="tablaCuentas">
+                        <img src="" alt="Lista de cuentas">
+                        <p>No hay cuentas registradas aún</p>
+                        <!-- El backend puede inyectar aqui una tabla con los resultados -->
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 </body>
     <script src ="./js/cajero.js"></script>

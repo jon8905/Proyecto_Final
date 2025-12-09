@@ -1,0 +1,807 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background-color: var(--muted);
+    font-size: var(--font-size);
+    min-height: 100vh;
+}
+
+/* Header - Exactamente como DashboardLayout */
+.cabecera {
+    background-color: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+}
+
+.cabecera > div {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+@media (min-width: 640px) {
+    .cabecera > div {
+        padding: 0 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .cabecera > div {
+        padding: 0 32px;
+    }
+}
+
+.cabecera .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+}
+
+.cabecera .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cabecera .logoBanca {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.cabecera .header-title h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--bank-blue);
+    line-height: 1.2;
+}
+
+.cabecera .header-title h2 {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.2;
+}
+
+.cabecera .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.cabecera .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cabecera .asesorLogo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.cabecera .user-details h2 {
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--foreground);
+    line-height: 1.2;
+}
+
+.cabecera .user-details h3 {
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.2;
+}
+
+.btnSalir {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: calc(var(--radius) - 2px);
+    font-weight: var(--font-weight-medium);
+    font-size: 0.875rem;
+    cursor: pointer;
+    color: var(--foreground);
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btnSalir:hover {
+    background-color: var(--muted);
+}
+
+/* Main Content - Exactamente como DashboardLayout */
+main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 16px;
+}
+
+@media (min-width: 640px) {
+    main {
+        padding: 32px 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    main {
+        padding: 32px;
+    }
+}
+
+/* Page Header */
+.textoPanelAsesor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.tituloPanelAsesor {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--foreground);
+}
+
+.pTotalclientes {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: calc(var(--radius) - 2px);
+    border: 1px solid transparent;
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+}
+
+/* Tabs - Exactamente como TabsList */
+.pestañas {
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+    display: inline-flex;
+    height: 36px;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    border-radius: calc(var(--radius) + 4px);
+    padding: 3px;
+    margin-bottom: 16px;
+}
+
+.pestañas ul {
+    list-style-type: none;
+    display: flex;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.pestañaCliente,
+.pestañaBuscar,
+.pestañaVer {
+    background-color: transparent;
+    border-radius: calc(var(--radius) + 4px);
+    padding: 0;
+}
+
+.pestañaCliente.active,
+.pestañaBuscar.active,
+.pestañaVer.active {
+    background-color: var(--card);
+}
+
+.pestañaCliente a,
+.pestañaBuscar a,
+.pestañaVer a {
+    display: inline-flex;
+    height: calc(100% - 1px);
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: calc(var(--radius) + 4px);
+    border: 1px solid transparent;
+    padding: 4px 8px;
+    text-decoration: none;
+    color: var(--foreground);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+    transition: color 0.15s ease, box-shadow 0.15s ease;
+    outline: none;
+}
+
+.pestañaCliente.active a,
+.pestañaBuscar.active a,
+.pestañaVer.active a {
+    background-color: var(--card);
+    color: var(--foreground);
+    border-color: transparent;
+}
+
+.pestañaCliente a:focus-visible,
+.pestañaBuscar a:focus-visible,
+.pestañaVer a:focus-visible {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+}
+
+.pestañaCliente a img,
+.pestañaBuscar a img,
+.pestañaVer a img {
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+/* Cards - Exactamente como Card component */
+.registroCliente,
+.buscarCliente,
+.listarClientes {
+    background-color: var(--card);
+    color: var(--card-foreground);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border-radius: calc(var(--radius) + 4px);
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+}
+
+/* Card Header */
+.card-header {
+    display: grid;
+    grid-auto-rows: min-content;
+    grid-template-rows: auto auto;
+    align-items: start;
+    gap: 6px;
+    padding: 24px 24px 0 24px;
+}
+
+.card-title {
+    line-height: 1;
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--foreground);
+}
+
+.card-description {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+}
+
+/* Card Content */
+.card-content {
+    padding: 0 24px;
+}
+
+.card-content:last-child {
+    padding-bottom: 24px;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    flex: 1;
+    outline: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Typography */
+.p1 {
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--foreground);
+    margin-bottom: 8px;
+}
+
+.p2 {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    margin-bottom: 24px;
+}
+
+.p3 {
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--foreground);
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.p4 {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+/* Buttons */
+.btnSeleccionarTipo,
+.btnBuscar {
+    background-color: var(--bank-blue);
+    color: var(--primary-foreground);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    border-radius: calc(var(--radius) - 2px);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-medium);
+    height: 36px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    outline: none;
+}
+
+.btnSeleccionarTipo:hover,
+.btnBuscar:hover {
+    background-color: color-mix(in oklab, var(--bank-blue) 90%, transparent);
+}
+
+.btnSeleccionarTipo:focus-visible,
+.btnBuscar:focus-visible {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+}
+
+/* Forms */
+input,
+select {
+    width: 100%;
+    min-width: 0;
+    height: 36px;
+    padding: 8px 12px;
+    margin-bottom: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: calc(var(--radius) - 2px);
+    background-color: #ffffff;
+    color: var(--foreground);
+    font-size: 0.875rem;
+    transition: all 0.15s ease;
+    outline: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    input,
+    select {
+        background-color: #fafafaad;
+        border-color: #4b5563;
+    }
+}
+
+input:hover,
+select:hover {
+    border-color: #9ca3af;
+}
+
+@media (prefers-color-scheme: dark) {
+    input:hover,
+    select:hover {
+        border-color: #6b7280;
+    }
+}
+
+input:focus-visible,
+select:focus-visible {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+}
+
+input::placeholder {
+    color: #6b7280;
+}
+
+@media (prefers-color-scheme: dark) {
+    input::placeholder {
+        color: #9ca3af;
+    }
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--foreground);
+    font-weight: var(--font-weight-medium);
+    font-size: 0.875rem;
+}
+
+/* Filter Form */
+.formFiltros {
+    background-color: var(--muted);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.pFiltrosBusqueda {
+    margin-bottom: 16px;
+    color: var(--foreground);
+    font-weight: var(--font-weight-medium);
+    font-size: 0.875rem;
+}
+
+.formFiltros button[type="reset"],
+.formFiltros button[type="submit"] {
+    background-color: var(--bank-blue);
+    color: var(--primary-foreground);
+    border: none;
+    padding: 8px 16px;
+    border-radius: calc(var(--radius) - 2px);
+    cursor: pointer;
+    font-weight: var(--font-weight-medium);
+    font-size: 0.875rem;
+    height: 36px;
+    transition: background-color 0.15s ease;
+}
+
+.formFiltros button[type="reset"]:hover,
+.formFiltros button[type="submit"]:hover {
+    background-color: color-mix(in oklab, var(--bank-blue) 90%, transparent);
+}
+
+/* Empty State */
+.tablaClientes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: var(--muted-foreground);
+    text-align: center;
+    padding: 32px;
+}
+
+.logoVerOpaco {
+    opacity: 0.3;
+    margin-bottom: 16px;
+    width: 48px;
+    height: 48px;
+}
+
+/* Centered Content */
+.centered-content {
+    text-align: center;
+    padding: 32px 0;
+}
+
+.centered-content img {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px auto;
+    opacity: 0.5;
+}
+
+.centered-content h3 {
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 8px;
+    color: var(--foreground);
+}
+
+.centered-content p {
+    color: var(--muted-foreground);
+    margin-bottom: 24px;
+}
+
+/* Registration Form Styles */
+.selector-tipo-cliente {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.radio-option {
+    position: relative;
+}
+
+.radio-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.radio-label:hover {
+    background-color: var(--muted);
+}
+
+.radio-option input[type="radio"]:checked + .radio-label {
+    border-color: var(--bank-blue);
+    background-color: color-mix(in oklab, var(--bank-blue) 5%, transparent);
+}
+
+.icon-box {
+    padding: 12px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.bg-blue-100 {
+    background-color: color-mix(in oklab, #3b82f6 20%, white);
+}
+
+.bg-green-100 {
+    background-color: color-mix(in oklab, #10b981 20%, white);
+}
+
+.text-blue-600 {
+    color: #2563eb;
+}
+
+.text-green-600 {
+    color: #059669;
+}
+
+.formulario-cliente {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.progress-container {
+    height: 4px;
+    background-color: var(--muted);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--bank-blue);
+    transition: width 0.3s ease;
+}
+
+.info-box {
+    background-color: color-mix(in oklab, var(--bank-blue) 5%, transparent);
+    padding: 16px;
+    border-left: 4px solid var(--bank-blue);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-bottom: 24px;
+}
+
+.info-title {
+    font-size: 1.125rem;
+    color: var(--bank-blue);
+    margin-bottom: 8px;
+    font-weight: var(--font-weight-medium);
+}
+
+.info-description {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+.step-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #d1d5db;
+    transition: background-color 0.15s ease;
+}
+
+.step-indicator.active {
+    background-color: var(--bank-blue);
+}
+
+.space-y-6 > * + * {
+    margin-top: 24px;
+}
+
+.space-y-2 > * + * {
+    margin-top: 8px;
+}
+
+.space-y-4 > * + * {
+    margin-top: 16px;
+}
+
+.grid {
+    display: grid;
+}
+
+.grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+    .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    
+    .md\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.gap-4 {
+    gap: 16px;
+}
+
+.gap-2 {
+    gap: 8px;
+}
+
+.radio-group-horizontal {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.radio-group-horizontal label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0;
+    font-weight: var(--font-weight-normal);
+    cursor: pointer;
+}
+
+.radio-group-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.radio-group-vertical label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0;
+    font-weight: var(--font-weight-normal);
+    cursor: pointer;
+}
+
+textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 2px);
+    background-color: var(--background);
+    color: var(--foreground);
+    font-size: var(--font-size);
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+}
+
+textarea:focus-visible {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+    outline: none;
+}
+
+input.error,
+select.error,
+textarea.error {
+    border-color: #ef4444;
+}
+
+input.error:focus-visible,
+select.error:focus-visible,
+textarea.error:focus-visible {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px color-mix(in oklab, #ef4444 30%, transparent);
+}
+
+.btn-success {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: calc(var(--radius) - 2px);
+    cursor: pointer;
+    font-weight: var(--font-weight-medium);
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease;
+}
+
+.btn-success:hover {
+    background-color: #059669;
+}
+
+.btn-success:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.max-w-4xl {
+    max-width: 896px;
+}
+
+.max-w-2xl {
+    max-width: 672px;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mb-6 {
+    margin-bottom: 24px;
+}
+
+.mt-4 {
+    margin-top: 16px;
+}
+
+.mt-8 {
+    margin-top: 32px;
+}
+
+.pt-4 {
+    padding-top: 16px;
+}
+
+.pt-6 {
+    padding-top: 24px;
+}
+
+.border-t {
+    border-top: 1px solid var(--border);
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.size-lg {
+    padding: 12px 24px;
+    font-size: 1rem;
+}

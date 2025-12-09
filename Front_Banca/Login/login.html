@@ -17,25 +17,42 @@
 </head>
 
 <body>
-    <section id="login">
-        <img src="" alt="Logo Banca 1">
-        <h2>Banca 1</h2>
-        <h3>Sistema de Gestión Bancaria</h3>
+    <div class="login-container">
+        <div class="cabeceraLogin">
+            <img src="logo.png" width="82" height="82" alt="">
+            <h1 class="nombreBanca">Banca</h1>
+            <p class="esloganBanca">Sistema de Gestión Bancaria</p>
+        </div>
 
-        <h4>Iniciar Sesión</h4>
-        <h4>Ingresa tus credenciales para acceder al sistema</h4>
+        <div class="login">
+            <div class="card-header">
+                <h4 class="card-title">Iniciar Sesión</h4>
+                <p class="card-description">Ingresa tus credenciales para acceder al sistema</p>
+            </div>
+            <div class="card-content">
+                <form id="formLogin" class="formLogin" action="" method="post">
+                    <div class="form-field">
+                        <label for="usuario">Código de Usuario</label>
+                        <input type="text" id="usuario" name="usuario" placeholder="Digite su usuario." required>
+                    </div>
 
-        <form id="formLogin" action="" method="post">
+                    <div class="form-field">
+                        <label for="contrasena">Contraseña</label>
+                        <input type="password" id="contrasena" name="contrasena" placeholder="Digite su contraseña." required>
+                    </div>
 
-            <label for="usuario">Código de Usuario</label>
-            <input type="text" id="usuario" name="usuario" placeholder="Ingrese su usuario" required>
+                    <!-- Mensajes -->
+                    <div id="msgError" class="alert-error"></div>
 
-            <label for="contrasena">Contraseña</label>
-            <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña" required>
-
-            <button type="submit" id="btnLogin" name="btnLogin">Iniciar Sesión</button>
-    </section>
+                    <button type="submit" class="btnLogin" id="btnLogin" name="btnLogin">
+                        Iniciar Sesión
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
+
 <script src="login.js"></script>
 
 </html>

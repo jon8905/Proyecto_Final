@@ -7,153 +7,206 @@
     <title>Banca 1 | Director Operativo</title>
     <meta name="author" content="Jean Steven Londoño Portillo">
     <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="../../globals.css">
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
     <!-- Cabacera con nombre, logo, usuario, codigo usuario y boton de salir -->
     <header>
-        <img src="" alt="Banca 1 Logo">
-        <h1>Banca 1</h1>
-        <h2>Director Operativo</h2>
-
-        <img src="" alt="Director Logo">
-        <h2 id="nombreDirector">Director Operativo</h2>
-        <h3 id="codigoDirector">DIR001</h3>
-
-        <button id="btnSalir" name="btnSalir">Salir</button>
+        <div>
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-title">
+                        <h1>SimulaBank</h1>
+                        <h2>Director Operativo</h2>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-details">
+                            <h2 id="nombreDirector">Director Operativo</h2>
+                            <h3 id="codigoDirector">DIR001</h3>
+                        </div>
+                    </div>
+                    <button id="btnSalir" name="btnSalir">Salir</button>
+                </div>
+            </div>
+        </div>
     </header>
 
 
 <main>
     <section id="panelDirector">
-        <h2>Panel Director Operativo</h2>
-
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+        <h2 style="font-size: 1.5rem; font-weight: 500; color: var(--foreground);">Panel Director Operativo</h2>
+        <div class="badges-container">
+            <span class="badge"><strong id="totalClientes">0</strong> clientes pendientes</span>
+        </div>
+    </div>
         <!-- Pestañas -->
         <nav>
             <ul>
                 <li><a href="#dashboardEjecutivo"><img src="" alt="Dashboard Logo">Dashboard Ejecutivo</a></li>
-                <li><a href="#listarCliente"><img src="" alt="Ver Clientes Logo">Clientes Pendientes</a></li>
-                <li><a href="#listarCuenta"><img src="" alt="Ver Cuentas Logo">Cuentas Aprobadas</a></li>
+                <li><a href="#listarClientesPendientes"><img src="" alt="Ver Clientes Logo">Clientes Pendientes</a></li>
+                <li><a href="#listarCuentasAprobadas"><img src="" alt="Ver Cuentas Logo">Cuentas Aprobadas</a></li>
             </ul>
         </nav>
     </section>
 
-    <!-- Contador de clientes pendientes -->
-    <section id="contadorClientes">
-        <p><strong id="totalClientes">0</strong> clientes pendientes</p>
+    <!-- Pestaña de dashboard ejecutivo -->
+    <section id="dashboardEjecutivo" class="tab-content">
+        <!-- Filtros de Dashboard -->
+        <div class="card" id="formFiltrosDashboard">
+            <div class="card-header">
+                <h4 class="card-title">Filtros de Dashboard</h4>
+                <p class="card-description">Filtrar la métricas y gráficas por rango de fechas y estado de cuentas</p>
+            </div>
+            <div class="card-content">
+                <form action="" method="get" class="filter-grid">
+                    <div>
+                        <label for="fecha_desde">Fecha Desde</label>
+                        <input type="date" id="fecha_desde" name="fecha_desde">
+                    </div>
+                    <div>
+                        <label for="fecha_hasta">Fecha Hasta</label>
+                        <input type="date" id="fecha_hasta" name="fecha_hasta">
+                    </div>
+                    <div>
+                        <label for="estado">Estado de Cuentas</label>
+                        <select name="estado" id="estado">
+                            <option value="todos_los_estados">Todas</option>
+                            <option value="pendiente_aprobacion">Activas</option>
+                            <option value="aprobado">Pendientes</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="tablaCuentas" class="tablaCuentas"></div>
+        
+        <!-- KPIs principales -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-card-header">
+                    <h4 class="metric-card-title">Total Clientes</h4>
+                </div>
+                <div class="metric-value" id="totalClientes">0</div>
+                <p class="metric-description">Clientes registrados</p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-card-header">
+                    <h4 class="metric-card-title">Cuentas Activas</h4>
+                </div>
+                <div class="metric-value" id="cuentasActivas" style="color: var(--bank-green);">0</div>
+                <p class="metric-description">de <strong>0</strong> totales</p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-card-header">
+                    <h4 class="metric-card-title">Saldo Total</h4>
+                </div>
+                <div class="metric-value" id="saldoTotal" style="color: var(--bank-green);">$0</div>
+                <p class="metric-description">En todas las cuentas</p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-card-header">
+                    <h4 class="metric-card-title">Depósito Promedio</h4>
+                </div>
+                <div class="metric-value" id="depositoPromedio" style="color: var(--bank-blue-light);">$0</div>
+                <p class="metric-description">Por cuenta activa</p>
+            </div>
+        </div>
+
+        <!-- Gráficas principales -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <h4 class="chart-card-title">Evolución de Cuentas Creadas</h4>
+                    <p class="chart-card-description">Número de cuentas creadas en los últimos 6 meses</p>
+                </div>
+                <canvas id="chartCuentas" width="400" height="200"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <h4 class="chart-card-title">Evolución de Saldos</h4>
+                    <p class="chart-card-description">Saldos totales por mes</p>
+                </div>
+                <canvas id="chartSaldos" width="400" height="200"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <h4 class="chart-card-title">Clientes por Asesor</h4>
+                    <p class="chart-card-description">Distribución de clientes entre asesores</p>
+                </div>
+                <canvas id="chartAsesores" width="400" height="200"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <h4 class="chart-card-title">Estado de Cuentas</h4>
+                    <p class="chart-card-description">Distribución por estado</p>
+                </div>
+                <canvas id="chartEstados" width="400" height="200"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <h4 class="chart-card-title">Tipos de Cliente</h4>
+                    <p class="chart-card-description">Naturales vs Jurídicos</p>
+                </div>
+                <canvas id="chartTipos" width="400" height="200"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <h4 class="chart-card-title">Saldos Administrados por Cajero</h4>
+                    <p class="chart-card-description">Distribución de saldos entre cajeros</p>
+                </div>
+                <canvas id="chartCajeros" width="400" height="200"></canvas>
+            </div>
+        </div>
     </section>
 
-    <!-- Pestaña de dashboard ejecutivo -->
-    <div>
-        <section id="dashboardEjecutivo">
-            <p>Dashboard Ejecutivo</p>
-        </section>
-
-        <!-- Filtros de Dashboard -->
-        <form id="formFiltrosDashboard" action="" method="get">
-            <p>Filtros de Dashboard</p>
-            <p>Filtrar la métricas y gráficas por rango de fechas y estado de cuentas</p>
-            <label for="fecha_desde">Fecha Desde </label>
-            <input type="date" id="fecha_desde" name="fecha_desde">
-
-            <label for="fecha_hasta">Fecha Hasta </label>
-            <input type="date" id="fecha_hasta" name="fecha_hasta">
-
-            <label for="">Estado de Cuentas</label>
-            <select name="estado" id="estado">
-                <option value="todos_los_estados">Todas</option>
-                <option value="pendiente_aprobacion">Activas</option>
-                <option value="aprobado">Pendientes</option>
-            </select>
-        </form>
-
-        <div id="tablaCuentas"></div>
-        
-
-        <section>
-            <img src="" alt="Total Clientes Logo">
-            <h2 id="totalClientes">Total Clientes</h2>
-            <strong>0</strong>
-            <p>Clientes registrados</p>
-        </section>
-
-        <section>
-            <img src="" alt="cuentas Activas Logo">
-            <h2 id="cuentasActivas">Cuentas Activas</h2>
-            <strong>0</strong>
-            <p>de <strong>0</strong> totales</p>
-        </section>
-
-        <section>
-            <img src="" alt="Saldo Total Logo">
-            <h2 id="saldoTotal">Saldo total</h2>
-            <strong>$0</strong>
-            <p>En todas las cuentas</p>
-        </section>
-
-        <section>
-            <img src="" alt="Deposito Promedio Logo">
-            <h2 id="depositoPromedio">Depósito Promedio</h2>
-            <strong>S0</strong>
-            <p>Por cuenta activa</p>
-        </section>
-
-        <section>
-            <p>Evolución de Cuentas Creadas</p>
-            <p>Número de cuentas creadas en los últimos 6 meses</p>
-        </section>
-
-        <section>
-            <p>Evolución de Saldos</p>
-            <p>Saldos totales por mes</p>
-        </section>
-
-        <section>
-            <p>Clientes por Asesor</p>
-            <p>Distribución de clientes entre asesores</p>
-        </section>
-
-        <section>
-            <p>Estado de Cuentas</p>
-            <p>Distribución por estado</p>
-        </section>
-
-        <section>
-            <p>Tipos de Cliente</p>
-            <p>Naturales vs Jurídicos</p>
-        </section>
-
-        <section>
-            <p>Saldos Administrados por Cajero</p>
-            <p>Distribución de saldos entre cajeros</p>
-        </section>
-    </div>
-
     <!-- Pestaña de clientes pendientes -->
-    <div id="listarClientesPendientes">
-        <p>Solicitudes de Clientes Pendientes</p>
-        <p>Revise y apruebe o rechace las solicitudes de nuevos clientes. Solo se pueden aprobar formularios
-            completamente diligenciados.</p>
-
-        <div id="tablaClientesPendientes">
-            <img src="" alt="Lista de Clientes Pendientes Logo">
-            <p>No hay solicitudes pendientes de aprobación</p>
-            <!-- El backend puede inyectar aqui una tabla con los resultados -->
+    <section id="listarClientesPendientes" class="tab-content">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Solicitudes de Clientes Pendientes</h4>
+                <p class="card-description">Revise y apruebe o rechace las solicitudes de nuevos clientes. Solo se pueden aprobar formularios completamente diligenciados.</p>
+            </div>
+            <div class="card-content">
+                <div id="tablaClientesPendientes" class="empty-state">
+                    <img src="" alt="Lista de Clientes Pendientes Logo">
+                    <p>No hay solicitudes pendientes de aprobación</p>
+                    <!-- El backend puede inyectar aqui una tabla con los resultados -->
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
     <!-- Pestaña de cuentas aprobadas -->
-    <div id="listarCuentasAprobadas">
-        <p>Cuentas Creadas</p>
-        <p>cuentas aprobadas dependiente de depósito inicial.</p>
-
-        <div id="tablaCuentasAprobadas">
-            <img src="" alt="Lista de cuentas Aprobadas Logo">
-            <p>No hay cuentas creadas pendientes</p>
-            <!-- El backend puede inyectar aqui una tabla con los resultados -->
+    <section id="listarCuentasAprobadas" class="tab-content">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Cuentas Creadas</h4>
+                <p class="card-description">Cuentas aprobadas dependiente de depósito inicial.</p>
+            </div>
+            <div class="card-content">
+                <div id="tablaCuentasAprobadas" class="empty-state">
+                    <img src="" alt="Lista de cuentas Aprobadas Logo">
+                    <p>No hay cuentas creadas pendientes</p>
+                    <!-- El backend puede inyectar aqui una tabla con los resultados -->
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 </main>
     <script src="./js/solicitudes.js"></script>
 
