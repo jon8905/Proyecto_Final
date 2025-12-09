@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             switch (data.usuario.rol) {
 
                 case "Administrador":
-                    window.location.href = "admin_dashboard.html";
+                    window.location.href = "../Administrador/administrador.html";
                     break;
 
                 case "Asesor":

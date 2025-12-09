@@ -313,16 +313,107 @@ nav li.active a {
 }
 
 /*Estilo agregado*/
-.tablaCuentas{
+/* Contenedor general de la tabla */
+.tablaCuentas {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 200px;
-    color: var(--muted-foreground);
-    text-align: center;
+    width: 100%;
     padding: 32px;
+    color: var(--muted-foreground);
 }
+
+/* Tabla principal */
+.tablaCuentas table {
+    width: 90%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-top: 20px;
+}
+
+/* Encabezados */
+.tablaCuentas thead th {
+    background: #f5f6fa;
+    color: #333;
+    font-weight: bold;
+    padding: 14px;
+    font-size: 15px;
+    text-align: center;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+/* Filas */
+.tablaCuentas tbody tr {
+    transition: background 0.25s ease;
+}
+
+.tablaCuentas tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+/* Hover */
+.tablaCuentas tbody tr:hover {
+    background: #e9f3ff;
+}
+
+/* Celdas */
+.tablaCuentas td {
+    padding: 12px 10px;
+    font-size: 14px;
+    color: #444;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+/* Título */
+.tablaCuentas h2 {
+    font-size: 24px;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+    .tablaCuentas table {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    .tablaCuentas thead {
+        display: none;
+    }
+
+    .tablaCuentas tbody tr {
+        display: block;
+        margin-bottom: 12px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    }
+
+    .tablaCuentas td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        border: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    .tablaCuentas td:last-child {
+        border-bottom: none;
+    }
+
+    .tablaCuentas td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #666;
+    }
+}
+
 
 @media (prefers-color-scheme: dark) {
     .filter-grid input,
@@ -490,3 +581,4 @@ canvas {
 #tablaCuentasAprobadas p {
     margin-top: 8px;
 }
+

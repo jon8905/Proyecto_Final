@@ -93,7 +93,7 @@
             </section>
 
                 <!-- Selector de tipo de cliente (oculto inicialmente) -->
-            <div id="selectorTipoCliente" class="selector-tipo-cliente" style="display: none;">
+            <div id="selectorTipoCliente" class="selector-tipo-cliente">
                 <div class="card">
                     <div class="card-header">
                         <div class="flex items-center gap-2">
@@ -224,47 +224,28 @@
         </div>
             
 
-        <!-- Formulario de seleccion de tipo de cliente a registrar -->
-        <div id="seleccionTipoCliente">
-            <button id="btnAtrasSeleccion" name="btnAtrasSeleccion">Atras</button>
-            <p>Tipo de cuenta de Ahorros</p>
-            <p>Seleccione el tipo de cliente para el cual desea abrir la cuenta de ahorros</p>
-
-            <form id="formTipoCliente" action="/api/clientes/seleccionar" method="post">
-                <fieldset>
-                    <input type="radio" id="persona_natural" value="natural" name="tipo_cliente">
-                    <img src="" alt="Logo Persona Natural">
-                    <label for="persona_natural">Persona Natural</label>
-
-                    <input type="radio" id="persona_juridica" value="juridica" name="tipo_cliente">
-                    <img src="" alt="Logo Persona Jurídica">
-                    <label for="persona_juridica">Persona Jurídica</label>
-
-                    <button type="submit">Continuar con Persona <strong>Natural/Jurídica</strong></button>
-                </fieldset>
-            </form>
-        </div>
-
         <!-- Formulario de registro de cliente persona natural - Paso 1 -->
         <div>
-            <section id="registroPersonaNatural">
-                <section id="paso1">
+            <section id="registroPersonaNatural" class="card-header">
+                <section id="paso1" class="card-content">
                     <img src="" alt="Agregar Cliente Logo">
-                    <p>Registro de Cliente - Persona Natural</p>
-                    <p>Información Personal - Datos personales básicos</p>
+                    <p class="card-title">Registro de Cliente - Persona Natural</p>
+                    <p class="card-description">Información Personal - Datos personales básicos</p>
 
                     <button type="button" id="btnCancelarPaso1" class="btnCancelar">Cancelar</button>
 
-                    <p>Paso 1 de 6</p>
+                    <div class="mt-4">
+                    <p class="">Paso 1 de 6</p>
                     <progress value="17" max="100" aria-label="17% de dominio"></progress>
+                    </div>
                 </section>
 
-                <section>
-                    <p>Información Personal</p>
+                <section class="space-y-6">
+                    <p class="">Información Personal</p>
                     <p>Complete los datos personales básicos del cliente</p>
                 </section>
 
-                <form id="formPaso1" action="/api/clientes/paso1" method="post">
+                <form id="formPaso1" action="/api/clientes/paso1" method="post" class="space-y-6">
                     <fieldset>
                         <legend>Tipo de solicitud</legend>
 

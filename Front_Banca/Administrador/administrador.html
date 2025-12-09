@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador</title>
+    <link rel="stylesheet" href="./administrador.css">
+</head>
+<body>
+    <div id="contenedorAdministrador">
+
+    <!-- ENCABEZADO SUPERIOR -->
+    <header id="encabezadoPrincipal">
+
+        <div class="encabezado-izquierda">
+            <img src="../Asesor/img/asesor.png" alt="Icono Asesor" id="logo">
+            <span class="rol-usuario">Administrador</span>
+
+        </div>
+
+        <div class="encabezado-d">
+            
+            <button id="btnSalir">Salir</button>
+        </div>
+
+    </header>
+
+    <!-- TITULO DEL PANEL -->
+    <h2 id="tituloPanel">Panel de Administrador</h2>
+
+    <!-- BOTONES DE NAVEGACIÓN -->
+    <nav id="barraNavegacion">
+        <button class="nav-boton" id="btnCrearUsuario">Crear Usuario</button>
+        <button class="nav-boton" id="btnGestionarUsuarios">Gestionar Usuarios</button>
+    </nav>
+
+   
+ 
+
+    <!-- FORMULARIO -->
+    <section id="seccionCrearUsuario">
+
+        <h3 class="titulo-seccion">Crear Nuevo Usuario</h3>
+
+        <br><br><br>
+
+        <form id="formularioCrearUsuario">
+
+            <!-- Código y contraseña -->
+            <div class="fila-formulario">
+
+                <div class="grupo-formulario">
+                    <label for="codigoUsuario">Código de Usuario</label>
+                    <input type="text" id="codigoUsuario" placeholder="Asesor" required>
+                </div>
+                <br>
+                <div class="grupo-formulario">
+                    <label for="contrasenaUsuario">Contraseña</label>
+                    <input type="password" id="contrasenaUsuario" placeholder="********" required>
+                </div>
+
+            </div>
+
+            <!-- Rol -->
+            <div class="grupo-formulario">
+                <label for="rolUsuario">Rol del Usuario</label >
+                <select id="rolUsuario" required>
+                    <option>Seleccionar rol</option>
+                    <option value="2">Asesor</option>
+                    <option value="3">Director</option>   
+                    <option value="4">Cajero</option>
+                </select>
+            </div>
+
+            <!-- Botón crear -->
+            <div class="acciones-formulario">
+                <button type="submit" id="btnCrear">Crear</button>
+            </div>
+
+        </form>
+    </section>
+
+    <!-- LISTA DE USUARIOS -->
+
+    <div id="listaUsuarios"></div>
+
+
+</div>
+<script src="administtrador.js"></script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+#logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 10%;
+    margin-right: 10px;
+   
+}
+
+
+#contenedorAdministrador {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: sans-serif;
+    background: #f1f5f9;
+}
+
+#seccionCrearUsuario{
+    display: none;
+}
+
+#seccionCrearUsuario,
+#listaUsuarios {
+    display: none;
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+    border: 1px solid #e5e7eb;
+}
+
+
+.titulo-seccion {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    text-align: center;
+    margin-top: 20px;
+    color: #111827;
+
+}
+
+#seccionCrearUsuario p {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+
+label {
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 6px;
+    display: block;
+}
+
+input, select {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #2563eb;
+}
+
+
+.fila-formulario {
+    display: flex;
+    gap: 20px;
+}
+
+.grupo-formulario {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+#btnCrear {
+    width: 100%;
+    background: #003c71;   /* azul oscuro como referencia */
+    color: white;
+    padding: 14px;
+    border: none;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+#btnCrear:hover {
+    background: #002f59;
+}
+
+
+#encabezadoPrincipal {
+    background: white;
+    padding: 14px 20px;
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    border: 1px solid #e5e7eb;
+    align-items: center;
+}
+
+.encabezado-izquierda span:first-child {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.encabezado-derecha {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* BOTÓN SALIR */
+#btnSalir {
+    background: #003c71;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+#btnSalir:hover {
+    background: #002f59;
+}
+
+/* ================================
+   NAVIGATION BUTTONS
+================================= */
+#barraNavegacion {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+}
+
+.nav-boton {
+    background: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.nav-boton:hover {
+    background: #edf2f7;
+}
+
+#indicadorUsuariosActivos {
+    background: white;
+    padding: 10px 16px;
+    border-radius: 14px;
+    border: 1px solid #d1d5db;
+    width: fit-content;
+    margin-bottom: 25px;
+}
+
+/* Contenedor general de la tabla */
+.tabla-cliente {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Encabezados */
+.tabla-cliente thead {
+    background: #003c71;
+    color: white;
+}
+
+.tabla-cliente th {
+    padding: 12px;
+    text-align: left;
+    font-size: 15px;
+}
+
+/* Filas */
+.tabla-cliente td {
+    padding: 10px;
+    border-bottom: 1px solid #dcdcdc;
+    font-size: 14px;
+}
+
+/* Última fila sin borde */
+.tabla-cliente tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Alternar color de filas */
+.tabla-cliente tbody tr:nth-child(even) {
+    background: #f5f7fa;
+}
+
+/* Columna de acciones más ancha */
+.tabla-cliente td:last-child {
+    width: 160px;
+    text-align: center;
+}
+
+/* Botones */
+.tabla-cliente button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    margin: 2px;
+    transition: 0.2s ease;
+}
+
+/* Botón editar */
+#btnEditar {
+    background: #003c71;
+    color: white;
+}
+
+#btnEditar:hover {
+    background: #1565c0;
+}
+
+/* Botón eliminar */
+.tabla-cliente button:last-child {
+    background: #e53935;
+    color: white;
+}
+
+.tabla-cliente button:last-child:hover {
+    background: #b71c1c;
+}
