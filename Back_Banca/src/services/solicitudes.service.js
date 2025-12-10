@@ -59,7 +59,6 @@ async function cambiarEstado(id_solicitud, estado, observaciones) {
     }
 }
 
-
 //Obtenemos cuentas aprobadas (DIRECTOR)
 async function obtenerAprobadas(){
     const sql = ` SELECT 
