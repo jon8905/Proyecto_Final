@@ -30,23 +30,57 @@ async function cambiarEstado(id_solicitud, estado, observaciones) {
     try {
         await conn.beginTransaction();
 
-        // actualizar solicitud (DIRECTOR)
+        // Obtener solicitud primero
+        const [[solicitud]] = await conn.query(`
+            SELECT id_cliente, id_cuenta
+            FROM Solicitudes_Apertura
+            WHERE id_solicitud = ?
+        `, [id_solicitud]);
+
+        if (!solicitud) {
+            throw new Error("Solicitud no encontrada");
+        }
+
+        // 1️⃣ Actualizar solicitud
         await conn.query(`
             UPDATE Solicitudes_Apertura
-            SET estado = ?,
-                fecha_respuesta = NOW(),
-                observaciones = ?
+            SET estado = ?, fecha_respuesta = NOW(), observaciones = ?
             WHERE id_solicitud = ?
         `, [estado, observaciones, id_solicitud]);
 
-        // actualizar cuenta asociada (DIRECTOR)
-        await conn.query(`
-            UPDATE Cuenta_Ahorro 
-            SET estado = ?
-            WHERE id_cuenta = (
-                SELECT id_cuenta FROM Solicitudes_Apertura WHERE id_solicitud = ?
-            )
-        `, [estado === 'aprobada' ? 'activa' : 'pendiente', id_solicitud]);
+        // 2️⃣ Si APRUEBA y NO existe una cuenta → crear la cuenta
+        if (estado === "aprobada" && !solicitud.id_cuenta) {
+
+            const numeroCuenta = `${Date.now()}`;
+
+            const [cuentaNueva] = await conn.query(`
+                INSERT INTO Cuenta_Ahorro (numero_cuenta, saldo, estado, fecha_apertura, id_cliente)
+                VALUES (?, 0, 'activa', NOW(), ?)
+            `, [numeroCuenta, solicitud.id_cliente]);
+
+            // actualizar solicitud con id_cuenta nueva
+            await conn.query(`
+                UPDATE Solicitudes_Apertura
+                SET id_cuenta = ?
+                WHERE id_solicitud = ?
+            `, [cuentaNueva.insertId, id_solicitud]);
+        }
+
+        // 3️⃣ Si APRUEBA y cuenta existe → activar la cuenta
+        if (estado === "aprobada" && solicitud.id_cuenta) {
+            await conn.query(`
+                UPDATE Cuenta_Ahorro SET estado = 'activa'
+                WHERE id_cuenta = ?
+            `, [solicitud.id_cuenta]);
+        }
+
+        // 4️⃣ Si RECHAZA y la cuenta existe → ponerla como 'rechazada'
+        if (estado === "rechazada" && solicitud.id_cuenta) {
+            await conn.query(`
+                UPDATE Cuenta_Ahorro SET estado = 'rechazada'
+                WHERE id_cuenta = ?
+            `, [solicitud.id_cuenta]);
+        }
 
         await conn.commit();
         return { ok: true };
@@ -54,10 +88,12 @@ async function cambiarEstado(id_solicitud, estado, observaciones) {
     } catch (error) {
         await conn.rollback();
         throw error;
+
     } finally {
         conn.release();
     }
 }
+
 
 //Obtenemos cuentas aprobadas (DIRECTOR)
 async function obtenerAprobadas(){

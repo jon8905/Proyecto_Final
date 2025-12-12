@@ -42,31 +42,42 @@ elementos.salir.addEventListener("click", () => {
         const cliente = await response.json();
 
          //Aqui se agrega la tabla para mostrar datos en front
-        elementos.resultado.innerHTML=`<table border="1" class="tabla-cliente">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Documento</th>
-                        <th>Número de Cuenta</th>
-                        <th>Saldo</th>
-                        <th>Estado</th>
-                        <th>Fecha Apertura</th>
-                    </tr>
-                </thead>
+        elementos.resultado.innerHTML = `
+    <table border="1" class="tabla-cliente">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Documento</th>
+                <th>Estado Solicitud</th>
+                <th>Fecha Solicitud</th>
+                <th>Observaciones</th>
+                <th>Número Cuenta</th>
+                <th>Saldo</th>
+                <th>Estado Cuenta</th>
+                <th>Fecha Apertura</th>
+            </tr>
+        </thead>
 
-                <tbody>|
-                    <tr>
-                        <td>${cliente.nombre}</td>
-                        <td>${cliente.numero_documento}</td>
-                        <td>${cliente.numero_cuenta}</td>
-                        <td>$${cliente.saldo}</td>
-                        <td>${cliente.estado}</td>
-                        <td>${cliente.fecha_apertura}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <tbody>
+            <tr>
+                <td>${cliente.nombre}</td>
+                <td>${cliente.numero_documento}</td>
 
-        `;        
+                <!-- Datos de solicitud -->
+                <td>${cliente.estado_solicitud ?? 'Sin solicitud'}</td>
+                <td>${cliente.fecha_solicitud ?? '---'}</td>
+                <td>${cliente.observaciones ?? '---'}</td>
+
+                <!-- Datos de cuenta (pueden ser null) -->
+                <td>${cliente.numero_cuenta ?? 'No aplica'}</td>
+                <td>${cliente.saldo != null ? '$' + cliente.saldo : 'No aplica'}</td>
+                <td>${cliente.estado_cuenta ?? 'No aplica'}</td>
+                <td>${cliente.fecha_apertura ?? '---'}</td>
+            </tr>
+        </tbody>
+    </table>
+`;
+        
 
       }catch(error){
         console.error("Error buscando cliente", error);
@@ -99,31 +110,31 @@ async function filtrarCuentasPorEstado() {
     const fechaDesde = document.getElementById("fecha_desde").value;
     const fechaHasta = document.getElementById("fecha_hasta").value;
 
-    // Obtener todas las cuentas
+    // Obtener todas las cuentas desde el backend ya con JOIN
     const cuentas = await listarCuentas();
     if (!cuentas) return;
 
     let cuentasFiltradas = cuentas;
 
-    // Filtrar por estado (si no es "todos")
+    // Filtrar por estado de solicitud
     if (estadoSeleccionado !== "todos_los_estados") {
-        cuentasFiltradas = cuentasFiltradas.filter(cuenta => cuenta.estado === estadoSeleccionado);
+        cuentasFiltradas = cuentasFiltradas.filter(
+            cuenta => cuenta.estado_solicitud === estadoSeleccionado
+        );
     }
 
-    // Filtrar por fechas (fecha_solicitud)
+    // Filtrar por fechas
     cuentasFiltradas = cuentasFiltradas.filter(cuenta => {
         const fechaSolicitud = new Date(cuenta.fecha_solicitud);
 
-        // Filtrar desde
         if (fechaDesde) {
             const desde = new Date(fechaDesde);
             if (fechaSolicitud < desde) return false;
         }
 
-        // Filtrar hasta
         if (fechaHasta) {
             const hasta = new Date(fechaHasta);
-            hasta.setHours(23, 59, 59); // incluir todo el día
+            hasta.setHours(23, 59, 59);
             if (fechaSolicitud > hasta) return false;
         }
 
@@ -132,27 +143,27 @@ async function filtrarCuentasPorEstado() {
 
     // Construir filas
     let filas = "";
-    cuentasFiltradas.forEach(cliente => {
+    cuentasFiltradas.forEach(cuenta => {
         filas += `
             <tr>
-                <td>${cliente.nombre}</td>
-                <td>${cliente.tipo_de_identificacion}</td>
-                <td>${cliente.numero_documento}</td>
-                <td>${cliente.telefono}</td>
-                <td>${cliente.correo}</td>
-                <td>${cliente.numero_cuenta}</td>
-                <td>${cliente.saldo}</td>
-                <td>${cliente.estado}</td>
-                <td>${cliente.fecha_apertura}</td>
-                <td>${cliente.fecha_solicitud}</td>
-                <td>${cliente.estado}</td>
-                <td>${cliente.fecha_respuesta}</td>
-                <td>${cliente.observaciones}</td>
+                <td>${cuenta.nombre}</td>
+                <td>${cuenta.tipo_de_identificacion}</td>
+                <td>${cuenta.numero_documento}</td>
+                <td>${cuenta.telefono}</td>
+                <td>${cuenta.correo}</td>
+                <td>${cuenta.numero_cuenta ?? "—"}</td>
+                <td>${cuenta.saldo !== null ? "$" + cuenta.saldo : "—"}</td>
+                <td>${cuenta.estado_cuenta ?? "—"}</td>
+                <td>${cuenta.fecha_apertura ?? "—"}</td>
+                <td>${cuenta.fecha_solicitud}</td>
+                <td>${cuenta.estado_solicitud}</td>
+                <td>${cuenta.fecha_respuesta ?? "—"}</td>
+                <td>${cuenta.observaciones ?? "—"}</td>
             </tr>
         `;
     });
 
-    // Insertar en el DOM
+    // Pintar tabla en pantalla
     elementos.listadoCuentas.innerHTML = `
       <table border="1" class="tabla-cliente">
           <thead>
@@ -164,7 +175,7 @@ async function filtrarCuentasPorEstado() {
                   <th>Correo</th>
                   <th>Nº Cuenta</th>
                   <th>Saldo</th>
-                  <th>Estado</th>
+                  <th>Estado Cuenta</th>
                   <th>Fecha Apertura</th>
                   <th>Fecha Solicitud</th>
                   <th>Estado Solicitud</th>
@@ -176,8 +187,9 @@ async function filtrarCuentasPorEstado() {
               ${filas}
           </tbody>
       </table>
-    `;
+    `;
 }
+
   // Obtener filtro cuentas por estado
   document.getElementById("estado").addEventListener("change", filtrarCuentasPorEstado);
 

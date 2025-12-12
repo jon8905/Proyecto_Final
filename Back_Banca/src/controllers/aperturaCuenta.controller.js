@@ -31,7 +31,7 @@ const { param } = require('../app.js');
     }
     };
 
-
+//MOSTRAR CUENTA POR ESTADO Y FECHA
 async function listarCuenta (req,res){
     try {
         const { fechaDesde, fechaHasta, estado } = req.query;
@@ -44,88 +44,101 @@ async function listarCuenta (req,res){
             c.numero_documento,
             c.telefono,
             c.correo,
+
             ca.numero_cuenta,
             ca.saldo,
-            ca.estado,
+            ca.estado AS estado_cuenta,
             ca.fecha_apertura,
+
+            sa.id_solicitud,
             sa.fecha_solicitud,
-            sa.estado,
+            sa.estado AS estado_solicitud,
             sa.fecha_respuesta,
             sa.observaciones
         FROM Cliente c
-        INNER JOIN Cuenta_ahorro ca
-            ON ca.id_cliente = c.id_cliente
         INNER JOIN Solicitudes_Apertura sa
+            ON sa.id_cliente = c.id_cliente
+        LEFT JOIN Cuenta_Ahorro ca
             ON ca.id_cuenta = sa.id_cuenta
         WHERE 1=1
         `;
 
         const params = [];
 
-        // FILTRO POR FECHAS
-        if (fechaDesde && fechaHasta) {
-            query += ` AND sa.fecha_solicitud BETWEEN ? AND ?`;
-            params.push(fechaDesde, fechaHasta);
-        } else if (fechaDesde) {
-            query += ` AND sa.fecha_solicitud >= ?`;
+        // Filtro por fecha solicitud
+        if (fechaDesde) {
+            query += " AND sa.fecha_solicitud >= ? ";
             params.push(fechaDesde);
-        } else if (fechaHasta) {
-            query += ` AND sa.fecha_solicitud <= ?`;
+        }
+        if (fechaHasta) {
+            query += " AND sa.fecha_solicitud <= ? ";
             params.push(fechaHasta);
         }
 
-        // FILTRO POR ESTADO
-        if (estado && estado !== "Todos") {
-            query += ` AND ca.estado = ?`;
+        // Filtro por estado de solicitud
+        if (estado && estado !== "todos") {
+            query += " AND sa.estado = ? ";
             params.push(estado);
         }
 
-        // SIEMPRE AL FINAL
-        query += ` ORDER BY sa.fecha_solicitud DESC`;
+        query += " ORDER BY sa.fecha_solicitud DESC";
 
-        const [detalle] = await db.execute(query, params);
+        const [rows] = await db.query(query, params);
 
-        // SI NO HAY RESULTADOS
-        if (detalle.length === 0) {
-            return res.status(200).json({
-                message: "No se encontraron registros según los filtros aplicados",
-                data: []
-            });
-        }
-
-        return res.status(200).json(detalle);
+        res.status(200).json(rows);
 
     } catch (error) {
-        console.error("❌ Error al listar cuentas:", error);
-        res.status(500).json({ message: "Error interno en el servidor." });
+        console.log("Error en listarCuenta:", error);
+        res.status(500).json({error:"Error al listar cuentas"});
     }
 }
 
 //Funcion para obtener datos de cliente por cedula (Modulo asesor)
+//Función para obtener cliente + estado de solicitud + cuenta (si existe)
 async function obtenerClienteCuenta(req, res) {
     const { doc } = req.params;
 
     try {
-        const [cliente] = await db.query(`SELECT 
-    c.nombre,
-    c.numero_documento,
-    ca.numero_cuenta,
-    ca.saldo,
-    ca.estado,
-    ca.fecha_apertura
-    FROM Cuenta_Ahorro ca
-    INNER JOIN Cliente c
-    ON ca.id_cliente = c.id_cliente
-    WHERE c.numero_documento = ? OR ca.numero_cuenta = ?`, [doc, doc]);
-        if (cliente.length === 0) {
+        const [rows] = await db.query(`
+            SELECT
+                c.id_cliente,
+                c.nombre,
+                c.numero_documento,
+
+                -- Datos de solicitud
+                sa.id_solicitud,
+                sa.estado AS estado_solicitud,
+                sa.fecha_solicitud,
+                sa.fecha_respuesta,
+                sa.observaciones,
+
+                -- Datos de cuenta (si existe)
+                ca.id_cuenta,
+                ca.numero_cuenta,
+                ca.saldo,
+                ca.estado AS estado_cuenta,
+                ca.fecha_apertura
+
+            FROM Cliente c
+            LEFT JOIN Solicitudes_Apertura sa
+                ON sa.id_cliente = c.id_cliente
+            LEFT JOIN Cuenta_Ahorro ca
+                ON ca.id_cuenta = sa.id_cuenta
+            WHERE c.numero_documento = ?;
+        `, [doc]);
+
+        if (rows.length === 0) {
             return res.status(404).json({ error: 'Cliente no encontrado' });
         }
-        res.status(200).json(cliente[0]);
+
+        res.status(200).json(rows[0]);
+
     } catch (error) {
         console.error('Error al obtener el cliente', error);
-        res.status(500).json({ error: 'Error al obtener el cliente' });
-    }
+        res.status(500).json({ error: 'Error al obtener el cliente' });
+    }
 }
+
 
 //Exportamos
 module.exports = { crearCuentaController, listarCuenta, obtenerClienteCuenta, listarClientes };

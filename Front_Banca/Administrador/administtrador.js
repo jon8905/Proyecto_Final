@@ -5,105 +5,51 @@ const elementos = {
     codigo: document.getElementById("codigoUsuario"),
     contrasena: document.getElementById("contrasenaUsuario"),
     rol: document.getElementById("rolUsuario"),
-    btnCrear: document.getElementById("btnCrear"), // Boton del formulario
+    btnCrear: document.getElementById("btnCrear"),
     form: document.getElementById("formularioCrearUsuario"),
-
-    // Elementos de Navegación y Secciones
-    btnCrearNav: document.getElementById("btnCrearUsuario"),
-    btnGestionarNav: document.getElementById("btnGestionarUsuarios"),
-    seccionCrear: document.getElementById("seccionCrearUsuario"),
-    seccionListar: document.getElementById("listaUsuarios"),
-
-    btnSalir: document.getElementById('btnSalir')
+    btnGestionar: document.getElementById('btnGestionarUsuarios'),
+    listaUsuarios: document.getElementById('listaUsuarios')
 };
 
-// VARIABLES DE CONTROL
-let modoEdicion = false;
-let idUsuarioEditar = null;
+function limpiararFormulario() {
+    elementos.codigo.value = "";
+    elementos.contrasena.value = "";
+    elementos.rol.value = "";
+}
 
+document.getElementById('btnSalir').addEventListener('click', () => {
+    window.location.href = "../Login/login.html";
+});
 
-// ==========================================
-// INICIALIZACIÓN Y EVENTOS
-// ==========================================
+elementos.btnGestionar.addEventListener('click', () => {
+    elementos.listaUsuarios.style.display = 'block';
+    
+});
+
+ const formularioCrearUsuario = document.getElementById("seccionCrearUsuario");
 
 document.addEventListener("DOMContentLoaded", () => {
+    
+    const btnCrearUsuario = document.getElementById("btnCrearUsuario");
+    const formularioCrearUsuario = document.getElementById("seccionCrearUsuario");
 
-    // Configurar navegación entre pestañas
-    elementos.btnCrearNav.addEventListener("click", (e) => {
-        e.preventDefault();
-        mostrarSeccion("crear");
-    });
-
-    elementos.btnGestionarNav.addEventListener("click", (e) => {
-        e.preventDefault();
-        mostrarSeccion("listar");
-    });
-
-    // Configurar botón salir
-    elementos.btnSalir.addEventListener('click', () => {
-        window.location.href = "../Login/login.html";
-    });
-
-    // Configurar submit del formulario
-    elementos.form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        registrarUsuario();
-    });
-
-    // Estado inicial: mostrar sección de crear
-    mostrarSeccion("crear");
-    // Cargar usuarios en segundo plano para tener la lista lista
-    listarUsuarios();
+    // Mostrar formulario al hacer clic
+    btnCrearUsuario.addEventListener("click", () => {
+        formularioCrearUsuario.style.display = "block";
+        limpiararFormulario();
+        elementos.btnCrear.textContent = "Crear"; 
+        modoEdicion = false;});
 });
 
 
-// ==========================================
-// LÓGICA DE INTERFAZ (UI)
-// ==========================================
-
-function mostrarSeccion(opcion) {
-    // Ocultar todas las secciones
-    elementos.seccionCrear.style.display = "none";
-    elementos.seccionListar.style.display = "none";
-
-    // Quitar estado activo de botones (li)
-    elementos.btnCrearNav.parentElement.classList.remove("active");
-    elementos.btnGestionarNav.parentElement.classList.remove("active");
-
-    if (opcion === "crear") {
-        elementos.seccionCrear.style.display = "block";
-        elementos.btnCrearNav.parentElement.classList.add("active");
-
-        // Si estábamos en modo edición y queremos volver a "Crear nuevo", podríamos resetear aquí
-        // Pero a veces el usuario quiere editar, cambia de pestaña para ver algo y vuelve. 
-        // Dejaremos el estado actual, pero si el usuario hace clic explícito en "Crear Usuario" 
-        // cuando YA estaba en esa pestaña, podríamos resetear.
-        // Por simplicidad, añadimos un botón "Cancelar" en el formulario si es necesario, 
-        // o permitimos que el usuario limpie manualmente.
-
-        // Si se desea que al entrar a "Crear" siempre esté limpio:
-        // cancelarEdicion(); 
-
-    } else if (opcion === "listar") {
-        elementos.seccionListar.style.display = "block";
-        elementos.btnGestionarNav.parentElement.classList.add("active");
-        listarUsuarios(); // Refrescar lista
-    }
-}
-
-function cancelarEdicion() {
-    modoEdicion = false;
-    idUsuarioEditar = null;
-    elementos.form.reset();
-    elementos.btnCrear.textContent = "Crear";
-}
 
 
-// ==========================================
-// LÓGICA DE NEGOCIO (CRUD)
-// ==========================================
+// -------------- VARIABLES DE CONTROL -----------------
+let modoEdicion = false;
+let idUsuarioEditar = null;
 
-//  REGISTRO / EDICIÓN
+//  FUNCIÓN DE REGISTRO / EDICIÓN
+
 async function registrarUsuario() {
 
     const datos = {
@@ -115,7 +61,8 @@ async function registrarUsuario() {
     let endpoint = "";
     let method = "";
 
-    if (modoEdicion) {
+
+    if (modoEdicion) {  
         endpoint = `${URL}/usuarios/${idUsuarioEditar}`;
         method = "PUT";
     } else {
@@ -124,11 +71,6 @@ async function registrarUsuario() {
     }
 
     try {
-        // Si es edición y la contraseña está vacía, no la enviamos (backend debe manejar esto)
-        if (modoEdicion && !datos.contrasena) {
-            delete datos.contrasena;
-        }
-
         const res = await fetch(endpoint, {
             method: method,
             headers: { "Content-Type": "application/json" },
@@ -144,7 +86,11 @@ async function registrarUsuario() {
 
         alert(modoEdicion ? "Usuario actualizado" : "Usuario creado correctamente");
 
-        cancelarEdicion();
+        elementos.form.reset();
+        modoEdicion = false;
+        idUsuarioEditar = null;
+        elementos.btnCrear.textContent = "Crear"; // volver a modo crear
+
         listarUsuarios();
 
     } catch (error) {
@@ -154,13 +100,16 @@ async function registrarUsuario() {
 }
 
 //  CARGAR LISTA DE USUARIOS
+
 async function listarUsuarios() {
+    const contenedor = document.getElementById("listaUsuarios");
+
     try {
         const res = await fetch(`${URL}/usuarios`);
         const usuarios = await res.json();
 
         let html = `
-            <table class="tabla-cliente">
+            <table border="1" class="tabla-cliente">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -172,38 +121,33 @@ async function listarUsuarios() {
                 <tbody>
         `;
 
-        if (Array.isArray(usuarios)) {
-            usuarios.forEach(u => {
-                let nombreRol = "Desconocido";
-                if (u.id_rol == 2) nombreRol = "Asesor";
-                if (u.id_rol == 3) nombreRol = "Director";
-                if (u.id_rol == 4) nombreRol = "Cajero";
+        usuarios.forEach(u => {
+            html += `
+                <tr>
+                    <td>${u.id_usuario}</td>
+                    <td>${u.codigo}</td>
+                    <td>${u.id_rol}</td>
 
-                html += `
-                    <tr>
-                        <td>${u.id_usuario}</td>
-                        <td>${u.codigo}</td>
-                        <td>${nombreRol} (${u.id_rol})</td>
-
-                        <td>
-                            <button id="btnEditar" onclick="editarUsuario(${u.id_usuario}, '${u.codigo}', '${u.id_rol}')">Editar</button>
-                            <button onclick="eliminarUsuario(${u.id_usuario})">Eliminar</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
+                    <td>
+                        <button id="btnEditar" onclick="editarUsuario(${u.id_usuario}, '${u.codigo}', '${u.id_rol}')">Editar</button>
+                        <button onclick="eliminarUsuario(${u.id_usuario})">Eliminar</button>
+                    </td>
+                </tr>
+            `;
+        });
 
         html += "</tbody></table>";
-        elementos.seccionListar.innerHTML = html;
+
+        contenedor.innerHTML = html;
 
     } catch (error) {
-        console.error("Error gestionando usuarios:", error);
-        elementos.seccionListar.innerHTML = "<p>Error cargando usuarios</p>";
+        console.error("Error:", error);
+        contenedor.innerHTML = "<p>Error cargando usuarios</p>";
     }
 }
 
 //  ELIMINAR USUARIO
+
 async function eliminarUsuario(id) {
     if (!confirm("¿Seguro que deseas eliminar este usuario?")) return;
 
@@ -224,17 +168,34 @@ async function eliminarUsuario(id) {
     }
 }
 
+
 //  EDITAR USUARIO (CARGA EL FORMULARIO)
+
 function editarUsuario(id, codigo, rol) {
+
     modoEdicion = true;
     idUsuarioEditar = id;
 
     elementos.codigo.value = codigo;
     elementos.rol.value = rol;
-    elementos.contrasena.value = ""; // Limpiar contraseña por seguridad
+    elementos.contrasena.value = ""; // por seguridad
 
     elementos.btnCrear.textContent = "Actualizar Usuario";
-
-    // Cambiar a la pestaña de creación/edición
-    mostrarSeccion("crear");
+    formularioCrearUsuario.style.display = "block";
+    
 }
+
+//  CARGAR AL INICIAR
+
+window.addEventListener("DOMContentLoaded", () => {
+    listarUsuarios();
+
+});
+
+// EVENTO FORMULARIO
+
+elementos.form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    registrarUsuario();
+});
+

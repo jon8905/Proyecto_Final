@@ -166,40 +166,22 @@ async function crearCuenta(data) {
         data.informacion_fatca_crs
       ]
     );
-
-    //  Crear una Cuenta de Ahorro asociada
-    const numeroCuenta = `${Date.now()}`;
-    const [cuentaResult] = await connection.query(
-      `INSERT INTO Cuenta_Ahorro (numero_cuenta, saldo, estado, fecha_apertura, id_cliente)
-       VALUES (?, ?, ?, ?, ?)`,
-      [
-        numeroCuenta,
-        data.saldo_inicial || 0,
-        'Inactiva',
-        new Date(),
-        id_cliente
-      ]
-    );
-
-    const id_cuenta = cuentaResult.insertId;
-
-    //Banderita para validar si genera solicitud de cuenta
-    console.log("Insertando solicitud:", id_cliente, id_cuenta)
+    
     //Creamos solicitud en la misma transacción
-      await connection.query(
-        `INSERT INTO Solicitudes_Apertura (id_cliente, id_cuenta) VALUES (?, ?)`,
-        [id_cliente, id_cuenta]
-      );
+      // Crear SOLO la solicitud de apertura
+    await connection.query(
+      `INSERT INTO Solicitudes_Apertura 
+      (id_cliente, estado, fecha_solicitud) 
+      VALUES (?, 'pendiente', NOW())`,
+      [id_cliente]
+);
 
+await connection.commit();
 
-    await connection.commit();
-
-    return {
-      id_cliente,
-      id_cuenta,
-      numeroCuenta,
-      message: 'Cuenta y cliente creados exitosamente'
-    };
+return {
+  id_cliente,
+  message: 'Solicitud de apertura creada. Pendiente de aprobación.'
+};
 
   } catch (error) {
     await connection.rollback();
