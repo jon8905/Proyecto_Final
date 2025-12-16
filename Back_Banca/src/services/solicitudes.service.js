@@ -41,14 +41,14 @@ async function cambiarEstado(id_solicitud, estado, observaciones) {
             throw new Error("Solicitud no encontrada");
         }
 
-        // 1️⃣ Actualizar solicitud
+        // Actualizar solicitud
         await conn.query(`
             UPDATE Solicitudes_Apertura
             SET estado = ?, fecha_respuesta = NOW(), observaciones = ?
             WHERE id_solicitud = ?
         `, [estado, observaciones, id_solicitud]);
 
-        // 2️⃣ Si APRUEBA y NO existe una cuenta → crear la cuenta
+        // Si APRUEBA y NO existe una cuenta → crear la cuenta
         if (estado === "aprobada" && !solicitud.id_cuenta) {
 
             const numeroCuenta = `${Date.now()}`;
@@ -66,7 +66,7 @@ async function cambiarEstado(id_solicitud, estado, observaciones) {
             `, [cuentaNueva.insertId, id_solicitud]);
         }
 
-        // 3️⃣ Si APRUEBA y cuenta existe → activar la cuenta
+        // Si APRUEBA y cuenta existe → activar la cuenta
         if (estado === "aprobada" && solicitud.id_cuenta) {
             await conn.query(`
                 UPDATE Cuenta_Ahorro SET estado = 'activa'
@@ -74,7 +74,7 @@ async function cambiarEstado(id_solicitud, estado, observaciones) {
             `, [solicitud.id_cuenta]);
         }
 
-        // 4️⃣ Si RECHAZA y la cuenta existe → ponerla como 'rechazada'
+        // Si RECHAZA y la cuenta existe → ponerla como 'rechazada'
         if (estado === "rechazada" && solicitud.id_cuenta) {
             await conn.query(`
                 UPDATE Cuenta_Ahorro SET estado = 'rechazada'

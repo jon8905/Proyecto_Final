@@ -74,9 +74,24 @@ async function cargarSolicitudesPendientes() {
             <td>${item.estado_solicitud || item.estado || "Pendiente"}</td>
 
             <td class="acciones-col">
-                <button class="btn-approve" onclick="aprobar(${item.id_solicitud})">Aprobar</button>
-                <button class="btn-reject" onclick="rechazar(${item.id_solicitud})">Rechazar</button>
-            </td>
+    ${
+        item.estado_solicitud === "pendiente"
+        ? `
+            <button 
+                class="btn btn-approve"
+                onclick="aprobar(${item.id_solicitud})">
+                Aprobar
+            </button>
+
+            <button 
+                class="btn btn-reject"
+                onclick="rechazar(${item.id_solicitud})">
+                Rechazar
+            </button>
+        `
+        : `<span class="estado-final">${item.estado_solicitud}</span>`
+    }
+</td>
         </tr>
     `;
         });
@@ -183,11 +198,15 @@ async function filtrarCuentasPorFechasYEstado() {
 
     // Mapear valores del select a valores del backend
     let estadoBackend = null;
-    if (estadoSeleccionado === "pendiente_aprobacion") {
-        estadoBackend = "pendientes";
-    } else if (estadoSeleccionado === "aprobado") {
-        estadoBackend = "activa";
-    }
+
+if (estadoSeleccionado === "pendientes") {
+    // Solicitudes pendientes (no cuenta creada)
+    estadoBackend = "pendiente";
+} 
+else if (estadoSeleccionado === "aprobada") {
+    // Cuentas activas
+    estadoBackend = "aprobada";
+}
 
     // Construir URL con query params
     let url = API_LISTAR_CUENTAS;
@@ -229,8 +248,9 @@ async function filtrarCuentasPorFechasYEstado() {
                 <th>Número Cuenta</th>
                 <th>Saldo</th>
                 <th>Estado</th>
-                <th>Fecha Solicitud</th>
                 <th>Fecha Apertura</th>
+                <th>Fecha Solicitud</th>
+                <th>Estado solicitud</th>
             </tr>
         </thead>
         <tbody>
@@ -244,8 +264,9 @@ async function filtrarCuentasPorFechasYEstado() {
             <td>${cuenta.numero_cuenta || "-"}</td>
             <td>$${cuenta.saldo ?? "0.00"}</td>
             <td>${cuenta.estado || "-"}</td>
-            <td>${cuenta.fecha_solicitud ? formatearFecha(cuenta.fecha_solicitud) : "-"}</td>
             <td>${cuenta.fecha_apertura ? formatearFecha(cuenta.fecha_apertura) : "-"}</td>
+            <td>${cuenta.fecha_solicitud ? formatearFecha(cuenta.fecha_solicitud) : "-"}</td>            
+            <td>${cuenta.estado_solicitud }</td>
         </tr>
     `;
         });

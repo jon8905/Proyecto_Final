@@ -1182,7 +1182,7 @@ textarea.error:focus-visible {
 
 /*Estilos para tabla resultado*/
 
-/* Tabla elegante para .tabResultado */
+/* Tabla tabResultado */
 .tabResultado {
     width: 100%;
     border-collapse: collapse;
@@ -1263,3 +1263,67 @@ textarea.error:focus-visible {
         color: #666;
     }
 }
+/* Contenedor con scroll para tabla de resultados */
+.tabResultado {
+    width: 100%;
+    max-height: 420px;           /* Scroll vertical */
+    overflow-y: auto;
+    overflow-x: auto;            /* Scroll horizontal */
+    margin-top: 16px;
+
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* Scrollbar moderno (Chrome, Edge, Safari) */
+.tabResultado::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+}
+
+.tabResultado::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.tabResultado::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.tabResultado::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Tabla interna */
+.tabResultado table {
+    width: 100%;
+    min-width: 900px; /* fuerza scroll horizontal si hay muchas columnas */
+    border-collapse: collapse;
+}
+
+/* Encabezados fijos */
+.tabResultado thead th {
+    background-color: #003b70; /* Azul oscuro como la imagen */
+    color: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 14px;
+    font-weight: 600;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+/* Celdas */
+.tabResultado td {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Hover */
+.tabResultado tbody tr:hover {
+    background: #e9f3ff;
+}
+

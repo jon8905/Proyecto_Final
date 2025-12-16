@@ -47,7 +47,7 @@ async function listarCuenta (req,res){
 
             ca.numero_cuenta,
             ca.saldo,
-            ca.estado AS estado_cuenta,
+            ca.estado,
             ca.fecha_apertura,
 
             sa.id_solicitud,
@@ -124,8 +124,8 @@ async function obtenerClienteCuenta(req, res) {
                 ON sa.id_cliente = c.id_cliente
             LEFT JOIN Cuenta_Ahorro ca
                 ON ca.id_cuenta = sa.id_cuenta
-            WHERE c.numero_documento = ?;
-        `, [doc]);
+            WHERE c.numero_documento = ? OR ca.numero_cuenta  = ?;
+        `, [doc, doc]);
 
         if (rows.length === 0) {
             return res.status(404).json({ error: 'Cliente no encontrado' });

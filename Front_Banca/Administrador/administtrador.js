@@ -2,53 +2,90 @@ const URL = "http://localhost:3000/api";
 
 // ELEMENTOS del DOM
 const elementos = {
-    codigo: document.getElementById("codigoUsuario"),
+    codigo: document.getElementById("codigoUsuarioInput"),
     contrasena: document.getElementById("contrasenaUsuario"),
     rol: document.getElementById("rolUsuario"),
     btnCrear: document.getElementById("btnCrear"),
     form: document.getElementById("formularioCrearUsuario"),
-    btnGestionar: document.getElementById('btnGestionarUsuarios'),
-    listaUsuarios: document.getElementById('listaUsuarios')
+
+    // Navegación
+    btnCrearNav: document.getElementById("btnCrearUsuario"),
+    btnGestionarNav: document.getElementById("btnGestionarUsuarios"),
+    seccionCrear: document.getElementById("seccionCrearUsuario"),
+    seccionListar: document.getElementById("listaUsuarios"),
+
+    btnSalir: document.getElementById('btnSalir')
 };
 
-function limpiararFormulario() {
-    elementos.codigo.value = "";
-    elementos.contrasena.value = "";
-    elementos.rol.value = "";
-}
-
-document.getElementById('btnSalir').addEventListener('click', () => {
-    window.location.href = "../Login/login.html";
-});
-
-elementos.btnGestionar.addEventListener('click', () => {
-    elementos.listaUsuarios.style.display = 'block';
-    
-});
-
- const formularioCrearUsuario = document.getElementById("seccionCrearUsuario");
-
-document.addEventListener("DOMContentLoaded", () => {
-    
-    const btnCrearUsuario = document.getElementById("btnCrearUsuario");
-    const formularioCrearUsuario = document.getElementById("seccionCrearUsuario");
-
-    // Mostrar formulario al hacer clic
-    btnCrearUsuario.addEventListener("click", () => {
-        formularioCrearUsuario.style.display = "block";
-        limpiararFormulario();
-        elementos.btnCrear.textContent = "Crear"; 
-        modoEdicion = false;});
-});
-
-
-
-
-// -------------- VARIABLES DE CONTROL -----------------
+// VARIABLES
 let modoEdicion = false;
 let idUsuarioEditar = null;
 
-//  FUNCIÓN DE REGISTRO / EDICIÓN
+
+
+// INICIALIZACIÓN
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    elementos.btnCrearNav.addEventListener("click", (e) => {
+        e.preventDefault();
+        mostrarSeccion("crear");
+        cancelarEdicion();
+    });
+
+    elementos.btnGestionarNav.addEventListener("click", (e) => {
+        e.preventDefault();
+        mostrarSeccion("listar");
+    });
+
+    elementos.btnSalir.addEventListener('click', () => {
+        window.location.href = "../Login/login.html";
+    });
+
+    elementos.form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        registrarUsuario();
+    });
+
+    mostrarSeccion("crear");
+    listarUsuarios();
+});
+
+
+
+// UI
+
+
+function mostrarSeccion(opcion) {
+
+    elementos.seccionCrear.style.display = "none";
+    elementos.seccionListar.style.display = "none";
+
+    elementos.btnCrearNav.parentElement.classList.remove("active");
+    elementos.btnGestionarNav.parentElement.classList.remove("active");
+
+    if (opcion === "crear") {
+        elementos.seccionCrear.style.display = "block";
+        elementos.btnCrearNav.parentElement.classList.add("active");
+    } else {
+        elementos.seccionListar.style.display = "block";
+        elementos.btnGestionarNav.parentElement.classList.add("active");
+        listarUsuarios();
+    }
+}
+
+function cancelarEdicion() {
+    modoEdicion = false;
+    idUsuarioEditar = null;
+    elementos.form.reset();
+    elementos.btnCrear.textContent = "Crear";
+}
+
+
+
+// CRUD
+
 
 async function registrarUsuario() {
 
@@ -61,8 +98,7 @@ async function registrarUsuario() {
     let endpoint = "";
     let method = "";
 
-
-    if (modoEdicion) {  
+    if (modoEdicion) {
         endpoint = `${URL}/usuarios/${idUsuarioEditar}`;
         method = "PUT";
     } else {
@@ -71,8 +107,12 @@ async function registrarUsuario() {
     }
 
     try {
+        if (modoEdicion && !datos.contrasena) {
+            delete datos.contrasena;
+        }
+
         const res = await fetch(endpoint, {
-            method: method,
+            method,
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(datos)
         });
@@ -86,11 +126,7 @@ async function registrarUsuario() {
 
         alert(modoEdicion ? "Usuario actualizado" : "Usuario creado correctamente");
 
-        elementos.form.reset();
-        modoEdicion = false;
-        idUsuarioEditar = null;
-        elementos.btnCrear.textContent = "Crear"; // volver a modo crear
-
+        cancelarEdicion();
         listarUsuarios();
 
     } catch (error) {
@@ -99,17 +135,14 @@ async function registrarUsuario() {
     }
 }
 
-//  CARGAR LISTA DE USUARIOS
 
 async function listarUsuarios() {
-    const contenedor = document.getElementById("listaUsuarios");
-
     try {
         const res = await fetch(`${URL}/usuarios`);
         const usuarios = await res.json();
 
         let html = `
-            <table border="1" class="tabla-cliente">
+            <table class="tabla-cliente">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -121,32 +154,41 @@ async function listarUsuarios() {
                 <tbody>
         `;
 
-        usuarios.forEach(u => {
-            html += `
-                <tr>
-                    <td>${u.id_usuario}</td>
-                    <td>${u.codigo}</td>
-                    <td>${u.id_rol}</td>
+        if (Array.isArray(usuarios)) {
+            usuarios.forEach(u => {
+                let nombreRol = "Administrador";
+                if (u.id_rol == 2) nombreRol = "Asesor";
+                if (u.id_rol == 3) nombreRol = "Director";
+                if (u.id_rol == 4) nombreRol = "Cajero";
 
-                    <td>
-                        <button id="btnEditar" onclick="editarUsuario(${u.id_usuario}, '${u.codigo}', '${u.id_rol}')">Editar</button>
-                        <button onclick="eliminarUsuario(${u.id_usuario})">Eliminar</button>
-                    </td>
-                </tr>
-            `;
-        });
+                html += `
+                    <tr>
+                        <td>${u.id_usuario}</td>
+                        <td>${u.codigo}</td>
+                        <td>${nombreRol}</td>
+
+                        <td>
+                            <button onclick="editarUsuario(${u.id_usuario}, '${u.codigo}', '${u.id_rol}')">Editar</button>
+                            <button onclick="eliminarUsuario(${u.id_usuario})">Eliminar</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
 
         html += "</tbody></table>";
-
-        contenedor.innerHTML = html;
+        elementos.seccionListar.innerHTML = html;
 
     } catch (error) {
-        console.error("Error:", error);
-        contenedor.innerHTML = "<p>Error cargando usuarios</p>";
+        console.error("Error gestionando usuarios:", error);
+        elementos.seccionListar.innerHTML = "<p>Error cargando usuarios</p>";
     }
 }
 
-//  ELIMINAR USUARIO
+
+
+// ELIMINAR
+
 
 async function eliminarUsuario(id) {
     if (!confirm("¿Seguro que deseas eliminar este usuario?")) return;
@@ -169,33 +211,19 @@ async function eliminarUsuario(id) {
 }
 
 
-//  EDITAR USUARIO (CARGA EL FORMULARIO)
+
+// EDITAR
+
 
 function editarUsuario(id, codigo, rol) {
-
     modoEdicion = true;
     idUsuarioEditar = id;
 
     elementos.codigo.value = codigo;
     elementos.rol.value = rol;
-    elementos.contrasena.value = ""; // por seguridad
+    elementos.contrasena.value = "";
 
     elementos.btnCrear.textContent = "Actualizar Usuario";
-    formularioCrearUsuario.style.display = "block";
-    
+
+    mostrarSeccion("crear");
 }
-
-//  CARGAR AL INICIAR
-
-window.addEventListener("DOMContentLoaded", () => {
-    listarUsuarios();
-
-});
-
-// EVENTO FORMULARIO
-
-elementos.form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    registrarUsuario();
-});
-

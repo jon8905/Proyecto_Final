@@ -569,22 +569,107 @@ canvas {
 }
 
 /* Empty States */
+/* TABLAS PENDIENTES*/
 .empty-state {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 200px;
-    color: var(--muted-foreground);
-    text-align: center;
+    min-height: 220px;
     padding: 32px;
+    text-align: center;
+    color: #6b7280;
 }
 
 .empty-state img {
-    opacity: 0.3;
+    width: 120px;
     margin-bottom: 16px;
-    width: 48px;
-    height: 48px;
+    opacity: 0.8;
+}
+
+.empty-state p {
+    font-size: 15px;
+}
+
+/* Tabla cuando el backend la inyecta dentro de .empty-state */
+.empty-state table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    margin-top: 20px;
+}
+
+/* Encabezados */
+.empty-state table thead th {
+    background-color: #003b70;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 14px;
+    font-size: 15px;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+/* Filas */
+.empty-state table tbody tr {
+    transition: background-color 0.25s ease;
+}
+
+.empty-state table tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.empty-state table tbody tr:hover {
+    background: #e9f3ff;
+}
+
+/* Celdas */
+.empty-state table td {
+    padding: 12px 10px;
+    font-size: 14px;
+    color: #444;
+    border-bottom: 1px solid #eee;
+}
+
+.empty-state table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/*BOTONES CLIENTES PENDIENTES*/
+.acciones-col {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+}
+
+.btn {
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-approve {
+    background-color: #198754;
+    color: #fff;
+}
+
+.btn-reject {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.estado-final {
+    font-weight: bold;
+    text-transform: capitalize;
 }
 
 /* Lists */

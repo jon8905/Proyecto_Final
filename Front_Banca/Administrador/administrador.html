@@ -26,7 +26,7 @@
                         <img src="../Asesor/img/asesor.png" alt="Admin Logo" class="asesorLogo">
                         <div class="user-details">
                             <h2 id="nombreUsuario">Administrador</h2>
-                            <h3 id="codigoUsuario">ADM001</h3>
+                            <h3 id="codigoUsuarioHeader">ADM001</h3> <!-- CAMBIADO ID -->
                         </div>
                     </div>
                     <button id="btnSalir" class="btnSalir" name="btnSalir">Salir</button>
@@ -57,15 +57,10 @@
             </ul>
         </nav>
 
-
-
-
         <!-- FORMULARIO -->
         <section id="seccionCrearUsuario">
 
             <h3 class="titulo-seccion">Crear Nuevo Usuario</h3>
-
-            <br><br><br>
 
             <form id="formularioCrearUsuario">
 
@@ -73,10 +68,10 @@
                 <div class="fila-formulario">
 
                     <div class="grupo-formulario">
-                        <label for="codigoUsuario">Código de Usuario</label>
-                        <input type="text" id="codigoUsuario" placeholder="Asesor" required>
+                        <label for="codigoUsuarioInput">Código de Usuario</label>
+                        <input type="text" id="codigoUsuarioInput" placeholder="Asesor001" required>
                     </div>
-                    <br>
+
                     <div class="grupo-formulario">
                         <label for="contrasenaUsuario">Contraseña</label>
                         <input type="password" id="contrasenaUsuario" placeholder="********" required>
@@ -88,7 +83,7 @@
                 <div class="grupo-formulario">
                     <label for="rolUsuario">Rol del Usuario</label>
                     <select id="rolUsuario" required>
-                        <option>Seleccionar rol</option>
+                        <option value="">Seleccionar rol</option>
                         <option value="2">Asesor</option>
                         <option value="3">Director</option>
                         <option value="4">Cajero</option>
@@ -104,12 +99,12 @@
         </section>
 
         <!-- LISTA DE USUARIOS -->
-
         <div id="listaUsuarios"></div>
 
-
     </main>
-    <script src="administtrador.js"></script>
+
 </body>
+
+<script src="administtrador.js"></script> <!-- NOMBRE CORREGIDO -->
 
 </html>
