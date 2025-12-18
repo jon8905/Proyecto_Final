@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 console.log("Iniciando wizard para:", tipoSeleccionadoTexto.textContent);
             } else if (radioJuridica && radioJuridica.checked) {
-                alert("El formulario para Persona Jurídica aún no está disponible.");
+                window.location.href = "../juridica/juridica.html"
             }
         });
     }

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banca | Asesor</title>
+    <meta name="author" content="Jean Steven Londoño Portillo">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="../../globals.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+
+<body>
+   
+   
+   <main>
+
+        <!-- Formulario de registro de cliente persona natural - Paso 1 -->
+         <!-- ___________________________________________________________________  -->
+         <!-- ___________________________________________________________________  -->
+        <div id="paso1Container">
+            <section class="wizard-header">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="card-title">Registro de Cliente - Persona Juridica</h4>
+                    </div>
+                    <button type="button" id="btnCancelarPaso1" class="btnCancelar">Cancelar</button>
+                </div>
+                <div class="mt-4">
+                    <div class="wizard-progress">
+                        <span class="wizard-progress-text">Progreso: 17%</span>
+                        <span class="wizard-progress-text">1/6</span>
+                    </div>
+                    <progress value="17" max="100" aria-label="17% completado"></progress>
+                </div>
+            </section>
+
+            <section id="paso1" class="wizard-content">
+                <div class="mb-6">
+                    <h3 class="form-section-title">Datos Básicos Del Representante Legal</h3>
+                    <p class="form-section-description">Complete la información de identificación básica del cliente.
+                    </p>
+                </div>
+
+                <form id="formPaso1" action="/api/clientes/paso1" method="post">
+                    <fieldset>
+                        <legend>Tipo de Solicitud</legend>
+                        <div class="radio-group-horizontal">
+                            <label><input type="radio" id="sol_vinculacion" name="tipo_solicitud" value="vinculación"
+                                    required> Vinculación</label>
+                            <label>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-grid">
+                        <div>
+                            <label for="tipo_cliente_relacion">Relación</label>
+                            <select name="tipo_cliente_relacion" id="tipo_cliente_relacion">
+                                <option value="">Seleccione...</option>
+                                <option value="beneficiario">Representante Legal</option>
+                                <option value="terceros">Terceros</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="fecha_diligenciamiento">Fecha diligenciamiento</label>
+                            <input type="date" id="fecha_diligenciamiento" name="fecha_diligenciamiento" required>
+
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div>
+                            <label for="primer_nombre">Primer nombre</label>
+                            <input type="text" id="primer_nombre" name="primer_nombre" required>
+                        </div>
+                        <div>
+                            <label for="segundo_nombre">Segundo nombre</label>
+                            <input type="text" id="segundo_nombre" name="segundo_nombre">
+                        </div>
+                        <div>
+                            <label for="primer_apellido">Primer apellido</label>
+                            <input type="text" id="primer_apellido" name="primer_apellido" required>
+                        </div>
+                        <div>
+                            <label for="segundo_apellido">Segundo apellido</label>
+                            <input type="text" id="segundo_apellido" name="segundo_apellido">
+                        </div>
+                    </div>
+
+                    <div class="form-grid mt-4">
+                        <div>
+                            <label for="tipo_documento">Tipo de documento</label>
+                            <select name="tipo_documento" id="tipo_documento" required>
+                                <option value="CC">C.C.</option>
+                                <option value="TI">T.I.</option>
+                                <option value="CE">C.E.</option>
+                                <option value="PPT">PPT</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="numero_documento">N° documento</label>
+                            <input type="text" id="numero_documento" name="numero_documento" required>
+                        </div>
+                        <div>
+                            <label for="lugar_expedicion">Lugar de expedición</label>
+                            <input type="text" id="lugar_expedicion" name="lugar_expedicion">
+                        </div>
+                        <div>
+                            <label for="fecha_expedicion">Fecha de expedición</label>
+                            <input type="date" id="fecha_expedicion" name="fecha_expedicion">
+                        </div>
+                    </div>
+
+                    <div class="form-grid mt-4">
+                        <div>
+                            <label for="ciudad_nacimiento">Ciudad de nacimiento</label>
+                            <input type="text" id="ciudad_nacimiento" name="ciudad_nacimiento" required>
+                        </div>
+                        <div>
+                            <label for="fecha_nacimiento">Fecha de nacimiento</label>
+                            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4 mt-6">
+                        <fieldset>
+                            <legend>Nacionalidad</legend>
+                            <div class="radio-group-vertical">
+                                <label><input type="radio" id="nacionalidad_col" name="nacionalidad" value="colombiano">
+                                    Colombiano</label>
+                                
+                                <div>
+                                    <label><input type="radio" id="otra_nacionalidad" name="nacionalidad" value="otra">
+                                        Otro</label>
+                                    <input type="text" id="otra_nacionalidad_detalle" name="otra_nacionalidad_detalle"
+                                        placeholder="¿Cuál?" class="mt-2 text-sm">
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Género</legend>
+                            <div class="radio-group-vertical">
+                                <label><input type="radio" id="genero_f" name="genero" value="femenino">
+                                    Femenino</label>
+                                <label><input type="radio" id="genero_m" name="genero" value="masculino">
+                                    Masculino</label>
+                                <label><input type="radio" id="genero_t" name="genero" value="transgenero">
+                                    Transgénero</label>
+                                <label><input type="radio" id="genero_nb" name="genero" value="no_binario"> No
+                                    Binario</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <fieldset>
+                            <legend>Estado civil</legend>
+                            <div class="radio-group-vertical">
+                                <label><input type="radio" id="soltero" name="estado_civil" value="soltero">
+                                    Soltero</label>
+                                <label><input type="radio" id="casado" name="estado_civil" value="casado">
+                                    Casado</label>
+                                <label><input type="radio" id="union_libre" name="estado_civil" value="union_libre">
+                                    Unión libre</label>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Grupo étnico</legend>
+                            <div class="radio-group-vertical">
+                                <label><input type="radio" id="indigena" name="grupo_etnico" value="indigena">
+                                    Indígena</label>
+                                <label><input type="radio" id="raizal" name="grupo_etnico" value="raizal">
+                                    Raizal</label>
+                                <label><input type="radio" id="afro" name="grupo_etnico" value="afrocolombiano">
+                                    Afrocolombiano</label>
+                                <label><input type="radio" id="ninguno" name="grupo_etnico" value="ninguno">
+                                    Ninguno</label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>
+
+                <div class="wizard-actions">
+                    <div></div> <!-- Spacer -->
+                    <div class="indicador hidden"> <!-- Oculto, se usa barra superior -->
+                        <span class="paso activo"></span>
+                        <span class="paso"></span>
+                        <span class="paso"></span>
+                        <span class="paso"></span>
+                        <span class="paso"></span>
+                        <span class="paso"></span>
+                    </div>
+                    <button type="button" id="btnSiguientePaso1" class="btnSiguiente">Siguiente</button>
+                </div>
+            </section>
+        </div>
+        <!-- ___________________________________________________________________  -->
+        <!-- ___________________________________________________________________  -->
+        <!-- Formulario de registro de cliente persona natural - Paso 2 -->
+        <section id="paso2" style="display: none;">
+            <div class="wizard-header">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="card-title">Registro de Cliente - Persona Juridica</h4>
+                    </div>
+                    <button type="button" id="btnCancelarPaso2" class="btnCancelar">Cancelar</button>
+                </div>
+                <div class="mt-4">
+                    <div class="wizard-progress">
+                        <span class="wizard-progress-text">Progreso: 33%</span>
+                        <span class="wizard-progress-text">2/6</span>
+                    </div>
+                    <progress value="33" max="100" aria-label="33% completado"></progress>
+                </div>
+            </div>
+
+            <div class="wizard-content">
+                <div class="mb-6">
+                    <h3 class="form-section-title">Ubicación y Contacto De la Empresa</h3>
+                    <p class="form-section-description">Dirección del Representante.</p>
+                </div>
+
+                <form id="formPaso2" action="/api/clientes/paso2" method="post">
+                    <div class="form-grid">
+                        <div class="full-width">
+                            <label for="direccion_residencia">Dirección de residencia</label>
+                            <input type="text" id="direccion_residencia" name="direccion_residencia">
+                        </div>
+
+                        <div>
+                            <label for="barrio">Barrio</label>
+                            <input type="text" id="barrio" name="barrio">
+                        </div>
+
+                        <div>
+                            <label for="ciudad_municipio">Ciudad / Municipio</label>
+                            <input type="text" id="ciudad_municipio" name="ciudad_municipio">
+                        </div>
+
+                        <div>
+                            <label for="departamento">Departamento</label>
+                            <input type="text" id="departamento" name="departamento">
+                        </div>
+
+                        <div>
+                            <label for="pais">País</label>
+                            <input type="text" id="pais" name="pais">
+                        </div>
+
+                        <div>
+                            <label for="telefono">Teléfono fijo</label>
+                            <input type="number" id="telefono" name="telefono">
+                        </div>
+
+                        <div>
+                            <label for="celular">Celular</label>
+                            <input type="number" id="celular" name="celular">
+                        </div>
+
+                        <div class="full-width">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                    </div>
+                </form>
+
+                <div class="wizard-actions">
+                    <button type="button" id="btnAnteriorPaso2" class="btnAnterior">Anterior</button>
+                    <button type="button" id="btnSiguientePaso2" class="btnSiguiente">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulario de registro de cliente persona natural - Paso 3 -->
+        <section id="paso3" style="display: none;">
+            <div class="wizard-header">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="card-title">Registro de Cliente - Persona Juridica</h4>
+                        <p class="card-description">Paso 3: Actividad Económica</p>
+                    </div>
+                    <button type="button" id="btnCancelarPaso3" class="btnCancelar">Cancelar</button>
+                </div>
+                <div class="mt-4">
+                    <div class="wizard-progress">
+                        <span class="wizard-progress-text">Progreso: 50%</span>
+                        <span class="wizard-progress-text">3/6</span>
+                    </div>
+                    <progress value="50" max="100" aria-label="50% completado"></progress>
+                </div>
+            </div>
+
+            <div class="wizard-content">
+                <div class="mb-6">
+                    <h3 class="form-section-title">Actividad Económica</h3>
+                    <p class="form-section-description">Información sobre la actividad económica principal.</p>
+                </div>
+
+                <form id="formPaso3" action="/api/clientes/paso3" method="post">
+                    <div class="form-grid">
+                        <div class="full-width">
+                            <label for="profesion">Actividad</label>
+                            <input type="text" id="profesion" name="profesion">
+                        </div>
+
+                        <div class="full-width">
+                            <label for="ocupacion">Ocupación / Oficio</label>
+                            <select name="ocupacion" id="ocupacion">
+                                <option value="otro">Seleccione</option>
+                                <option value="Ganadero">Ganaderia</option>
+                                <option value="Comerciante">Comercio</option>
+                                <option value="Agricultor">Agricultora</option>
+                                <option value="Otro">Otra</option>
+                            </select>
+                        </div>
+
+                        <div class="full-width">
+                            <div style="background-color: var(--muted); padding: 12px; border-radius: var(--radius);">
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" id="detalle_actividad" name="detalle_actividad"
+                                        style="width: auto; margin:0;">
+                                    <span style="font-weight: normal; font-size: 0.8rem;">Diligenciar detalle de
+                                        actividad (si es independiente, comerciante, etc.)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="full-width">
+                            <label for="actividad_economica_detalle">Detalle de la actividad económica</label>
+                            <textarea id="actividad_economica_detalle" name="actividad_economica_detalle"
+                                placeholder="Describa detalladamente su actividad económica principal"></textarea>
+                        </div>
+
+                        <div>
+                            <label for="codigo_ciiu">Código CIIU</label>
+                            <input type="text" id="codigo_ciiu" name="codigo_ciiu">
+                        </div>
+
+                        <div>
+                            <label for="num_empleados">N° Empleados</label>
+                            <input type="number" id="n_empleados" name="num_empleados">
+                        </div>
+                    </div>
+                </form>
+
+                <div class="wizard-actions">
+                    <button type="button" id="btnAnteriorPaso3" class="btnAnterior">Anterior</button>
+                    <button type="button" id="btnSiguientePaso3" class="btnSiguiente">Siguiente</button>
+                </div>
+            </div>
+        </section>
+        <!-- _____________________________________________________________  -->
+        <!-- _____________________________________________________________  -->
+
+        <!-- Formulario de registro de cliente persona natural - Paso 4 -->
+        <section id="paso4" style="display: none;">
+            <div class="wizard-header">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="card-title">Registro de Cliente - Persona Juridica</h4>
+                    </div>
+                    <button type="button" id="btnCancelarPaso4" class="btnCancelar">Cancelar</button>
+                </div>
+                <div class="mt-4">
+                    <div class="wizard-progress">
+                        <span class="wizard-progress-text">Progreso: 67%</span>
+                        <span class="wizard-progress-text">4/6</span>
+                    </div>
+                    <progress value="67" max="100" aria-label="67% completado"></progress>
+                </div>
+            </div>
+
+            <div class="wizard-content">
+                <div class="mb-6">
+                    <h3 class="form-section-title">Datos de La Empresa</h3>
+                    <p class="form-section-description">Información de la empresa.</p>
+                </div>
+
+                <form id="formPaso4" action="/api/clientes/paso4">
+                    <div class="form-grid">
+                        <div class="full-width">
+                            <label for="nombre_empresa">Nombre de la empresa</label>
+                            <input type="text" id="nombre_empresa" name="nombre_empresa">
+                        </div>
+
+                        <div class="full-width">
+                            <label for="direccion_empresa">Dirección empresa</label>
+                            <input type="text" id="direccion" name="direccion_empresa">
+                        </div>
+
+                        <div>
+                            <label for="barrio_empresa">Barrio</label>
+                            <input type="text" id="barrio_empresa" name="barrio_empresa">
+                        </div>
+
+                        <div>
+                            <label for="ciudad_empresa">Ciudad / Municipio</label>
+                            <input type="text" id="ciudad" name="ciudad_empresa">
+                        </div>
+
+                        <div>
+                            <label for="departamento_empresa">Departamento</label>
+                            <input type="text" id="departamento_empresa" name="departamento_empresa">
+                        </div>
+
+                        <div>
+                            <label for="pais_empresa">País</label>
+                            <input type="text" id="pais_empresa" name="pais_empresa">
+                        </div>
+
+                        <div>
+                            <label for="telefono_empresa">Teléfono</label>
+                            <input type="number" id="telefono_empresa" name="telefono_empresa">
+                        </div>
+
+                        <div>
+                            <label for="extension">Extensión</label>
+                            <input type="number" id="extension" name="extension">
+                        </div>
+
+                        <div>
+                            <label for="celular_empresa">Celular</label>
+                            <input type="number" id="celular_empresa" name="celular_empresa">
+                        </div>
+
+                        <div>
+                            <label for="email_empresa">Correo electrónico</label>
+                            <input type="email" id="correo" name="email_empresa">
+                        </div>
+                    </div>
+                </form>
+
+                <div class="wizard-actions">
+                    <button type="button" id="btnAnteriorPaso4" class="btnAnterior">Anterior</button>
+                    <button type="button" id="btnSiguientePaso4" class="btnSiguiente">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulario de registro de cliente persona natural - Paso 5 -->
+        <section id="paso5" style="display: none;">
+            <div class="wizard-header">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="card-title">Registro de Cliente - Persona Juridica</h4>
+                        <p class="card-description">Paso 5: Información Financiera</p>
+                    </div>
+                    <button type="button" id="btnCancelarPaso5" class="btnCancelar">Cancelar</button>
+                </div>
+                <div class="mt-4">
+                    <div class="wizard-progress">
+                        <span class="wizard-progress-text">Progreso: 83%</span>
+                        <span class="wizard-progress-text">5/6</span>
+                    </div>
+                    <progress value="83" max="100" aria-label="83% completado"></progress>
+                </div>
+            </div>
+
+            <div class="wizard-content">
+                <div class="mb-6">
+                    <h3 class="form-section-title">Ingresos y Patrimonio</h3>
+                    <p class="form-section-description">Detalle de la situación financiera de la empresa.</p>
+                </div>
+
+                <form id="formPaso5" action="/api/clientes/paso5" method="post">
+                    <div class="form-grid">
+                        <div>
+                            <label for="ingresos_mensuales">Ingresos mensuales</label>
+                            <input type="number" id="ingresos_mensuales" name="ingresos_mensuales">
+                        </div>
+
+                        <div>
+                            <label for="otros_ingresos">Otros ingresos</label>
+                            <input type="number" id="otros_ingresos" name="otros_ingresos">
+                        </div>
+
+                        <div>
+                            <label for="total_egresos">Total egresos</label>
+                            <input type="number" id="total_egresos" name="total_egresos">
+                        </div>
+
+                        <div>
+                            <label for="total_activos">Total activos</label>
+                            <input type="number" id="total_activos" name="total_activos">
+                        </div>
+
+                        <div>
+                            <label for="total_pasivos">Total pasivos</label>
+                            <input type="number" id="total_pasivos" name="total_pasivos">
+                        </div>
+
+                        <div>
+                            <label for="ventas_anuales">Ventas anuales</label>
+                            <input type="number" id="ventas_anuales" name="ventas_anuales">
+                        </div>
+
+                        <div>
+                            <label for="fecha_cierre_ventas">Fecha cierre ventas</label>
+                            <input type="date" id="fecha_cierre_ventas" name="fecha_cierre_ventas">
+                        </div>
+                    </div>
+                </form>
+
+                <div class="wizard-actions">
+                    <button type="button" id="btnAnteriorPaso5" class="btnAnterior">Anterior</button>
+                    <button type="button" id="btnSiguientePaso5" class="btnSiguiente">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulario de registro de cliente persona natural - Paso 6 -->
+        <section id="paso6" style="display: none;">
+            <div class="wizard-header">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="card-title">Registro de Cliente - Persona Juridica</h4>
+                        <p class="card-description">Paso 6: Información Legal</p>
+                    </div>
+                    <button type="button" id="btnCancelarPaso6" class="btnCancelar">Cancelar</button>
+                </div>
+                <div class="mt-4">
+                    <div class="wizard-progress">
+                        <span class="wizard-progress-text">Progreso: 100%</span>
+                        <span class="wizard-progress-text">6/6</span>
+                    </div>
+                    <progress value="100" max="100" aria-label="100% completado"></progress>
+                </div>
+            </div>
+
+            <div class="wizard-content">
+                <div class="mb-6">
+                    <h3 class="form-section-title">Declaraciones Legales</h3>
+                    <p class="form-section-description">Información PEP, Tributaria y FATCA.</p>
+                </div>
+
+                <form id="formPaso6" action="/api/clientes/paso6" method="post">
+                    <fieldset>
+                        <legend>Información PEP (Personas Expuestas Políticamente)</legend>
+                        <div class="radio-group-vertical">
+                            <label><input type="checkbox" id="pep" name="informacion_pep" value="pep"> ¿Es usted una
+                                persona expuesta politicamente (PEP)?</label>
+                            <label><input type="checkbox" id="fide_ico" name="informacion_pep" value="fide_ico"> ¿Es
+                                fideicomitente o constituyente de patrimonio autónomo?</label>
+                            <label><input type="checkbox" id="relacion_pep" name="informacion_pep" value="relacion_pep">
+                                ¿Es relacionado con PEP?</label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Información Tributaria</legend>
+                        <div class="radio-group-vertical mb-4">
+                            <label><input type="checkbox" id="declara_renta" name="informacion_tributaria"
+                                    value="declara_renta"> ¿Es declarante de renta?</label>
+                            <label><input type="checkbox" id="agente_retenedor" name="informacion_tributaria"
+                                    value="agente_retenedor"> ¿Es agente retenedor?</label>
+                        </div>
+
+                        <div style="max-width: 300px;">
+                            <label for="iva">Régimen IVA</label>
+                            <select name="informacion_tributaria" id="iva">
+                                <option value="Ninguno">Ninguno</option>
+                                <option value="Comun">Común</option>
+                                <option value="Simplificado">Simplificado</option>
+                            </select>
+                        </div>
+                    </fieldset>
+
+                    <!-- <fieldset>
+                        <legend>FATCA y CRS</legend>
+                        <label><input type="checkbox" id="fatca_crs" name="fatca_crs" value="declara_fatca_crs"> ¿Es
+                            residente fiscal de Estados Unidos?</label>
+                    </fieldset> -->
+                </form>
+
+                <div class="wizard-actions">
+                    <button type="button" id="btnAnteriorPaso6" class="btnAnterior">Anterior</button>
+                    <button type="submit" id="btnRegistrarCliente" class="btnRegistrar">Registrar Cliente</button>
+                </div>
+            </div>
+        </section>
+    </main>    
+
+
+</body>
+ 
+    <!-- <script src="./js/index.js"></script> -->
+    <script src="./js/juridica.js"></script>
+    <script src="./js/wizard.js"></script>
+</html>
